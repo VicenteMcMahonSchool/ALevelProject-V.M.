@@ -8,7 +8,7 @@ Application::Application(unsigned int windowWidth, unsigned int windowHeight)
         SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
         windowWidth, windowHeight,
         SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
-    if (window == NULL)
+    if (this->window == NULL)
         throw std::runtime_error(SDL_GetError());
     this->renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
     if (!this->renderer)
