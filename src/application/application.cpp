@@ -1,15 +1,17 @@
 #include "./application.hpp"
 
 // Constructor for application, this is used to make the class.
-Application::Application(unsigned int windowWidth, unsigned int windowHeight)
+Application::Application()
 {
+    SDL_GetCurrentDisplayMode(0, &displayMode); // Gets data about the display.
     this->window = SDL_CreateWindow(
         "Platformer",
         SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-        windowWidth, windowHeight,
+        displayMode.w, displayMode.h,
         SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
     if (this->window == NULL)
         throw std::runtime_error(SDL_GetError());
+    SDL_SetWindowFullscreen(this->window, SDL_WINDOW_FULLSCREEN); // Makes the window fullscreen.
     this->renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
     if (!this->renderer)
         throw std::runtime_error(SDL_GetError());

@@ -1,6 +1,6 @@
 #include "./application/application.hpp"
 
-Application application{128, 128};
+Application application{};
 // The main function, needed to start the program.
 int main(void)
 {

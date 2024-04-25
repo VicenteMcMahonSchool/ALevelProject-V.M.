@@ -8,7 +8,7 @@ struct Application
 {
     SDL_Window *window;
     SDL_Renderer *renderer;
-    Application(unsigned int windowWidth, unsigned int windowHeight);
+    Application();
     ~Application();
     void run(void);
 };
