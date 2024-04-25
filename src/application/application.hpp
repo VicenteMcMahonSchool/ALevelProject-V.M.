@@ -6,8 +6,6 @@
 // This is a header file for application, only needed because of '#include' directives.
 struct Application
 {
-    SDL_Window *window;
-    SDL_Renderer *renderer;
     Application();
     ~Application();
     void run(void);

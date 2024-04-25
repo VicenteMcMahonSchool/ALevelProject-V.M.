@@ -1,27 +1,31 @@
 #include "./application.hpp"
 
+SDL_Window *window;
+SDL_Renderer *renderer;
+SDL_DisplayMode displayMode;
+
 // Constructor for application, this is used to make the class.
 Application::Application()
 {
     SDL_GetCurrentDisplayMode(0, &displayMode); // Gets data about the display.
-    this->window = SDL_CreateWindow(
+    window = SDL_CreateWindow(
         "Platformer",
         SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
         displayMode.w, displayMode.h,
         SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
-    if (this->window == NULL)
+    if (window == NULL)
         throw std::runtime_error(SDL_GetError());
-    SDL_SetWindowFullscreen(this->window, SDL_WINDOW_FULLSCREEN); // Makes the window fullscreen.
-    this->renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
-    if (!this->renderer)
+    SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN); // Makes the window fullscreen.
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
+    if (!renderer)
         throw std::runtime_error(SDL_GetError());
 }
 
 // Destructor for application, this is used to free memory.
 Application::~Application()
 {
-    SDL_DestroyRenderer(this->renderer);
-    SDL_DestroyWindow(this->window);
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
     SDL_Quit();
 }
 
@@ -43,11 +47,9 @@ void Application::run(void)
                 goto exit;
             }
         }
-        SDL_RenderClear(this->renderer);                                // Clears the screen.
-        SDL_SetRenderDrawColor(this->renderer, 0XFF, 0XFF, 0XFF, 0XFF); // Sets draw colour.
-        SDL_RenderFillRect(this->renderer, &testRectangle);             // Fills rectangle.
-        SDL_SetRenderDrawColor(this->renderer, 0X33, 0X33, 0X33, 0XFF); // Sets the colour.
-        SDL_RenderPresent(this->renderer);                              // Renders everything.
+        SDL_RenderClear(renderer);                                // Clears the screen.
+        SDL_SetRenderDrawColor(renderer, 0X33, 0X33, 0X33, 0XFF); // Sets the colour.
+        SDL_RenderPresent(renderer);                              // Renders everything.
         SDL_Delay(128);
     }
 exit: // This is a section which can be reached using 'goto' statements.
