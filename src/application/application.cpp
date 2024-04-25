@@ -23,7 +23,7 @@ Application::~Application()
     SDL_Quit();
 }
 
-// This is going to be the main loop for the code.
+// This is the main loop for the code.
 void Application::run(void)
 {
     while (true)
