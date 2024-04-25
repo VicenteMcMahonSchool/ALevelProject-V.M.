@@ -9,11 +9,10 @@ Application::Application(unsigned int windowWidth, unsigned int windowHeight)
         windowWidth, windowHeight,
         SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
     if (window == NULL)
-        throw SDL_GetError();
-    // SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+        throw std::runtime_error(SDL_GetError());
     this->renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
     if (!this->renderer)
-        throw SDL_GetError();
+        throw std::runtime_error(SDL_GetError());
 }
 
 // Destructor for application, this is used to free memory.
@@ -43,6 +42,8 @@ void Application::run(void)
             }
         }
         SDL_RenderClear(this->renderer);                                // Clears the screen.
+        SDL_SetRenderDrawColor(this->renderer, 0XFF, 0XFF, 0XFF, 0XFF); // Sets draw colour.
+        SDL_RenderFillRect(this->renderer, &testRectangle);             // Fills rectangle.
         SDL_SetRenderDrawColor(this->renderer, 0X33, 0X33, 0X33, 0XFF); // Sets the colour.
         SDL_RenderPresent(this->renderer);                              // Renders everything.
         SDL_Delay(128);
