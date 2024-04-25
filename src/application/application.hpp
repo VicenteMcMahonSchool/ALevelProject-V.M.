@@ -1,10 +1,8 @@
 #pragma once
 #include <SDL2/SDL.h>
 #include <stdexcept>
-#include "global.hpp"
+#include "../global/global.hpp"
 
-#define SDL_VIDEODRIVER dummy
-#define SDL_OPENGL_ACCELERATED_VISUAL 1
 // This is a header file for application, only needed because of '#include' directives.
 struct Application
 {

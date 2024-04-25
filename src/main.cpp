@@ -1,5 +1,4 @@
-#include "./application.hpp"
-#include "./global.hpp"
+#include "./application/application.hpp"
 
 Application application{128, 128};
 // The main function, needed to start the program.
