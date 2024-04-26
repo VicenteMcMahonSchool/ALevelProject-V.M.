@@ -1,6 +1,9 @@
 #pragma once
 #include <SDL2/SDL.h>
 
+#define SDL_SetRenderDrawColour SDL_SetRenderDrawColor
+#define SDL_WINDOWPOS_CENTRED SDL_WINDOWPOS_CENTERED
+
 #define GETTER_CPP(type, className, name, name2) \
     type className::get##name2(void) { return this->name; }
 

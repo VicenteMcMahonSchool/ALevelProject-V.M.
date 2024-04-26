@@ -10,7 +10,7 @@ Application::Application()
     SDL_GetCurrentDisplayMode(0, &displayMode); // Gets data about the display.
     window = SDL_CreateWindow(
         "Platformer",
-        SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+        SDL_WINDOWPOS_CENTRED, SDL_WINDOWPOS_CENTRED,
         displayMode.w, displayMode.h,
         SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
     if (window == NULL)
@@ -47,9 +47,9 @@ void Application::run(void)
                 goto exit;
             }
         }
-        SDL_RenderClear(renderer);                                // Clears the screen.
-        SDL_SetRenderDrawColor(renderer, 0X33, 0X33, 0X33, 0XFF); // Sets the colour.
-        SDL_RenderPresent(renderer);                              // Renders everything.
+        SDL_RenderClear(renderer);                                 // Clears the screen.
+        SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF); // Sets the colour.
+        SDL_RenderPresent(renderer);                               // Renders everything.
         SDL_Delay(128);
     }
 exit: // This is a section which can be reached using 'goto' statements.
