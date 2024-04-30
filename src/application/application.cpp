@@ -1,13 +1,18 @@
 #include "./application.hpp"
+#include "../linked_list/linked_list.hpp"
 
 SDL_Window *window;
 SDL_Renderer *renderer;
-SDL_DisplayMode displayMode;
+LinkedList<Rectangle> rectangles{};
 
 // Constructor for application, this is used to make the class.
 Application::Application()
 {
-    SDL_GetCurrentDisplayMode(0, &displayMode); // Gets data about the display.
+    if (SDL_Init(SDL_INIT_VIDEO) < 0)
+        throw std::runtime_error(SDL_GetError());
+    SDL_DisplayMode displayMode{};
+    if (SDL_GetCurrentDisplayMode(0, &displayMode))
+        throw std::runtime_error(SDL_GetError()); // Gets data about the display.
     window = SDL_CreateWindow(
         "Platformer",
         SDL_WINDOWPOS_CENTRED, SDL_WINDOWPOS_CENTRED,
@@ -15,7 +20,7 @@ Application::Application()
         SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
     if (window == NULL)
         throw std::runtime_error(SDL_GetError());
-    SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN); // Makes the window fullscreen.
+    // SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN); // Makes the window fullscreen.
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
     if (!renderer)
         throw std::runtime_error(SDL_GetError());
@@ -32,6 +37,7 @@ Application::~Application()
 // This is the main loop for the code.
 void Application::run(void)
 {
+    rectangles.add(Rectangle({0, 0}, {0XFF, 0XFF, 0XFF, 0XFF}, 128, 128));
     while (true)
     {
         SDL_Event event;
@@ -47,7 +53,8 @@ void Application::run(void)
                 goto exit;
             }
         }
-        SDL_RenderClear(renderer);                                 // Clears the screen.
+        SDL_RenderClear(renderer); // Clears the screen.
+        TRAVERSE(rectangles, Rectangle, item->datum.draw())
         SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF); // Sets the colour.
         SDL_RenderPresent(renderer);                               // Renders everything.
         SDL_Delay(128);
