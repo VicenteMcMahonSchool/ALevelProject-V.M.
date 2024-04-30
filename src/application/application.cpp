@@ -54,7 +54,7 @@ void Application::run(void)
             }
         }
         SDL_RenderClear(renderer); // Clears the screen.
-        TRAVERSE(rectangles, Rectangle, item->datum.draw())
+        TRAVERSE(rectangles.head, Rectangle, item->datum.draw())
         SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF); // Sets the colour.
         SDL_RenderPresent(renderer);                               // Renders everything.
         SDL_Delay(128);
