@@ -78,9 +78,6 @@ void Application::run(void)
         */
         while (SDL_PollEvent(&event) > 0)
         {
-            last = now;
-            now = SDL_GetPerformanceCounter();
-            deltaTime = (double)((now - last) * 1000 / (double)SDL_GetPerformanceFrequency());
             switch (event.type)
             {
             case SDL_KEYDOWN:
@@ -94,12 +91,15 @@ void Application::run(void)
             case SDL_QUIT: // Quit event.
                 goto exit;
             }
+            last = now;
+            now = SDL_GetPerformanceCounter();
+            deltaTime = (double)((now - last) * 1000 / (double)SDL_GetPerformanceFrequency());
             SDL_RenderClear(renderer);                                                              // Clears the screen.
             TRAVERSE(gameObjects.head, GameObject, this->updateGameObject(&item->datum, deltaTime)) // Updates all the rectangles.
             TRAVERSE(gameObjects.head, GameObject, this->drawGameObject(&item->datum))              // Draws all the rectangles.
             SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF);                              // Sets the colour.
             SDL_RenderPresent(renderer);                                                            // Renders everything.
-            // SDL_Delay(50);
+            SDL_Delay(16);
         }
     }
 exit: // This is a section which can be reached using 'goto' statements.
