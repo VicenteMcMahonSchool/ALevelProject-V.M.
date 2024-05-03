@@ -49,6 +49,14 @@ void Application::run(void)
         {
             switch (event.type)
             {
+            case SDL_KEYDOWN:
+                switch (event.key.keysym.scancode)
+                {
+                case SDL_SCANCODE_ESCAPE: // If the escape key is pressed, exit.
+                    goto exit;
+                    break;
+                }
+                break;
             case SDL_QUIT: // Quit event.
                 goto exit;
             }
