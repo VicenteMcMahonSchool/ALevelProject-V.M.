@@ -10,5 +10,7 @@ struct Application
 {
     Application();
     ~Application();
+    void updateGameObject(GameObject *gameObject, double deltaTime);
+    void drawGameObject(GameObject *gameObject);
     void run(void);
 };

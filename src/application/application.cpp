@@ -34,10 +34,36 @@ Application::~Application()
     SDL_Quit();
 }
 
+void Application::updateGameObject(GameObject *gameObject, double deltaTime)
+{
+    switch (gameObject->type)
+    {
+    case RECTANGLE:
+        gameObject->value.rectangle.update(deltaTime);
+        break;
+    case MOVABLE_RECTANGLE:
+        gameObject->value.movableRectangle.update(deltaTime);
+        break;
+    }
+}
+
+void Application::drawGameObject(GameObject *gameObject)
+{
+    switch (gameObject->type)
+    {
+    case RECTANGLE:
+        gameObject->value.rectangle.draw();
+        break;
+    case MOVABLE_RECTANGLE:
+        gameObject->value.movableRectangle.draw();
+        break;
+    }
+}
+
 // This is the main loop for the code.
 void Application::run(void)
 {
-    gameObjects.add({.type = RECTANGLE, .value = Rectangle({0, 0}, {0XFF, 0XFF, 0XFF, 0XFF}, 128, 128)});
+    gameObjects.add({.type = MOVABLE_RECTANGLE, .value = MovableRectangle({0, 0}, {0XFF, 0XFF, 0XFF, 0XFF}, 128, 128)});
     while (true)
     {
         SDL_Event event;
@@ -61,10 +87,11 @@ void Application::run(void)
                 goto exit;
             }
         }
-        SDL_RenderClear(renderer);                                                 // Clears the screen.
-        TRAVERSE(gameObjects.head, GameObject, item->datum.value.rectangle.draw()) // Draws all the rectangles.
-        SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF);                 // Sets the colour.
-        SDL_RenderPresent(renderer);                                               // Renders everything.
+        SDL_RenderClear(renderer);                                                      // Clears the screen.
+        TRAVERSE(gameObjects.head, GameObject, this->updateGameObject(&item->datum, 0)) // Updates all the rectangles.
+        TRAVERSE(gameObjects.head, GameObject, this->drawGameObject(&item->datum))      // Draws all the rectangles.
+        SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF);                      // Sets the colour.
+        SDL_RenderPresent(renderer);                                                    // Renders everything.
         SDL_Delay(128);
     }
 exit: // This is a section which can be reached using 'goto' statements.
