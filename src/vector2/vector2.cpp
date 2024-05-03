@@ -33,32 +33,32 @@ Vector2 Vector2::operator/(const double &other) const
     return Vector2{this->x / other, this->y / other};
 }
 
-Vector2 Vector2::operator+=(const Vector2 &other)
+void Vector2::operator+=(const Vector2 &other)
 {
     this->x = this->x + other.x;
     this->y = this->y + other.y;
 }
-Vector2 Vector2::operator-=(const Vector2 &other)
+void Vector2::operator-=(const Vector2 &other)
 {
     this->x = this->x - other.x;
     this->y = this->y - other.y;
 }
-Vector2 Vector2::operator+=(const double &other)
+void Vector2::operator+=(const double &other)
 {
     this->x = this->x + other;
     this->y = this->y + other;
 }
-Vector2 Vector2::operator-=(const double &other)
+void Vector2::operator-=(const double &other)
 {
     this->x = this->x - other;
     this->y = this->y - other;
 }
-Vector2 Vector2::operator*=(const double &other)
+void Vector2::operator*=(const double &other)
 {
     this->x = this->x * other;
     this->y = this->y * other;
 }
-Vector2 Vector2::operator/=(const double &other)
+void Vector2::operator/=(const double &other)
 {
     this->x = this->x / other;
     this->y = this->y / other;
