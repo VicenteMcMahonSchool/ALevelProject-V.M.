@@ -17,7 +17,7 @@ Application::Application()
         "Platformer",
         SDL_WINDOWPOS_CENTRED, SDL_WINDOWPOS_CENTRED,
         displayMode.w, displayMode.h,
-        SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+        SDL_WINDOW_SHOWN);
     if (window == NULL)
         throw std::runtime_error(SDL_GetError());
     SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN); // Makes the window fullscreen.
