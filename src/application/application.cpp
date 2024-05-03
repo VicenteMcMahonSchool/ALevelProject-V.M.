@@ -49,12 +49,12 @@ void Application::run(void)
         {
             switch (event.type)
             {
-            case SDL_QUIT:
+            case SDL_QUIT: // Quit event.
                 goto exit;
             }
         }
-        SDL_RenderClear(renderer); // Clears the screen.
-        TRAVERSE(rectangles.head, Rectangle, item->datum.draw())
+        SDL_RenderClear(renderer);                                 // Clears the screen.
+        TRAVERSE(rectangles.head, Rectangle, item->datum.draw())   // Draws all the rectangles.
         SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF); // Sets the colour.
         SDL_RenderPresent(renderer);                               // Renders everything.
         SDL_Delay(128);
