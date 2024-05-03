@@ -64,6 +64,8 @@ void Application::drawGameObject(GameObject *gameObject)
 void Application::run(void)
 {
     gameObjects.add({.type = MOVABLE_RECTANGLE, .value = MovableRectangle({0, 0}, {0XFF, 0XFF, 0XFF, 0XFF}, 128, 128)});
+    gameObjects.add({.type = RECTANGLE, .value = Rectangle({1000, 1000}, {0X33, 0X33, 0XFF, 0XFF}, 128, 128)});
+    TRAVERSE(gameObjects.head, GameObject, if (item->datum.type == MOVABLE_RECTANGLE) item->datum.value.movableRectangle.setVelocity({16, 0}))
     while (true)
     {
         SDL_Event event;

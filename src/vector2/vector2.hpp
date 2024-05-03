@@ -13,6 +13,12 @@ struct Vector2
     Vector2 operator-(const double &other) const;
     Vector2 operator*(const double &other) const;
     Vector2 operator/(const double &other) const;
+    Vector2 operator+=(const Vector2 &other);
+    Vector2 operator-=(const Vector2 &other);
+    Vector2 operator+=(const double &other);
+    Vector2 operator-=(const double &other);
+    Vector2 operator*=(const double &other);
+    Vector2 operator/=(const double &other);
     friend Vector2 operator+(const double &left, const Vector2 &right);
     friend Vector2 operator-(const double &left, const Vector2 &right);
     friend Vector2 operator*(const double &left, const Vector2 &right);
