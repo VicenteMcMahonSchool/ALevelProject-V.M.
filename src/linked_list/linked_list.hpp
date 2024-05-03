@@ -1,6 +1,6 @@
 #pragma once
 #include "../macros/macros.hpp"
-#include "../rectangle/rectangle.hpp"
+#include "../game_object/game_object.hpp"
 
 #define TRAVERSE(start, type, code)               \
     {                                             \

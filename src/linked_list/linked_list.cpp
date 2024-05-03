@@ -19,7 +19,5 @@ void LinkedList<T>::add(T item)
     this->head = newNode;
 }
 
-template class LinkedListNode<Rectangle>;
-template class LinkedList<Rectangle>;
-template class LinkedListNode<MovableRectangle>;
-template class LinkedList<MovableRectangle>;
+template class LinkedListNode<GameObject>;
+template class LinkedList<GameObject>;
