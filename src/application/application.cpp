@@ -69,12 +69,18 @@ void Application::run(void)
     while (true)
     {
         SDL_Event event;
+        // Delta Time code taken from https://gamedev.stackexchange.com/questions/110825/how-to-calculate-delta-time-with-sdl.
+        Uint64 now = SDL_GetPerformanceCounter(), last = 0; // Will be used to calculate 'deltaTime'.
+        double deltaTime = 0;
         /*
         Loops until there is an error getting the event. The 'event' variable is passed by reference to 'SDL_PollEvent',
         this function will get the current event and store it in 'event'.
         */
         while (SDL_PollEvent(&event) > 0)
         {
+            last = now;
+            now = SDL_GetPerformanceCounter();
+            deltaTime = (double)((now - last) * 1000 / (double)SDL_GetPerformanceFrequency());
             switch (event.type)
             {
             case SDL_KEYDOWN:
@@ -88,13 +94,13 @@ void Application::run(void)
             case SDL_QUIT: // Quit event.
                 goto exit;
             }
+            SDL_RenderClear(renderer);                                                              // Clears the screen.
+            TRAVERSE(gameObjects.head, GameObject, this->updateGameObject(&item->datum, deltaTime)) // Updates all the rectangles.
+            TRAVERSE(gameObjects.head, GameObject, this->drawGameObject(&item->datum))              // Draws all the rectangles.
+            SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF);                              // Sets the colour.
+            SDL_RenderPresent(renderer);                                                            // Renders everything.
+            // SDL_Delay(50);
         }
-        SDL_RenderClear(renderer);                                                      // Clears the screen.
-        TRAVERSE(gameObjects.head, GameObject, this->updateGameObject(&item->datum, 0)) // Updates all the rectangles.
-        TRAVERSE(gameObjects.head, GameObject, this->drawGameObject(&item->datum))      // Draws all the rectangles.
-        SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF);                      // Sets the colour.
-        SDL_RenderPresent(renderer);                                                    // Renders everything.
-        SDL_Delay(128);
     }
 exit: // This is a section which can be reached using 'goto' statements.
     return;
