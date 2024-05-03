@@ -3,8 +3,7 @@
 
 SDL_Window *window;
 SDL_Renderer *renderer;
-LinkedList<Rectangle> rectangles{};
-LinkedList<MovableRectangle> movableRectangles{};
+LinkedList<GameObject> gameObjects{};
 
 // Constructor for application, this is used to make the class.
 Application::Application()
@@ -38,7 +37,7 @@ Application::~Application()
 // This is the main loop for the code.
 void Application::run(void)
 {
-    rectangles.add(Rectangle({0, 0}, {0XFF, 0XFF, 0XFF, 0XFF}, 128, 128));
+    gameObjects.add({.type = RECTANGLE, .value = Rectangle({0, 0}, {0XFF, 0XFF, 0XFF, 0XFF}, 128, 128)});
     while (true)
     {
         SDL_Event event;
@@ -62,10 +61,10 @@ void Application::run(void)
                 goto exit;
             }
         }
-        SDL_RenderClear(renderer);                                 // Clears the screen.
-        TRAVERSE(rectangles.head, Rectangle, item->datum.draw())   // Draws all the rectangles.
-        SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF); // Sets the colour.
-        SDL_RenderPresent(renderer);                               // Renders everything.
+        SDL_RenderClear(renderer);                                                 // Clears the screen.
+        TRAVERSE(gameObjects.head, GameObject, item->datum.value.rectangle.draw()) // Draws all the rectangles.
+        SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF);                 // Sets the colour.
+        SDL_RenderPresent(renderer);                                               // Renders everything.
         SDL_Delay(128);
     }
 exit: // This is a section which can be reached using 'goto' statements.

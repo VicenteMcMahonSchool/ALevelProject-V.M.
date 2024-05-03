@@ -8,13 +8,15 @@ enum GAME_OBJECT_TYPE
     MOVABLE_RECTANGLE
 };
 
+union GameObjectUnion
+{
+    Rectangle rectangle;
+    MovableRectangle movableRectangle;
+};
+
 class GameObject
 {
 public:
     GAME_OBJECT_TYPE type;
-    union game_object
-    {
-        Rectangle rectangle;
-        MovableRectangle movableRectangle;
-    };
+    GameObjectUnion value;
 };
