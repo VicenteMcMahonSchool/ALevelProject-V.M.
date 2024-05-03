@@ -21,3 +21,5 @@ void LinkedList<T>::add(T item)
 
 template class LinkedListNode<Rectangle>;
 template class LinkedList<Rectangle>;
+template class LinkedListNode<MovableRectangle>;
+template class LinkedList<MovableRectangle>;

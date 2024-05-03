@@ -2,8 +2,6 @@
 #include "../vector2/vector2.hpp"
 #include "../global/global.hpp"
 
-#define TESTING(value) value
-
 class Rectangle
 {
 public:

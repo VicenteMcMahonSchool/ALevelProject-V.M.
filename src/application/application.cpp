@@ -4,6 +4,7 @@
 SDL_Window *window;
 SDL_Renderer *renderer;
 LinkedList<Rectangle> rectangles{};
+LinkedList<MovableRectangle> movableRectangles{};
 
 // Constructor for application, this is used to make the class.
 Application::Application()
