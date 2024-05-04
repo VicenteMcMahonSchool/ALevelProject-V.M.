@@ -11,6 +11,7 @@ struct LinkedList;
 extern Application application; // In 'main.cpp'.
 // These are stored in 'application.cpp'.
 // extern SDL_DisplayMode displayMode;
+extern unsigned int windowWidth, windowHeight;
 extern SDL_Window *window;
 extern SDL_Renderer *renderer;
 extern LinkedList<GameObject> gameObjects;

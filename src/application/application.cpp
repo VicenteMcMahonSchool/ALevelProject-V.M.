@@ -1,6 +1,7 @@
 #include "./application.hpp"
 #include "../linked_list/linked_list.hpp"
 
+unsigned int windowWidth, windowHeight;
 SDL_Window *window;
 SDL_Renderer *renderer;
 LinkedList<GameObject> gameObjects{};
@@ -24,6 +25,8 @@ Application::Application()
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE | SDL_RENDERER_PRESENTVSYNC);
     if (!renderer)
         throw std::runtime_error(SDL_GetError());
+    windowWidth = displayMode.w;
+    windowHeight = displayMode.h;
 }
 
 // Destructor for application, this is used to free memory.
