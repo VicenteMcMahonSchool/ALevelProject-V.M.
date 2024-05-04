@@ -100,7 +100,6 @@ void Application::run(void)
         TRAVERSE(gameObjects.head, GameObject, this->drawGameObject(&item->datum))              // Draws all the rectangles.
         SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF);                              // Sets the colour.
         SDL_RenderPresent(renderer);                                                            // Renders everything.
-        printf("Delta Time: %lf\n", deltaTime);
         SDL_Delay(16);
     }
 exit: // This is a section which can be reached using 'goto' statements.
