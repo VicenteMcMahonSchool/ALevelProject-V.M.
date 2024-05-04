@@ -21,7 +21,7 @@ Application::Application()
     if (window == NULL)
         throw std::runtime_error(SDL_GetError());
     SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN); // Makes the window fullscreen.
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE | SDL_RENDERER_PRESENTVSYNC);
     if (!renderer)
         throw std::runtime_error(SDL_GetError());
 }
@@ -72,6 +72,9 @@ void Application::run(void)
     double deltaTime = 0;
     while (true)
     {
+        last = now;
+        now = SDL_GetPerformanceCounter();
+        deltaTime = (double)((now - last) * 1000 / (double)SDL_GetPerformanceFrequency());
         /*
         Loops until there is an error getting the event. The 'event' variable is passed by reference to 'SDL_PollEvent',
         this function will get the current event and store it in 'event'.
@@ -92,14 +95,12 @@ void Application::run(void)
                 goto exit;
             }
         }
-        last = now;
-        now = SDL_GetPerformanceCounter();
-        deltaTime = (double)((now - last) * 1000 / (double)SDL_GetPerformanceFrequency());
         SDL_RenderClear(renderer);                                                              // Clears the screen.
         TRAVERSE(gameObjects.head, GameObject, this->updateGameObject(&item->datum, deltaTime)) // Updates all the rectangles.
         TRAVERSE(gameObjects.head, GameObject, this->drawGameObject(&item->datum))              // Draws all the rectangles.
         SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF);                              // Sets the colour.
         SDL_RenderPresent(renderer);                                                            // Renders everything.
+        printf("Delta Time: %lf\n", deltaTime);
         SDL_Delay(16);
     }
 exit: // This is a section which can be reached using 'goto' statements.
