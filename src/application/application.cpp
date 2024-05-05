@@ -37,31 +37,31 @@ Application::~Application()
     SDL_Quit();
 }
 
-void Application::updateGameObject(GameObject *gameObject, double deltaTime)
-{
-    switch (gameObject->type)
-    {
-    case RECTANGLE:
-        gameObject->value.rectangle.update(deltaTime);
-        break;
-    case MOVABLE_RECTANGLE:
-        gameObject->value.movableRectangle.update(deltaTime);
-        break;
-    }
-}
+// void Application::updateGameObject(GameObject *gameObject, double deltaTime)
+// {
+//     switch (gameObject->type)
+//     {
+//     case RECTANGLE:
+//         gameObject->value.rectangle.update(deltaTime);
+//         break;
+//     case MOVABLE_RECTANGLE:
+//         gameObject->value.movableRectangle.update(deltaTime);
+//         break;
+//     }
+// }
 
-void Application::drawGameObject(GameObject *gameObject)
-{
-    switch (gameObject->type)
-    {
-    case RECTANGLE:
-        gameObject->value.rectangle.draw();
-        break;
-    case MOVABLE_RECTANGLE:
-        gameObject->value.movableRectangle.draw();
-        break;
-    }
-}
+// void Application::drawGameObject(GameObject *gameObject)
+// {
+//     switch (gameObject->type)
+//     {
+//     case RECTANGLE:
+//         gameObject->value.rectangle.draw();
+//         break;
+//     case MOVABLE_RECTANGLE:
+//         gameObject->value.movableRectangle.draw();
+//         break;
+//     }
+// }
 
 // This is the main loop for the code.
 void Application::run(void)
