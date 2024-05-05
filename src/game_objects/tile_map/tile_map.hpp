@@ -16,4 +16,6 @@ private:
 public:
     TileMap(Vector2 position);
     ~TileMap();
+    void update(double deltaTime);
+    void draw(void);
 };

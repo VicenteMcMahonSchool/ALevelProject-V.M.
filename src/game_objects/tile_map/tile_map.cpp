@@ -8,3 +8,5 @@ TileMap::~TileMap()
 {
     free(this->tileMap);
 }
+void TileMap::update(double deltaTime) {}
+void TileMap::draw(void) {}
