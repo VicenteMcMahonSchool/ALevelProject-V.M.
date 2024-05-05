@@ -5,18 +5,22 @@ GameObjectUnion::~GameObjectUnion(void) {}
 
 GameObject::GameObject(GeneralGameObject value)
 {
+    this->type = GENERAL_GAME_OBJECT;
     this->value.generalGameObject = value;
 }
 GameObject::GameObject(Rectangle value)
 {
+    this->type = RECTANGLE;
     this->value.rectangle = value;
 }
 GameObject::GameObject(MovableRectangle value)
 {
+    this->type = MOVABLE_RECTANGLE;
     this->value.movableRectangle = value;
 }
 GameObject::GameObject(TileMap value)
 {
+    this->type = TILE_MAP;
     this->value.tileMap = value;
 }
 
