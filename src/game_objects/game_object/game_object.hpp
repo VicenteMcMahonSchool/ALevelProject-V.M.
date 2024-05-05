@@ -13,7 +13,7 @@ enum GAME_OBJECT_TYPE
 union GameObjectUnion
 {
     GameObjectUnion(void);
-    ~GameObjectUnion(void);
+    ~GameObjectUnion();
     GeneralGameObject generalGameObject;
     Rectangle rectangle;
     MovableRectangle movableRectangle;
