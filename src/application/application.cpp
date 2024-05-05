@@ -66,8 +66,8 @@ void Application::drawGameObject(GameObject *gameObject)
 // This is the main loop for the code.
 void Application::run(void)
 {
-    gameObjects.add({.type = MOVABLE_RECTANGLE, .value = MovableRectangle({0, 0}, {0XFF, 0XFF, 0XFF, 0XFF}, 128, 128)});
-    gameObjects.add({.type = RECTANGLE, .value = Rectangle({256, 256}, {0X33, 0X33, 0XFF, 0XFF}, 128, 128)});
+    gameObjects.add({MovableRectangle({0, 0}, {0XFF, 0XFF, 0XFF, 0XFF}, 128, 128)});
+    gameObjects.add({Rectangle({256, 256}, {0X33, 0X33, 0XFF, 0XFF}, 128, 128)});
     TRAVERSE(gameObjects.head, GameObject, if (item->datum.type == MOVABLE_RECTANGLE) item->datum.value.movableRectangle.setVelocity({0.125, 0}))
     SDL_Event event;
     // Delta Time code taken from https://gamedev.stackexchange.com/questions/110825/how-to-calculate-delta-time-with-sdl.
@@ -98,11 +98,13 @@ void Application::run(void)
                 goto exit;
             }
         }
-        SDL_RenderClear(renderer);                                                              // Clears the screen.
-        TRAVERSE(gameObjects.head, GameObject, this->updateGameObject(&item->datum, deltaTime)) // Updates all the rectangles.
-        TRAVERSE(gameObjects.head, GameObject, this->drawGameObject(&item->datum))              // Draws all the rectangles.
-        SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF);                              // Sets the colour.
-        SDL_RenderPresent(renderer);                                                            // Renders everything.
+        SDL_RenderClear(renderer); // Clears the screen.
+        // TRAVERSE(gameObjects.head, GameObject, this->updateGameObject(&item->datum, deltaTime)) // Updates all the rectangles.
+        // TRAVERSE(gameObjects.head, GameObject, this->drawGameObject(&item->datum))              // Draws all the rectangles.
+        TRAVERSE(gameObjects.head, GameObject, item->datum.update(deltaTime))
+        TRAVERSE(gameObjects.head, GameObject, item->datum.draw())
+        SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF); // Sets the colour.
+        SDL_RenderPresent(renderer);                               // Renders everything.
         SDL_Delay(16);
     }
 exit: // This is a section which can be reached using 'goto' statements.
