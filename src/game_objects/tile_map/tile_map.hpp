@@ -12,9 +12,12 @@ class TileMap : public GeneralGameObject
 {
 private:
     TILE_TYPE *tileMap;
+    SDL_Rect *rectangles;
+    unsigned int tileSize;
+    unsigned int numberOfTiles;
 
 public:
-    TileMap(Vector2 position);
+    TileMap(Vector2 position, unsigned int tileSize);
     ~TileMap();
     void update(double deltaTime);
     void draw(void);

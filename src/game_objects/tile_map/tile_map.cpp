@@ -1,8 +1,9 @@
 #include "./tile_map.hpp"
 
-TileMap::TileMap(Vector2 position) : GeneralGameObject(position)
+TileMap::TileMap(Vector2 position, unsigned int tileSize) : GeneralGameObject(position), tileSize(tileSize)
 {
-    this->tileMap = (TILE_TYPE *)calloc(windowWidth * windowHeight, sizeof(TILE_TYPE));
+    this->numberOfTiles = (unsigned int)(windowWidth * (double)windowHeight / (tileSize * tileSize));
+    this->tileMap = (TILE_TYPE *)calloc(this->numberOfTiles, sizeof(TILE_TYPE));
 }
 TileMap::~TileMap()
 {
