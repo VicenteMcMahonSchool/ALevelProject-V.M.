@@ -1,17 +1,17 @@
 #include "./tile_map.hpp"
 
-TileMap::TileMap(Vector2 position, SDL_Colour colour, unsigned int tileSize) : GeneralGameObject(position), colour(colour), tileSize(tileSize)
+TileMap::TileMap(Vector2 position, unsigned int tileSize) : GeneralGameObject(position), tileSize(tileSize)
 {
-    this->numberOfTiles = (unsigned int)(windowWidth * (double)windowHeight / tileSize / tileSize);
+    this->numberOfTiles = (unsigned int)ceil(((double)windowWidth * (double)windowHeight) / (tileSize * tileSize)) /*135*/;
     this->tileMap = (TILE_TYPE *)calloc(this->numberOfTiles, sizeof(TILE_TYPE));
     this->rectangles = (SDL_Rect *)calloc(this->numberOfTiles, sizeof(SDL_Rect));
     for (unsigned int i = 0; i < this->numberOfTiles; i++)
     {
-        this->rectangles[i].x = (i % windowHeight) * tileSize;
-        this->rectangles[i].y = (i / windowHeight) * tileSize;
+        TILE_MAP_RECTANGLES_POSITION
         this->rectangles[i].w = tileSize;
         this->rectangles[i].h = tileSize;
     }
+    printf("Window width: %hd, Window height: %hd, Tile size: %hd, Number of tiles: %hd\n", windowWidth, windowHeight, tileSize, this->numberOfTiles);
 }
 TileMap::~TileMap()
 {
@@ -19,11 +19,9 @@ TileMap::~TileMap()
 }
 void TileMap::update(double deltaTime)
 {
-    this->position.x += 1 * deltaTime;
     for (unsigned int i = 0; i < this->numberOfTiles; i++)
     {
-        this->rectangles[i].x = (i % windowHeight) * tileSize - this->position.x;
-        this->rectangles[i].y = (i / windowHeight) * tileSize - this->position.y;
+        TILE_MAP_RECTANGLES_POSITION
     }
 }
 void TileMap::draw(void)
@@ -31,12 +29,10 @@ void TileMap::draw(void)
     // SDL_SetRenderDrawColour(renderer, this->colour.r, this->colour.g, this->colour.b, this->colour.a); // Sets draw colour.
     for (unsigned int i = 0; i < this->numberOfTiles; i++)
     {
-        if (i % 3 == 0)
-            SDL_SetRenderDrawColour(renderer, 0XFF, 0X00, 0X00, 0XFF);
-        else if (i % 3 == 1)
-            SDL_SetRenderDrawColour(renderer, 0X00, 0XFF, 0X00, 0XFF);
-        else
-            SDL_SetRenderDrawColour(renderer, 0X00, 0X00, 0XFF, 0XFF);
+        if (this->tileMap[i] == TILE_AIR)
+            SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0X00);
+        else if (this->tileMap[i] == TILE_PLATFORM)
+            SDL_SetRenderDrawColour(renderer, 0X33, 0XDD, 0X33, 0XFF);
         SDL_RenderFillRect(renderer, this->rectangles + i); // Fill rectangle.
     }
     GeneralGameObject::draw();
