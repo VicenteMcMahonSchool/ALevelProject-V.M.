@@ -28,11 +28,17 @@ void GameObject::update(double deltaTime)
 {
     switch (this->type)
     {
+    case GENERAL_GAME_OBJECT:
+        this->value.generalGameObject.update(deltaTime);
+        break;
     case RECTANGLE:
         this->value.rectangle.update(deltaTime);
         break;
     case MOVABLE_RECTANGLE:
         this->value.movableRectangle.update(deltaTime);
+        break;
+    case TILE_MAP:
+        this->value.tileMap.update(deltaTime);
         break;
     }
 }
@@ -40,11 +46,17 @@ void GameObject::draw(void)
 {
     switch (this->type)
     {
+    case GENERAL_GAME_OBJECT:
+        this->value.generalGameObject.draw();
+        break;
     case RECTANGLE:
         this->value.rectangle.draw();
         break;
     case MOVABLE_RECTANGLE:
         this->value.movableRectangle.draw();
+        break;
+    case TILE_MAP:
+        this->value.tileMap.draw();
         break;
     }
 }

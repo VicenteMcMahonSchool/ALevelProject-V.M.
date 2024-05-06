@@ -42,6 +42,7 @@ void Application::run(void)
 {
     gameObjects.add({MovableRectangle({0, 0}, {0XFF, 0XFF, 0XFF, 0XFF}, 128, 128)});
     gameObjects.add({Rectangle({256, 256}, {0X33, 0X33, 0XFF, 0XFF}, 128, 128)});
+    gameObjects.add({TileMap({0, 0}, {0XFF, 0X00, 0X00, 0XFF}, 64)});
     TRAVERSE(gameObjects.head, GameObject, if (item->datum.type == MOVABLE_RECTANGLE) item->datum.value.movableRectangle.setVelocity({0.125, 0}))
     SDL_Event event;
     // Delta Time code taken from https://gamedev.stackexchange.com/questions/110825/how-to-calculate-delta-time-with-sdl.
