@@ -40,9 +40,11 @@ Application::~Application()
 // This is the main loop for the code.
 void Application::run(void)
 {
-    gameObjects.add({MovableRectangle({0, 0}, {0XFF, 0XFF, 0XFF, 0XFF}, 120, 120)});
-    gameObjects.add({TileMap({0, 0}, 120)}); // Only works for screen size 1920×1080.
-    TRAVERSE(gameObjects.head, GameObject, if (item->datum.type == MOVABLE_RECTANGLE) item->datum.value.movableRectangle.setVelocity({0.125, 0}))
+    MovableRectangle movableRectangle = MovableRectangle({0, 0}, {0XFF, 0XFF, 0XFF, 0XFF}, 120, 120);
+    movableRectangle.setVelocity({0.125, 0});
+    TileMap tileMap = TileMap({0, 0}, 120);
+    gameObjects.add({&movableRectangle});
+    gameObjects.add({&tileMap}); // Only works for screen size 1920×1080.
     SDL_Event event;
     // Delta Time code taken from https://gamedev.stackexchange.com/questions/110825/how-to-calculate-delta-time-with-sdl.
     Uint64 now = SDL_GetPerformanceCounter(), last = 0; // Will be used to calculate 'deltaTime'.

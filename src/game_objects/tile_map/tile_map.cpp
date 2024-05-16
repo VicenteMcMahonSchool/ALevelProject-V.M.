@@ -11,10 +11,11 @@ TileMap::TileMap(Vector2 position, unsigned int tileSize) : GeneralGameObject(po
         this->rectangles[i].w = tileSize;
         this->rectangles[i].h = tileSize;
     }
-    printf("Window width: %hd, Window height: %hd, Tile size: %hd, Number of tiles: %hd\n", windowWidth, windowHeight, tileSize, this->numberOfTiles);
+    printf("Window width: %u, Window height: %u, Tile size: %u, Number of tiles: %u\n", windowWidth, windowHeight, tileSize, this->numberOfTiles);
 }
 TileMap::~TileMap()
 {
+    free(this->rectangles);
     free(this->tileMap);
 }
 void TileMap::update(double deltaTime)

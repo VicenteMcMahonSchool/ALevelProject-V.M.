@@ -14,10 +14,10 @@ union GameObjectUnion
 {
     GameObjectUnion(void);
     ~GameObjectUnion();
-    GeneralGameObject generalGameObject;
-    Rectangle rectangle;
-    MovableRectangle movableRectangle;
-    TileMap tileMap;
+    GeneralGameObject *generalGameObject;
+    Rectangle *rectangle;
+    MovableRectangle *movableRectangle;
+    TileMap *tileMap;
 };
 
 class GameObject
@@ -25,10 +25,10 @@ class GameObject
 public:
     GAME_OBJECT_TYPE type;
     GameObjectUnion value{};
-    GameObject(GeneralGameObject value);
-    GameObject(Rectangle value);
-    GameObject(MovableRectangle value);
-    GameObject(TileMap value);
+    GameObject(GeneralGameObject *value);
+    GameObject(Rectangle *value);
+    GameObject(MovableRectangle *value);
+    GameObject(TileMap *value);
     void update(double deltaTime);
     void draw(void);
 };
