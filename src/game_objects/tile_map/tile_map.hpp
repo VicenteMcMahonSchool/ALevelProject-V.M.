@@ -7,7 +7,7 @@
 #define NUMBER_OF_TILES WIDTH_OF_TILE_MAP *HEIGHT_OF_TILE_MAP
 #define TILE_MAP_RECTANGLES_POSITION                                                     \
     this->rectangles[i].x = (i % WIDTH_OF_TILE_MAP) * this->tileSize - this->position.x; \
-    this->rectangles[i].y = (i / HEIGHT_OF_TILE_MAP) * this->tileSize - this->position.y;
+    this->rectangles[i].y = (i / WIDTH_OF_TILE_MAP) * this->tileSize - this->position.y;
 
 enum TILE_TYPE
 {
