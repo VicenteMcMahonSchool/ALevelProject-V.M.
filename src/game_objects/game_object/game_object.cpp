@@ -23,6 +23,11 @@ GameObject::GameObject(TileMap *value)
     this->type = TILE_MAP;
     this->value.tileMap = value;
 }
+GameObject::GameObject(Player *value)
+{
+    this->type = PLAYER;
+    this->value.player = value;
+}
 
 void GameObject::update(double deltaTime)
 {

@@ -1,5 +1,5 @@
 #pragma once
-#include "../movable_rectangle/movable_rectangle.hpp"
+#include "../player/player.hpp"
 #include "../tile_map/tile_map.hpp"
 
 enum GAME_OBJECT_TYPE
@@ -7,7 +7,8 @@ enum GAME_OBJECT_TYPE
     GENERAL_GAME_OBJECT,
     RECTANGLE,
     MOVABLE_RECTANGLE,
-    TILE_MAP
+    TILE_MAP,
+    PLAYER
 };
 
 union GameObjectUnion
@@ -18,6 +19,7 @@ union GameObjectUnion
     Rectangle *rectangle;
     MovableRectangle *movableRectangle;
     TileMap *tileMap;
+    Player *player;
 };
 
 class GameObject
@@ -29,6 +31,7 @@ public:
     GameObject(Rectangle *value);
     GameObject(MovableRectangle *value);
     GameObject(TileMap *value);
+    GameObject(Player *value);
     void update(double deltaTime);
     void draw(void);
 };
