@@ -2,9 +2,12 @@
 #include "../../global/global.hpp"
 #include "../general_game_object/general_game_object.hpp"
 
-#define TILE_MAP_RECTANGLES_POSITION                                                                  \
-    this->rectangles[i].x = (i % (windowWidth / this->tileSize)) * this->tileSize - this->position.x; \
-    this->rectangles[i].y = (i * this->tileSize) / windowWidth * this->tileSize - this->position.y;
+#define WIDTH_OF_TILE_MAP 8
+#define HEIGHT_OF_TILE_MAP 4
+#define NUMBER_OF_TILES WIDTH_OF_TILE_MAP *HEIGHT_OF_TILE_MAP
+#define TILE_MAP_RECTANGLES_POSITION                                                     \
+    this->rectangles[i].x = (i % WIDTH_OF_TILE_MAP) * this->tileSize - this->position.x; \
+    this->rectangles[i].y = (i / HEIGHT_OF_TILE_MAP) * this->tileSize - this->position.y;
 
 enum TILE_TYPE
 {
@@ -15,14 +18,13 @@ enum TILE_TYPE
 class TileMap : public GeneralGameObject
 {
 private:
-    TILE_TYPE *tileMap;
-    SDL_Rect *rectangles;
+    TILE_TYPE tileMap[NUMBER_OF_TILES];
+    SDL_Rect rectangles[NUMBER_OF_TILES];
     unsigned int tileSize;
-    unsigned int numberOfTiles;
 
 public:
     TileMap(Vector2 position, unsigned int tileSize);
-    ~TileMap();
     void update(double deltaTime);
     void draw(void);
+    void setTile(unsigned int x, unsigned int y, TILE_TYPE tileType);
 };
