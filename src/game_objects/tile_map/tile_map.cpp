@@ -38,4 +38,5 @@ void TileMap::draw(void)
 
 void TileMap::setTile(unsigned int x, unsigned int y, TILE_TYPE tileType)
 {
+    this->tileMap[y * WIDTH_OF_TILE_MAP + x % WIDTH_OF_TILE_MAP] = tileType;
 }

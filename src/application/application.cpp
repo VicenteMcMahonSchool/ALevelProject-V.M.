@@ -43,6 +43,9 @@ void Application::run(void)
     MovableRectangle movableRectangle = MovableRectangle({0, 0}, {0XFF, 0XFF, 0XFF, 0XFF}, 120, 120);
     movableRectangle.setVelocity({0.125, 0});
     TileMap tileMap = TileMap({0, 0}, 120);
+    tileMap.setTile(0, 0, TILE_PLATFORM);
+    tileMap.setTile(0, 1, TILE_PLATFORM);
+    tileMap.setTile(3, 3, TILE_PLATFORM);
     gameObjects.add({&movableRectangle});
     gameObjects.add({&tileMap}); // Only works for screen size 1920×1080.
     SDL_Event event;
