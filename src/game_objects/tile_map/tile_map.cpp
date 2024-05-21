@@ -32,6 +32,8 @@ void TileMap::draw(void)
         else if (this->tileMap[i] == TILE_PLATFORM)
             SDL_SetRenderDrawColour(renderer, 0X33, 0XDD, 0X33, 0XFF);
         SDL_RenderFillRect(renderer, this->rectangles + i); // Fill rectangle.
+        SDL_SetRenderDrawColor(renderer, 0X00, 0X00, 0X00, 0XFF);
+        SDL_RenderDrawRect(renderer, this->rectangles + i); // Outlines a rectangle.
     }
     GeneralGameObject::draw();
 }
