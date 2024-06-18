@@ -4,7 +4,7 @@
 unsigned int windowWidth, windowHeight;
 SDL_Window *window;
 SDL_Renderer *renderer;
-LinkedList<GameObject> gameObjects{};
+LinkedList /* <GameObject> */ gameObjects{};
 
 // Constructor for application, this is used to make the class.
 Application::Application()

@@ -1,5 +1,4 @@
-CFLAGS=`sdl2-config --cflags`
-LFLAGS=`sdl2-config --libs` #-lSDL2_ttf
+CFLAGS=`/home/linuxbrew/.linuxbrew/bin/sdl2-config --cflags --libs` -std=c++23 -ldl -lm #-lSDL2_ttf
 all:
 	clear
-	g++ ./src/*.cpp ./src/**/*.cpp ./src/**/**/*.cpp -o ./out/main $(CFLAGS) $(LFLAGS)
+	g++-14 ./src/*.cpp ./src/**/*.cpp ./src/**/**/*.cpp -o ./out/main $(CFLAGS)
