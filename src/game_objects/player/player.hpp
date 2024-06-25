@@ -3,5 +3,6 @@
 
 class Player : public MovableRectangle
 {
+public:
     Player(Vector2 position);
 };

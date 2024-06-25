@@ -1,6 +1,7 @@
 #include "./application.hpp"
 #include "../linked_list/linked_list.hpp"
 #include "../keys_down/keys_down.hpp"
+#include "../player/player.hpp"
 
 int windowWidth, windowHeight;
 SDL_Window *window;
@@ -41,10 +42,9 @@ Application::~Application()
 // This is the main loop for the code.
 void Application::run(void)
 {
-    MovableRectangle movableRectangle = MovableRectangle({0, 0}, {0XFF, 0XFF, 0XFF, 0XFF}, 120, 120);
-    movableRectangle.setVelocity({0.125, 0});
+    Player player{{0, 0}};
     TileMap tileMap = TileMap({0, 0}, 120);
-    gameObjects.add({&movableRectangle});
+    gameObjects.add({&player});
     gameObjects.add({&tileMap}); // Only works for screen size 1920×1080.
     SDL_Event event;
     // Delta Time code taken from https://gamedev.stackexchange.com/questions/110825/how-to-calculate-delta-time-with-sdl.
