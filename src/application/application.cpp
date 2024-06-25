@@ -2,7 +2,7 @@
 #include "../linked_list/linked_list.hpp"
 #include "../keys_down/keys_down.hpp"
 
-unsigned int windowWidth, windowHeight;
+int windowWidth, windowHeight;
 SDL_Window *window;
 SDL_Renderer *renderer;
 LinkedList /* <GameObject> */ gameObjects{};
