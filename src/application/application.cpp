@@ -1,5 +1,6 @@
 #include "./application.hpp"
 #include "../linked_list/linked_list.hpp"
+#include "../keys_down/keys_down.hpp"
 
 unsigned int windowWidth, windowHeight;
 SDL_Window *window;
@@ -68,7 +69,13 @@ void Application::run(void)
                 case SDL_SCANCODE_ESCAPE: // If the escape key is pressed, exit.
                     goto exit;
                     break;
+                default:
+                    setKeyDown(event.key.keysym.scancode);
+                    break;
                 }
+                break;
+            case SDL_KEYUP:
+                unsetKeyDown(event.key.keysym.scancode);
                 break;
             case SDL_QUIT: // Quit event.
                 goto exit;
