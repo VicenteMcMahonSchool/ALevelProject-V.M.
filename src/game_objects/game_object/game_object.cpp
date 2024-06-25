@@ -45,6 +45,8 @@ void GameObject::update(double deltaTime)
     case TILE_MAP:
         this->value.tileMap->update(deltaTime);
         break;
+    case PLAYER:
+        this->value.player->update(deltaTime);
     }
 }
 void GameObject::draw(void)
@@ -62,6 +64,9 @@ void GameObject::draw(void)
         break;
     case TILE_MAP:
         this->value.tileMap->draw();
+        break;
+    case PLAYER:
+        this->value.player->draw();
         break;
     }
 }

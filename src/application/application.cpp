@@ -1,7 +1,7 @@
 #include "./application.hpp"
 #include "../linked_list/linked_list.hpp"
 #include "../keys_down/keys_down.hpp"
-#include "../player/player.hpp"
+#include "../game_objects/player/player.hpp"
 
 int windowWidth, windowHeight;
 SDL_Window *window;
