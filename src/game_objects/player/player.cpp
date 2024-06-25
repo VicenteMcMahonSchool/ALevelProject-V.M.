@@ -1,6 +1,6 @@
 #include "./player.hpp"
 
-Player::Player(Vector2 position) : MovableRectangle(position, {0X33, 0X33, 0X77, 0XFF}, 128, 128) {}
+Player::Player(Vector2 position) : MovableRectangle(position, {0X33, 0X33, 0X77, 0XFF}, 120, 120) {}
 void Player::update(double deltaTime)
 {
     Vector2 deltaVelocity{0, 0};
