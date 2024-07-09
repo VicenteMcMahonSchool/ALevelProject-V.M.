@@ -26,5 +26,5 @@ public:
     TileMap(Vector2 position, unsigned int tileSize);
     void update(double deltaTime);
     void draw(void);
-    void setTile(unsigned int x, unsigned int y, TILE_TYPE tileType);
+    void setTile(size_t x, size_t y, TILE_TYPE tileType);
 };
