@@ -2,6 +2,7 @@
 #include "../movable_rectangle/movable_rectangle.hpp"
 #include "../../keys_down/keys_down.hpp"
 
+#define PLAYER_GRAVITY 0.0001
 #define PLAYER_SPEED 0.01
 class Player : public MovableRectangle
 {

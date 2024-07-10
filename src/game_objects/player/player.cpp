@@ -16,5 +16,6 @@ void Player::update(double deltaTime)
     double length = deltaVelocity.length();
     if (length != 0)
         this->velocity += deltaVelocity / length * PLAYER_SPEED;
+    this->velocity.y += PLAYER_GRAVITY * deltaTime;
     MovableRectangle::update(deltaTime);
 }
