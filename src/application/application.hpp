@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include <stdexcept>
 #include "../global/global.hpp"
 #include "../game_objects/rectangle/rectangle.hpp"

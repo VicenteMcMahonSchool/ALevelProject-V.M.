@@ -43,6 +43,8 @@ void Application::run(void)
     TileMap tileMap = TileMap({0, 0}, 120);
     gameObjects.add({&player});
     gameObjects.add({&tileMap}); // Only works for screen size 1920×1080.
+    tileMap.setTile(0, 1, TILE_PLATFORM);
+    SDL_Texture *imageTexture = IMG_LoadTexture(renderer, "image.jpg");
     SDL_Event event;
     // Delta Time code taken from https://gamedev.stackexchange.com/questions/110825/how-to-calculate-delta-time-with-sdl.
     Uint64 now = SDL_GetPerformanceCounter(), last = 0; // Will be used to calculate 'deltaTime'.
@@ -78,13 +80,16 @@ void Application::run(void)
                 goto exit;
             }
         }
-        SDL_RenderClear(renderer);                                            // Clears the screen.
+        SDL_RenderCopy(renderer, imageTexture, NULL, NULL);
+        // SDL_RenderPresent(renderer);
+        // SDL_RenderClear(renderer);                                            // Clears the screen.
         TRAVERSE(gameObjects.head, GameObject, item->datum.update(deltaTime)) // Updates all the 'GameObjects'.
         TRAVERSE(gameObjects.head, GameObject, item->datum.draw())            // Draws all the 'GameObjects'.
-        SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF);            // Sets the colour.
-        SDL_RenderPresent(renderer);                                          // Renders everything.
+        // SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF);            // Sets the colour.
+        SDL_RenderPresent(renderer); // Renders everything.
         SDL_Delay(16);
     }
 exit: // This is a section which can be reached using 'goto' statements.
+    SDL_DestroyTexture(imageTexture);
     return;
 }
