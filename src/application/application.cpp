@@ -4,6 +4,7 @@ int windowWidth, windowHeight;
 SDL_Window *window;
 SDL_Renderer *renderer;
 LinkedList /* <GameObject> */ gameObjects{};
+TileMap tileMap = TileMap({0, 0}, 120);
 
 // Constructor for application, this is used to make the class.
 Application::Application()
@@ -40,7 +41,6 @@ Application::~Application()
 void Application::run(void)
 {
     Player player{{0, 0}};
-    TileMap tileMap = TileMap({0, 0}, 120);
     gameObjects.add({&player});
     gameObjects.add({&tileMap}); // Only works for screen size 1920×1080.
     tileMap.setTile(0, 1, TILE_PLATFORM);

@@ -5,6 +5,7 @@
 // Application Type is defined here because of circular dependencies issues. This occurs because 'global.hpp' requires 'application' of type 'Application', whilst 'application' needs access to the global variables.
 struct Application;
 struct GameObject;
+struct TileMap;
 // template <typename>
 // struct LinkedList;
 struct LinkedList;
@@ -16,3 +17,4 @@ extern int windowWidth, windowHeight;
 extern SDL_Window *window;
 extern SDL_Renderer *renderer;
 extern LinkedList /* <GameObject> */ gameObjects;
+extern TileMap tileMap;
