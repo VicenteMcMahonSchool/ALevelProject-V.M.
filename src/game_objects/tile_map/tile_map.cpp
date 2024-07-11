@@ -26,7 +26,7 @@ void TileMap::draw(void)
         else if (this->tileMap[i] == TILE_PLATFORM)
         {
             // SDL_SetRenderDrawColour(renderer, 0X33, 0XDD, 0X33, 0XFF);
-            SDL_SetRenderDrawColour(renderer, i / WIDTH_OF_TILE_MAP == 0 ? 0XFF : 0X77, 0X33, 0X33, 0XFF);
+            SDL_SetRenderDrawColour(renderer, 0X77, 0X33, 0X33, 0XFF);
             SDL_RenderFillRect(renderer, this->rectangles + i); // Fill rectangle.
         }
         SDL_RenderDrawRect(renderer, this->rectangles + i);
@@ -37,4 +37,9 @@ void TileMap::draw(void)
 void TileMap::setTile(size_t x, size_t y, TILE_TYPE tileType)
 {
     this->tileMap[y * WIDTH_OF_TILE_MAP + x % WIDTH_OF_TILE_MAP] = tileType;
+}
+
+TILE_TYPE *TileMap::getTileAtPosition(Vector2 position)
+{
+    return this->tileMap + (size_t)(position.y * WIDTH_OF_TILE_MAP / this->tileSize + position.x / tileSize);
 }

@@ -27,4 +27,5 @@ public:
     void update(double deltaTime);
     void draw(void);
     void setTile(size_t x, size_t y, TILE_TYPE tileType);
+    TILE_TYPE *getTileAtPosition(Vector2 position);
 };

@@ -3,6 +3,7 @@
 Player::Player(Vector2 position) : MovableRectangle(position, {0X33, 0X33, 0X77, 0XFF}, 120, 120) {}
 void Player::update(double deltaTime)
 {
+    *(tileMap.getTileAtPosition(position)) = TILE_PLATFORM;
     this->velocity /= 1.05;
     Vector2 deltaVelocity{0, 0};
     if (isKeyDown(SDL_SCANCODE_A))
