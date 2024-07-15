@@ -41,5 +41,8 @@ void TileMap::setTile(size_t x, size_t y, TILE_TYPE tileType)
 
 TILE_TYPE *TileMap::getTileAtPosition(Vector2 position)
 {
-    return this->tileMap + (size_t)(position.y * WIDTH_OF_TILE_MAP / this->tileSize + position.x / tileSize);
+    size_t index = (size_t)(position.y) / this->tileSize * WIDTH_OF_TILE_MAP + (size_t)(position.x) / tileSize;
+    if (index > NUMBER_OF_TILES || index < 0)
+        return NULL;
+    return this->tileMap + index;
 }
