@@ -5,6 +5,7 @@ SDL_Window *window;
 SDL_Renderer *renderer;
 LinkedList /* <GameObject> */ gameObjects{};
 TileMap tileMap = TileMap({0, 0}, 120);
+Vector2 cameraPosition{0, 0};
 
 // Constructor for application, this is used to make the class.
 Application::Application()
@@ -83,7 +84,8 @@ void Application::run(void)
         // SDL_RenderPresent(renderer);
         // SDL_RenderClear(renderer);                                            // Clears the screen.
         TRAVERSE(gameObjects.head, GameObject, item->datum.update(deltaTime)) // Updates all the 'GameObjects'.
-        TRAVERSE(gameObjects.head, GameObject, item->datum.draw())            // Draws all the 'GameObjects'.
+        cameraPosition = player.getPosition() + (Vector2){(double)player.getRectangle().w / 2, (double)player.getRectangle().h / 2};
+        TRAVERSE(gameObjects.head, GameObject, item->datum.draw()) // Draws all the 'GameObjects'.
         // SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF);            // Sets the colour.
         SDL_RenderPresent(renderer); // Renders everything.
         SDL_Delay(16);

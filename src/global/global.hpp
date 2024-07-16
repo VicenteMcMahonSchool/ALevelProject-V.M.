@@ -6,6 +6,7 @@
 struct Application;
 struct GameObject;
 struct TileMap;
+struct Vector2;
 // template <typename>
 // struct LinkedList;
 struct LinkedList;
@@ -18,3 +19,4 @@ extern SDL_Window *window;
 extern SDL_Renderer *renderer;
 extern LinkedList /* <GameObject> */ gameObjects;
 extern TileMap tileMap;
+extern Vector2 cameraPosition;
