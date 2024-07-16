@@ -11,6 +11,7 @@
 
 enum TILE_TYPE
 {
+    TILE_NONE = 0,
     TILE_AIR,
     TILE_PLATFORM
 };
@@ -27,5 +28,8 @@ public:
     void update(double deltaTime);
     void draw(void);
     void setTile(size_t x, size_t y, TILE_TYPE tileType);
+    size_t getIndexFromPosition(Vector2 position);
     TILE_TYPE *getTileAtPosition(Vector2 position);
+    void getTilesAroundPosition(Vector2 position, TILE_TYPE *tiles[9]);
+    void setTilesAroundPosition(Vector2 position, TILE_TYPE tile);
 };
