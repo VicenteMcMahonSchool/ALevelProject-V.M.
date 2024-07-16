@@ -3,6 +3,9 @@
 
 class MovableRectangle : public Rectangle
 {
+protected:
+    double gravity = 0;
+
 public:
     MovableRectangle(Vector2 position, SDL_Colour colour, int width, int height);
     void update(double deltaTime);
