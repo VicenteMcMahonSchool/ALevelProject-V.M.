@@ -16,6 +16,19 @@ enum TILE_TYPE
     TILE_PLATFORM
 };
 
+struct TilesAroundPosition
+{
+    TILE_TYPE *centre = NULL;
+    TILE_TYPE *left = NULL;
+    TILE_TYPE *right = NULL;
+    TILE_TYPE *up = NULL;
+    TILE_TYPE *down = NULL;
+    TILE_TYPE *topLeft = NULL;
+    TILE_TYPE *topRight = NULL;
+    TILE_TYPE *bottomLeft = NULL;
+    TILE_TYPE *bottomRight = NULL;
+};
+
 class TileMap : public GeneralGameObject
 {
 private:
@@ -30,6 +43,6 @@ public:
     void setTile(size_t x, size_t y, TILE_TYPE tileType);
     size_t getIndexFromPosition(Vector2 position);
     TILE_TYPE *getTileAtPosition(Vector2 position);
-    void getTilesAroundPosition(Vector2 position, TILE_TYPE *tiles[9]);
+    TilesAroundPosition getTilesAroundPosition(Vector2 position);
     void setTilesAroundPosition(Vector2 position, TILE_TYPE tile);
 };

@@ -54,36 +54,52 @@ TILE_TYPE *TileMap::getTileAtPosition(Vector2 position)
     return tileMap + index;
 }
 
-void TileMap::getTilesAroundPosition(Vector2 position, TILE_TYPE *tiles[9])
+TilesAroundPosition TileMap::getTilesAroundPosition(Vector2 position)
 {
     size_t index = getIndexFromPosition(position);
+    TilesAroundPosition tiles;
     if (index <= NUMBER_OF_TILES && index >= 0)
-        tiles[0] = tileMap + index;
+        tiles.centre = tileMap + index;
     if (index - WIDTH_OF_TILE_MAP <= NUMBER_OF_TILES && index - WIDTH_OF_TILE_MAP >= 0)
-        tiles[1] = tileMap + index - WIDTH_OF_TILE_MAP;
+        tiles.up = tileMap + index - WIDTH_OF_TILE_MAP;
     if (index + WIDTH_OF_TILE_MAP <= NUMBER_OF_TILES && index + WIDTH_OF_TILE_MAP >= 0)
-        tiles[2] = tileMap + index + WIDTH_OF_TILE_MAP;
+        tiles.down = tileMap + index + WIDTH_OF_TILE_MAP;
     if (index - 1 <= NUMBER_OF_TILES && index - 1 >= 0)
-        tiles[3] = tileMap + index - 1;
+        tiles.left = tileMap + index - 1;
     if (index + 1 <= NUMBER_OF_TILES && index + 1 >= 0)
-        tiles[4] = tileMap + index + 1;
+        tiles.right = tileMap + index + 1;
     if (index - WIDTH_OF_TILE_MAP - 1 <= NUMBER_OF_TILES && index - WIDTH_OF_TILE_MAP - 1 >= 0)
-        tiles[5] = tileMap + index - WIDTH_OF_TILE_MAP - 1;
+        tiles.topLeft = tileMap + index - WIDTH_OF_TILE_MAP - 1;
     if (index - WIDTH_OF_TILE_MAP + 1 <= NUMBER_OF_TILES && index - WIDTH_OF_TILE_MAP + 1 >= 0)
-        tiles[6] = tileMap + index - WIDTH_OF_TILE_MAP + 1;
+        tiles.topRight = tileMap + index - WIDTH_OF_TILE_MAP + 1;
     if (index + WIDTH_OF_TILE_MAP - 1 <= NUMBER_OF_TILES && index + WIDTH_OF_TILE_MAP - 1 >= 0)
-        tiles[7] = tileMap + index + WIDTH_OF_TILE_MAP - 1;
+        tiles.bottomLeft = tileMap + index + WIDTH_OF_TILE_MAP - 1;
     if (index + WIDTH_OF_TILE_MAP + 1 <= NUMBER_OF_TILES && index + WIDTH_OF_TILE_MAP + 1 >= 0)
-        tiles[8] = tileMap + index + WIDTH_OF_TILE_MAP + 1;
+        tiles.bottomRight = tileMap + index + WIDTH_OF_TILE_MAP + 1;
+    return tiles;
 }
 
 void TileMap::setTilesAroundPosition(Vector2 position, TILE_TYPE tile)
 {
-    TILE_TYPE *tiles[9] = {};
-    getTilesAroundPosition(position, tiles);
-    for (size_t i = 0; i < 9; i++)
-        if (tiles[i] != NULL)
-            *tiles[i] = tile;
+    TilesAroundPosition tiles = getTilesAroundPosition(position);
+    if (tiles.centre)
+        *tiles.centre = tile;
+    if (tiles.left != NULL)
+        *tiles.left = tile;
+    if (tiles.right != NULL)
+        *tiles.right = tile;
+    if (tiles.up != NULL)
+        *tiles.up = tile;
+    if (tiles.down != NULL)
+        *tiles.down = tile;
+    if (tiles.topLeft != NULL)
+        *tiles.topLeft = tile;
+    if (tiles.topRight != NULL)
+        *tiles.topRight = tile;
+    if (tiles.bottomLeft != NULL)
+        *tiles.bottomLeft = tile;
+    if (tiles.bottomRight != NULL)
+        *tiles.bottomRight = tile;
     // size_t index = getIndexFromPosition(position);
     // if (index <= NUMBER_OF_TILES && index >= 0)
     //     tileMap[index] = tile;
