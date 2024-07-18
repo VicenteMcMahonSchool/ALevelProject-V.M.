@@ -23,6 +23,8 @@ void TileMap::draw(void)
     {
         rectangles[i].x -= cameraPosition.x - windowWidth / 2;
         rectangles[i].y -= cameraPosition.y - windowHeight / 2;
+        if (rectangles[i].x > tileSize / 2 || rectangles[i].y > tileSize / 2 /* || rectangles[i].x > windowWidth + tileSize / 2 || rectangles[i].y > windowHeight + tileSize / 2 */)
+            continue;
         if (tileMap[i] == TILE_AIR)
             SDL_SetRenderDrawColour(renderer, 0XDD, 0X00, 0X00, 0X00);
         else if (tileMap[i] == TILE_PLATFORM)
