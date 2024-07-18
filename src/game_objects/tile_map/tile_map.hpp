@@ -9,11 +9,12 @@
     this->rectangles[i].x = (i % WIDTH_OF_TILE_MAP) * this->tileSize - this->position.x; \
     this->rectangles[i].y = (i / WIDTH_OF_TILE_MAP) * this->tileSize - this->position.y;
 
-enum TILE_TYPE
+enum __attribute__((__packed__)) TILE_TYPE
 {
     TILE_NONE = 0,
     TILE_AIR,
-    TILE_PLATFORM
+    TILE_PLATFORM,
+    TILE_BOARDER,
 };
 
 struct TilesAroundPosition
