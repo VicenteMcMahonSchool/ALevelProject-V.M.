@@ -18,22 +18,27 @@ void TileMap::update(double deltaTime)
 }
 void TileMap::draw(void)
 {
-    // SDL_SetRenderDrawColour(renderer, colour.r, colour.g, colour.b, colour.a); // Sets draw colour.
     for (size_t i = 0; i < NUMBER_OF_TILES; i++)
     {
         rectangles[i].x -= cameraPosition.x - windowWidth / 2;
         rectangles[i].y -= cameraPosition.y - windowHeight / 2;
-        if (rectangles[i].x > tileSize / 2 || rectangles[i].y > tileSize / 2 /* || rectangles[i].x > windowWidth + tileSize / 2 || rectangles[i].y > windowHeight + tileSize / 2 */)
+        if (rectangles[i].x < -(int)tileSize)
             continue;
-        if (tileMap[i] == TILE_AIR)
-            SDL_SetRenderDrawColour(renderer, 0XDD, 0X00, 0X00, 0X00);
-        else if (tileMap[i] == TILE_PLATFORM)
+        else if (rectangles[i].x > windowWidth)
+        {
+            i += WIDTH_OF_TILE_MAP - i % WIDTH_OF_TILE_MAP - 1;
+            continue;
+        }
+        if (tileMap[i] == TILE_PLATFORM)
         {
             // SDL_SetRenderDrawColour(renderer, 0X33, 0XDD, 0X33, 0XFF);
             SDL_SetRenderDrawColour(renderer, 0X77, 0X33, 0X33, 0XFF);
             SDL_RenderFillRect(renderer, rectangles + i); // Fill rectangle.
         }
+        SDL_SetRenderDrawColour(renderer, 0XDD, 0X00, 0X00, 0X00);
         SDL_RenderDrawRect(renderer, rectangles + i);
+        rectangles[i].x += cameraPosition.x - windowWidth / 2;
+        rectangles[i].y += cameraPosition.y - windowHeight / 2;
     }
     GeneralGameObject::draw();
 }
