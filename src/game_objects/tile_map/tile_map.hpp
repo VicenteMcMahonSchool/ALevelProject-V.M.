@@ -2,8 +2,8 @@
 #include "../../global/global.hpp"
 #include "../general_game_object/general_game_object.hpp"
 
-#define WIDTH_OF_TILE_MAP 262144
-#define HEIGHT_OF_TILE_MAP 16
+#define WIDTH_OF_TILE_MAP 2048
+#define HEIGHT_OF_TILE_MAP 2048
 #define NUMBER_OF_TILES WIDTH_OF_TILE_MAP *HEIGHT_OF_TILE_MAP
 #define TILE_MAP_RECTANGLES_POSITION                                                     \
     this->rectangles[i].x = (i % WIDTH_OF_TILE_MAP) * this->tileSize - this->position.x; \
