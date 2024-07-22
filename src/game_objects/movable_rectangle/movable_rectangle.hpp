@@ -1,5 +1,6 @@
 #pragma once
 #include "../rectangle/rectangle.hpp"
+#include "../tile_map/tile_map.hpp"
 
 class MovableRectangle : public Rectangle
 {
