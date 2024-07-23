@@ -5,7 +5,7 @@ void MovableRectangle::update(double deltaTime)
 {
     position += velocity * deltaTime + (Vector2){0, gravity} / 2 * deltaTime * deltaTime;
     velocity += (Vector2){0, gravity} * deltaTime;
-    TilesAroundPosition tiles = tileMap.getTilesAroundPosition(position - (Vector2){rectangle.w / 2, rectangle.h / 2});
+    TilesAroundPosition tiles = tileMap.getTilesAroundPosition(position - (Vector2){(double)rectangle.w / 2, (double)rectangle.h / 2});
     if (tiles.topLeft != NULL && *tiles.topLeft == TILE_PLATFORM)
         puts("Top Left");
     if (tiles.top != NULL && *tiles.top == TILE_PLATFORM)
