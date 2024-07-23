@@ -22,8 +22,8 @@ struct TilesAroundPosition
     TILE_TYPE *centre = NULL;
     TILE_TYPE *left = NULL;
     TILE_TYPE *right = NULL;
-    TILE_TYPE *up = NULL;
-    TILE_TYPE *down = NULL;
+    TILE_TYPE *top = NULL;
+    TILE_TYPE *bottom = NULL;
     TILE_TYPE *topLeft = NULL;
     TILE_TYPE *topRight = NULL;
     TILE_TYPE *bottomLeft = NULL;

@@ -81,9 +81,9 @@ TilesAroundPosition TileMap::getTilesAroundPosition(Vector2 position)
     if (index <= NUMBER_OF_TILES && index >= 0)
         tiles.centre = tileMap + index;
     if (index - WIDTH_OF_TILE_MAP <= NUMBER_OF_TILES && index - WIDTH_OF_TILE_MAP >= 0)
-        tiles.up = tileMap + index - WIDTH_OF_TILE_MAP;
+        tiles.top = tileMap + index - WIDTH_OF_TILE_MAP;
     if (index + WIDTH_OF_TILE_MAP <= NUMBER_OF_TILES && index + WIDTH_OF_TILE_MAP >= 0)
-        tiles.down = tileMap + index + WIDTH_OF_TILE_MAP;
+        tiles.bottom = tileMap + index + WIDTH_OF_TILE_MAP;
     if (index - 1 <= NUMBER_OF_TILES && index - 1 >= 0)
         tiles.left = tileMap + index - 1;
     if (index + 1 <= NUMBER_OF_TILES && index + 1 >= 0)
@@ -108,10 +108,10 @@ void TileMap::setTilesAroundPosition(Vector2 position, TILE_TYPE tile)
         *tiles.left = tile;
     if (tiles.right != NULL)
         *tiles.right = tile;
-    if (tiles.up != NULL)
-        *tiles.up = tile;
-    if (tiles.down != NULL)
-        *tiles.down = tile;
+    if (tiles.top != NULL)
+        *tiles.top = tile;
+    if (tiles.bottom != NULL)
+        *tiles.bottom = tile;
     if (tiles.topLeft != NULL)
         *tiles.topLeft = tile;
     if (tiles.topRight != NULL)
