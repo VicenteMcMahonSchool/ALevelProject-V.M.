@@ -44,6 +44,7 @@ void Application::run(void)
     Player player{{0, 0}};
     gameObjects.add({&player});
     gameObjects.add({&tileMap});
+    tileMap.setTile(0, 16, TILE_PLATFORM);
     SDL_Texture *imageTexture = IMG_LoadTexture(renderer, "image.jpg");
     SDL_Event event;
     // Delta Time code taken from https://gamedev.stackexchange.com/questions/110825/how-to-calculate-delta-time-with-sdl.
