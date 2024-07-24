@@ -6,11 +6,6 @@ Player::Player(Vector2 position) : MovableRectangle(position, {0X33, 0X33, 0X77,
 }
 void Player::update(double deltaTime)
 {
-    // TILE_TYPE *tile = tileMap.getTileAtPosition(position + Vector2{(double)rectangle.w / 2, (double)rectangle.h / 2});
-    // if (tile)
-    //     *tile = TILE_PLATFORM;
-    tileMap.setTilesAroundPosition(position + Vector2{(double)rectangle.w / 2, (double)rectangle.h / 2}, TILE_PLATFORM);
-    // velocity /= 1.05;
     Vector2 deltaVelocity{0, 0};
     if (isKeyDown(SDL_SCANCODE_A))
         deltaVelocity.x -= 1;
@@ -23,7 +18,5 @@ void Player::update(double deltaTime)
     double length = deltaVelocity.length();
     if (length != 0)
         velocity += deltaVelocity / length * PLAYER_SPEED;
-    // position += velocity * deltaTime + PLAYER_GRAVITY / 2 * deltaTime * deltaTime;
-    // velocity += PLAYER_GRAVITY * deltaTime;
     MovableRectangle::update(deltaTime);
 }
