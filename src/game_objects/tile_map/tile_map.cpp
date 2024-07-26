@@ -1,5 +1,6 @@
 #include "./tile_map.hpp"
 
+GETTER_AND_SETTER_CPP(unsigned int, TileMap, tileSize, TileSize)
 TileMap::TileMap(Vector2 position, unsigned int tileSize) : GeneralGameObject(position), tileSize(tileSize)
 {
     for (size_t i = 0; i < NUMBER_OF_TILES; i++)
@@ -139,4 +140,12 @@ void TileMap::setTilesAroundPosition(Vector2 position, TILE_TYPE tile)
     //     tileMap[index + WIDTH_OF_TILE_MAP + 1] = tile;
     // if (index + WIDTH_OF_TILE_MAP - 1 <= NUMBER_OF_TILES && index + WIDTH_OF_TILE_MAP - 1 >= 0)
     //     tileMap[index + WIDTH_OF_TILE_MAP - 1] = tile;
+}
+
+Vector2 TileMap::getCentrePositionOfTile(TILE_TYPE *tile)
+{
+    size_t tileIndex = tile - tileMap;
+    return {
+        (tileIndex % WIDTH_OF_TILE_MAP) * tileSize + (double)tileSize / 2,
+        (tileIndex * tileSize) / WIDTH_OF_TILE_MAP + (double)tileSize / 2};
 }

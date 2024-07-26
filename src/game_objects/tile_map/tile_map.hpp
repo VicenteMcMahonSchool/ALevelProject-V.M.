@@ -35,7 +35,8 @@ class TileMap : public GeneralGameObject
 private:
     TILE_TYPE tileMap[NUMBER_OF_TILES];
     SDL_Rect rectangles[NUMBER_OF_TILES];
-    unsigned int tileSize;
+    // unsigned int tileSize;
+    GETTER_AND_SETTER_HPP(unsigned int, tileSize, TileSize);
 
 public:
     TileMap(Vector2 position, unsigned int tileSize);
@@ -46,4 +47,5 @@ public:
     TILE_TYPE *getTileAtPosition(Vector2 position);
     TilesAroundPosition getTilesAroundPosition(Vector2 position);
     void setTilesAroundPosition(Vector2 position, TILE_TYPE tile);
+    Vector2 getCentrePositionOfTile(TILE_TYPE *tile);
 };

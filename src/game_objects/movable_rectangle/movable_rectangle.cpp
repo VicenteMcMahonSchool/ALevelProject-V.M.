@@ -3,45 +3,54 @@
 MovableRectangle::MovableRectangle(Vector2 position, SDL_Colour colour, int width, int height) : Rectangle(position, colour, width, height) {}
 void MovableRectangle::update(double deltaTime)
 {
-    position += velocity * deltaTime + (Vector2){0, gravity} / 2 * deltaTime * deltaTime;
-    velocity += (Vector2){0, gravity} * deltaTime;
-    TilesAroundPosition tiles = tileMap.getTilesAroundPosition(position + (Vector2){(double)rectangle.w / 2, (double)rectangle.h / 2});
-    if (tiles.topLeft != NULL && *tiles.topLeft == TILE_PLATFORM)
-    {
-        puts("Top Left");
-    }
+    double localGravity = isOnGround ? 0 : gravity;
+    position += velocity * deltaTime + (Vector2){0, localGravity} / 2 * deltaTime * deltaTime;
+    velocity += (Vector2){0, localGravity} * deltaTime;
+    isOnGround = false;
+    Vector2 centrePosition = position + (Vector2){(double)rectangle.w / 2, (double)rectangle.h / 2};
+    unsigned int tileSize = tileMap.getTileSize();
+    double averageWidth = (tileSize + rectangle.w) / 2;
+    double averageHeight = (tileSize + rectangle.h) / 2;
+    TilesAroundPosition tiles = tileMap.getTilesAroundPosition(centrePosition);
     if (tiles.top != NULL && *tiles.top == TILE_PLATFORM)
     {
-        puts("Top");
-    }
-    if (tiles.topRight != NULL && *tiles.topRight == TILE_PLATFORM)
-    {
-        puts("Top Right");
-    }
-    if (tiles.bottomLeft != NULL && *tiles.bottomLeft == TILE_PLATFORM)
-    {
-        puts("Bottom Left");
+        Vector2 tileCentre = tileMap.getCentrePositionOfTile(tiles.top);
+        if (centrePosition.y < tileCentre.y + averageHeight)
+        {
+            centrePosition.y = tileCentre.y + averageHeight;
+            velocity.y = 0;
+        }
     }
     if (tiles.bottom != NULL && *tiles.bottom == TILE_PLATFORM)
     {
-        puts("Bottom");
-    }
-    if (tiles.bottomRight != NULL && *tiles.bottomRight == TILE_PLATFORM)
-    {
-        puts("Bottom Right");
+        Vector2 tileCentre = tileMap.getCentrePositionOfTile(tiles.bottom);
+        if (centrePosition.y > tileCentre.y - averageHeight)
+        {
+            centrePosition.y = tileCentre.y - averageHeight;
+            isOnGround = true;
+            velocity.y = 0;
+        }
     }
     if (tiles.left != NULL && *tiles.left == TILE_PLATFORM)
     {
-        puts("Left");
-    }
-    if (tiles.centre != NULL && *tiles.centre == TILE_PLATFORM)
-    {
-        puts("Centre");
+        Vector2 tileCentre = tileMap.getCentrePositionOfTile(tiles.left);
+        if (centrePosition.x < tileCentre.x + averageWidth)
+        {
+            centrePosition.x = tileCentre.x + averageWidth;
+            velocity.x = 0;
+        }
     }
     if (tiles.right != NULL && *tiles.right == TILE_PLATFORM)
     {
-        puts("Right");
+        Vector2 tileCentre = tileMap.getCentrePositionOfTile(tiles.right);
+        if (centrePosition.x > tileCentre.x - averageWidth)
+        {
+            centrePosition.x = tileCentre.x - averageWidth;
+            velocity.x = 0;
+        }
     }
+
+    position = centrePosition - (Vector2){(double)rectangle.w / 2, (double)rectangle.h / 2};
     Rectangle::update(deltaTime);
 }
 GETTER_AND_SETTER_CPP(Vector2, MovableRectangle, velocity, Velocity)

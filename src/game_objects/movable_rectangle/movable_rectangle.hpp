@@ -6,6 +6,7 @@ class MovableRectangle : public Rectangle
 {
 protected:
     double gravity = 0;
+    bool isOnGround = false;
 
 public:
     MovableRectangle(Vector2 position, SDL_Colour colour, int width, int height);
