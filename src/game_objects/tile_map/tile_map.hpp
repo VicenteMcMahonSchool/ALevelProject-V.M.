@@ -16,6 +16,8 @@ enum __attribute__((__packed__)) TILE_TYPE
     TILE_AIR = 1,
     TILE_BOARDER = 2,
     TILE_PLATFORM = 3,
+    TILE_WIN = 4,
+    TILE_LOSE = 5,
 };
 
 struct TilesAroundPosition
