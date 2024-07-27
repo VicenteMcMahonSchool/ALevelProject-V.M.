@@ -7,7 +7,9 @@ tileTypes = {
     "TILE_NONE": b"\x00",
     "TILE_AIR": b"\x01",
     "TILE_BOARDER": b"\x02",
-    "TILE_PLATFORM": b"\x03"
+    "TILE_PLATFORM": b"\x03",
+    "TILE_WIN": b"\x04",
+    "TILE_LOSE": b"\x05"
 }
 
 if __name__ == "__main__":
