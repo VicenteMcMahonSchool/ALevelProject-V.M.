@@ -11,10 +11,11 @@ void Player::update(double deltaTime)
         deltaVelocity.x -= 1;
     if (isKeyDown(SDL_SCANCODE_D))
         deltaVelocity.x += 1;
-    if (isKeyDown(SDL_SCANCODE_W))
-        deltaVelocity.y -= 1;
-    if (isKeyDown(SDL_SCANCODE_S))
-        deltaVelocity.y += 1;
+    if (isKeyDown(SDL_SCANCODE_SPACE) && isOnGround)
+    {
+        isOnGround = false;
+        velocity.y -= 1;
+    }
     double length = deltaVelocity.length();
     if (length != 0)
         velocity += deltaVelocity / length * PLAYER_SPEED;

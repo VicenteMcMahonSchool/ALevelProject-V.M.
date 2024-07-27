@@ -15,7 +15,7 @@ void MovableRectangle::update(double deltaTime)
     TileCentres tileCentres = tileMap.getTileCentresAroundPositionOfTile(tiles.centre);
     if (getTileAttributes(tiles.top).isCollidable || (getTileAttributes(tiles.topLeft).isCollidable && (centrePosition - tileCentres.topLeft).isYBiggerThanX()) || (getTileAttributes(tiles.topRight).isCollidable && (tileCentres.topRight - centrePosition).isNegativeYBiggerThanX()))
     {
-        if (centrePosition.y < tileCentres.top.y + averageHeight)
+        if (centrePosition.y <= tileCentres.top.y + averageHeight)
         {
             centrePosition.y = tileCentres.top.y + averageHeight;
             velocity.y = 0;
@@ -23,7 +23,7 @@ void MovableRectangle::update(double deltaTime)
     }
     if (getTileAttributes(tiles.bottom).isCollidable || (getTileAttributes(tiles.bottomLeft).isCollidable && (centrePosition - tileCentres.bottomLeft).isNegativeYBiggerThanX()) || (getTileAttributes(tiles.bottomRight).isCollidable && (tileCentres.bottomRight - centrePosition).isYBiggerThanX()))
     {
-        if (centrePosition.y > tileCentres.bottom.y - averageHeight)
+        if (centrePosition.y >= tileCentres.bottom.y - averageHeight)
         {
             centrePosition.y = tileCentres.bottom.y - averageHeight;
             isOnGround = true;
@@ -32,7 +32,7 @@ void MovableRectangle::update(double deltaTime)
     }
     if (getTileAttributes(tiles.left).isCollidable || (getTileAttributes(tiles.topLeft).isCollidable && (centrePosition - tileCentres.topLeft).isXBiggerThanY()) || (getTileAttributes(tiles.bottomLeft).isCollidable && (centrePosition - tileCentres.bottomLeft).isYBiggerThanNegativeX()))
     {
-        if (centrePosition.x < tileCentres.left.x + averageWidth)
+        if (centrePosition.x <= tileCentres.left.x + averageWidth)
         {
             centrePosition.x = tileCentres.left.x + averageWidth;
             velocity.x = 0;
@@ -40,7 +40,7 @@ void MovableRectangle::update(double deltaTime)
     }
     if (getTileAttributes(tiles.right).isCollidable || (getTileAttributes(tiles.topRight).isCollidable && (centrePosition - tileCentres.topRight).isNegativeYBiggerThanX()) || (getTileAttributes(tiles.bottomRight).isCollidable && (centrePosition - tileCentres.bottomRight).isYBiggerThanX()))
     {
-        if (centrePosition.x > tileCentres.right.x - averageWidth)
+        if (centrePosition.x >= tileCentres.right.x - averageWidth)
         {
             centrePosition.x = tileCentres.right.x - averageWidth;
             velocity.x = 0;
