@@ -149,3 +149,18 @@ Vector2 TileMap::getCentrePositionOfTile(TILE_TYPE *tile)
         (tileIndex % WIDTH_OF_TILE_MAP) * tileSize + (double)tileSize / 2,
         (tileIndex * tileSize) / WIDTH_OF_TILE_MAP + (double)tileSize / 2};
 }
+
+TileCentres TileMap::getTileCentresAroundPositionOfTile(TILE_TYPE *tile)
+{
+    TileCentres output;
+    output.centre = getCentrePositionOfTile(tile);
+    output.left = output.centre + Vector2{-(double)tileSize, 0};
+    output.right = output.centre + Vector2{(double)tileSize, 0};
+    output.topLeft = output.centre + Vector2{-(double)tileSize, -(double)tileSize};
+    output.top = output.centre + Vector2{0, -(double)tileSize};
+    output.topRight = output.centre + Vector2{(double)tileSize, -(double)tileSize};
+    output.bottomLeft = output.centre + Vector2{-(double)tileSize, (double)tileSize};
+    output.bottom = output.centre + Vector2{0, (double)tileSize};
+    output.bottomRight = output.centre + Vector2{(double)tileSize, (double)tileSize};
+    return output;
+}

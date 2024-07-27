@@ -12,40 +12,37 @@ void MovableRectangle::update(double deltaTime)
     double averageWidth = (tileSize + rectangle.w) / 2;
     double averageHeight = (tileSize + rectangle.h) / 2;
     TilesAroundPosition tiles = tileMap.getTilesAroundPosition(centrePosition);
+    TileCentres tileCentres = tileMap.getTileCentresAroundPositionOfTile(tiles.centre);
     if (tiles.top != NULL && *tiles.top == TILE_PLATFORM)
     {
-        Vector2 tileCentre = tileMap.getCentrePositionOfTile(tiles.top);
-        if (centrePosition.y < tileCentre.y + averageHeight)
+        if (centrePosition.y < tileCentres.top.y + averageHeight)
         {
-            centrePosition.y = tileCentre.y + averageHeight;
+            centrePosition.y = tileCentres.top.y + averageHeight;
             velocity.y = 0;
         }
     }
     if (tiles.bottom != NULL && *tiles.bottom == TILE_PLATFORM)
     {
-        Vector2 tileCentre = tileMap.getCentrePositionOfTile(tiles.bottom);
-        if (centrePosition.y > tileCentre.y - averageHeight)
+        if (centrePosition.y > tileCentres.bottom.y - averageHeight)
         {
-            centrePosition.y = tileCentre.y - averageHeight;
+            centrePosition.y = tileCentres.bottom.y - averageHeight;
             isOnGround = true;
             velocity.y = 0;
         }
     }
     if (tiles.left != NULL && *tiles.left == TILE_PLATFORM)
     {
-        Vector2 tileCentre = tileMap.getCentrePositionOfTile(tiles.left);
-        if (centrePosition.x < tileCentre.x + averageWidth)
+        if (centrePosition.x < tileCentres.left.x + averageWidth)
         {
-            centrePosition.x = tileCentre.x + averageWidth;
+            centrePosition.x = tileCentres.left.x + averageWidth;
             velocity.x = 0;
         }
     }
     if (tiles.right != NULL && *tiles.right == TILE_PLATFORM)
     {
-        Vector2 tileCentre = tileMap.getCentrePositionOfTile(tiles.right);
-        if (centrePosition.x > tileCentre.x - averageWidth)
+        if (centrePosition.x > tileCentres.right.x - averageWidth)
         {
-            centrePosition.x = tileCentre.x - averageWidth;
+            centrePosition.x = tileCentres.right.x - averageWidth;
             velocity.x = 0;
         }
     }

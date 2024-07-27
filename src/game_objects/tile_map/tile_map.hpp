@@ -30,6 +30,19 @@ struct TilesAroundPosition
     TILE_TYPE *bottomRight = NULL;
 };
 
+struct TileCentres
+{
+    Vector2 left;
+    Vector2 centre;
+    Vector2 right;
+    Vector2 topLeft;
+    Vector2 top;
+    Vector2 topRight;
+    Vector2 bottomLeft;
+    Vector2 bottom;
+    Vector2 bottomRight;
+};
+
 class TileMap : public GeneralGameObject
 {
 private:
@@ -48,4 +61,5 @@ public:
     TilesAroundPosition getTilesAroundPosition(Vector2 position);
     void setTilesAroundPosition(Vector2 position, TILE_TYPE tile);
     Vector2 getCentrePositionOfTile(TILE_TYPE *tile);
+    TileCentres getTileCentresAroundPositionOfTile(TILE_TYPE *tile);
 };
