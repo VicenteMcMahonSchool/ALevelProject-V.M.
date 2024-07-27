@@ -3,12 +3,20 @@
 GETTER_AND_SETTER_CPP(unsigned int, TileMap, tileSize, TileSize)
 TileMap::TileMap(Vector2 position, unsigned int tileSize) : GeneralGameObject(position), tileSize(tileSize)
 {
+    FILE *file = fopen("./map", "rb");
+    fseek(file, 0, SEEK_END);
+    size_t fileSize = ftell(file);
+    rewind(file);
+    if (fileSize != sizeof(tileMap))
+        throw std::runtime_error("File size of map file is incorrect.");
     for (size_t i = 0; i < NUMBER_OF_TILES; i++)
     {
         TILE_MAP_RECTANGLES_POSITION
         rectangles[i].w = tileSize;
         rectangles[i].h = tileSize;
+        fread(tileMap + i, sizeof(TILE_TYPE), 1, file);
     }
+    fclose(file);
 }
 void TileMap::update(double deltaTime)
 {
@@ -23,31 +31,36 @@ void TileMap::draw(void)
     {
         rectangles[i].x -= cameraPosition.x - windowWidth / 2;
         rectangles[i].y -= cameraPosition.y - windowHeight / 2;
-        if (rectangles[i].x < -(int)tileSize)
-        {
-            i += -rectangles[i].x / tileSize - 1;
-            continue;
-        }
-        else if (rectangles[i].x > windowWidth)
-        {
-            i += WIDTH_OF_TILE_MAP - i % WIDTH_OF_TILE_MAP - 1;
-            continue;
-        }
-        else if (rectangles[i].y < -(int)tileSize)
-        {
-            i += -rectangles[i].y - 1;
-            continue;
-        }
-        else if (rectangles[i].y > windowHeight)
-        {
-            i += WIDTH_OF_TILE_MAP - 1;
-            continue;
-        }
+        // if (rectangles[i].x < -(int)tileSize)
+        // {
+        //     i += -rectangles[i].x / tileSize - 1;
+        //     continue;
+        // }
+        // else if (rectangles[i].x > windowWidth)
+        // {
+        //     i += WIDTH_OF_TILE_MAP - i % WIDTH_OF_TILE_MAP - 1;
+        //     continue;
+        // }
+        // else if (rectangles[i].y < -(int)tileSize)
+        // {
+        //     i += -rectangles[i].y - 1;
+        //     continue;
+        // }
+        // else if (rectangles[i].y > windowHeight)
+        // {
+        //     i += WIDTH_OF_TILE_MAP - 1;
+        //     continue;
+        // }
         if (tileMap[i] == TILE_PLATFORM)
         {
             // SDL_SetRenderDrawColour(renderer, 0X33, 0XDD, 0X33, 0XFF);
             SDL_SetRenderDrawColour(renderer, 0X77, 0X33, 0X33, 0XFF);
             SDL_RenderFillRect(renderer, rectangles + i); // Fill rectangle.
+        }
+        else if (tileMap[i] == TILE_BOARDER)
+        {
+            SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X77, 0XFF);
+            SDL_RenderFillRect(renderer, rectangles + i);
         }
         SDL_SetRenderDrawColour(renderer, 0XDD, 0X00, 0X00, 0X00);
         SDL_RenderDrawRect(renderer, rectangles + i);
@@ -147,7 +160,7 @@ Vector2 TileMap::getCentrePositionOfTile(TILE_TYPE *tile)
     size_t tileIndex = tile - tileMap;
     return {
         (tileIndex % WIDTH_OF_TILE_MAP) * tileSize + (double)tileSize / 2,
-        (tileIndex * tileSize) / WIDTH_OF_TILE_MAP + (double)tileSize / 2};
+        tileIndex / WIDTH_OF_TILE_MAP * (tileSize) + (double)tileSize / 2};
 }
 
 TileCentres TileMap::getTileCentresAroundPositionOfTile(TILE_TYPE *tile)

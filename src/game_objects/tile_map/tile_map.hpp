@@ -1,9 +1,10 @@
 #pragma once
+#include <stdexcept>
 #include "../../global/global.hpp"
 #include "../general_game_object/general_game_object.hpp"
 
-#define WIDTH_OF_TILE_MAP 256
-#define HEIGHT_OF_TILE_MAP 128
+#define WIDTH_OF_TILE_MAP 32
+#define HEIGHT_OF_TILE_MAP 32
 #define NUMBER_OF_TILES WIDTH_OF_TILE_MAP *HEIGHT_OF_TILE_MAP
 #define TILE_MAP_RECTANGLES_POSITION                                                     \
     this->rectangles[i].x = (i % WIDTH_OF_TILE_MAP) * this->tileSize - this->position.x; \
@@ -12,9 +13,9 @@
 enum __attribute__((__packed__)) TILE_TYPE
 {
     TILE_NONE = 0,
-    TILE_AIR,
-    TILE_PLATFORM,
-    TILE_BOARDER,
+    TILE_AIR = 1,
+    TILE_BOARDER = 2,
+    TILE_PLATFORM = 3,
 };
 
 struct TilesAroundPosition
