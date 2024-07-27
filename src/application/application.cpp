@@ -38,8 +38,8 @@ Application::~Application()
     SDL_Quit();
 }
 
-// This is the main loop for the code.
-void Application::run(void)
+// This is the main loop for the game.
+void Application::gameScreen(SCREEN *screen)
 {
     unsigned int tileSize = tileMap.getTileSize();
     Player player{{(double)tileSize, (double)tileSize}};
@@ -69,7 +69,6 @@ void Application::run(void)
                 {
                 case SDL_SCANCODE_ESCAPE: // If the escape key is pressed, exit.
                     goto exit;
-                    break;
                 default:
                     setKeyDown(event.key.keysym.scancode);
                     break;
@@ -94,5 +93,56 @@ void Application::run(void)
     }
 exit: // This is a section which can be reached using 'goto' statements.
     SDL_DestroyTexture(imageTexture);
+    *screen = SCREEN_MENU;
     return;
+}
+
+void Application::menuScreen(SCREEN *screen)
+{
+    *screen = SCREEN_EXIT;
+    cameraPosition = {0, 0};
+    constexpr int widthOfButton = 256, heightOfButton = 128;
+    Rectangle button{{-widthOfButton / 2, -heightOfButton / 2}, {0X77, 0X77, 0X77, 0XFF}, widthOfButton, heightOfButton};
+    SDL_Event event;
+    SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF);
+    SDL_RenderClear(renderer);
+    button.update(0);
+    button.draw();
+    SDL_RenderPresent(renderer);
+    while (true)
+    {
+        while (SDL_PollEvent(&event) > 0)
+        {
+            switch (event.type)
+            {
+            case SDL_QUIT:
+                goto exit;
+            case SDL_KEYDOWN:
+                switch (event.key.keysym.scancode)
+                {
+                case SDL_SCANCODE_P:
+                    *screen = SCREEN_GAME;
+                    goto exit;
+                case SDL_SCANCODE_ESCAPE: // If the escape key is pressed, exit.
+                    goto exit;
+                }
+                break;
+            }
+        }
+        SDL_Delay(16);
+    }
+exit:
+    return;
+}
+
+void Application::run(void)
+{
+    SCREEN screen = SCREEN_MENU;
+    while (screen != SCREEN_EXIT)
+    {
+        if (screen == SCREEN_MENU)
+            menuScreen(&screen);
+        else if (screen == SCREEN_GAME)
+            gameScreen(&screen);
+    }
 }
