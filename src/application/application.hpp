@@ -11,13 +11,6 @@
 #include "../game_objects/player/player.hpp"
 // This is a header file for application, only needed because of '#include' directives.
 
-enum __attribute__((__packed__)) SCREEN
-{
-    SCREEN_EXIT,
-    SCREEN_GAME,
-    SCREEN_MENU
-};
-
 class Application
 {
 public:
@@ -28,6 +21,6 @@ public:
 private:
     void drawText(const char *text, SDL_Rect *rectangle);
     void drawText(const char *text, SDL_Rect rectangle);
-    void gameScreen(SCREEN *screen);
-    void menuScreen(SCREEN *screen);
+    void gameScreen(void);
+    void menuScreen(void);
 };

@@ -7,6 +7,7 @@ LinkedList /* <GameObject> */ gameObjects{};
 TileMap tileMap = TileMap({0, 0}, 120);
 Vector2 cameraPosition{0, 0};
 TTF_Font *font = NULL;
+SCREEN screen = SCREEN_MENU;
 
 // Constructor for application, this is used to make the class.
 Application::Application()
@@ -47,7 +48,7 @@ Application::~Application()
 }
 
 // This is the main loop for the game.
-void Application::gameScreen(SCREEN *screen)
+void Application::gameScreen(void)
 {
     gameObjects.makeEmpty();
     unsigned int tileSize = tileMap.getTileSize();
@@ -60,7 +61,7 @@ void Application::gameScreen(SCREEN *screen)
     // Delta Time code taken from https://gamedev.stackexchange.com/questions/110825/how-to-calculate-delta-time-with-sdl.
     Uint64 now = SDL_GetPerformanceCounter(), last = 0; // Will be used to calculate 'deltaTime'.
     double deltaTime = 0;
-    while (true)
+    while (screen == SCREEN_GAME)
     {
         last = now;
         now = SDL_GetPerformanceCounter();
@@ -103,7 +104,7 @@ void Application::gameScreen(SCREEN *screen)
 exit: // This is a section which can be reached using 'goto' statements.
     SDL_DestroyTexture(imageTexture);
     unsetAllKeys();
-    *screen = SCREEN_MENU;
+    screen = SCREEN_MENU;
     return;
 }
 
@@ -120,9 +121,8 @@ void Application::drawText(const char *text, SDL_Rect rectangle)
     drawText(text, &rectangle);
 }
 
-void Application::menuScreen(SCREEN *screen)
+void Application::menuScreen(void)
 {
-    *screen = SCREEN_EXIT;
     cameraPosition = {0, 0};
     constexpr int widthOfButton = 256, heightOfButton = 128;
     Rectangle button{{-widthOfButton / 2, -heightOfButton / 2}, {0X77, 0X77, 0X77, 0XFF}, widthOfButton, heightOfButton};
@@ -134,7 +134,7 @@ void Application::menuScreen(SCREEN *screen)
     SDL_Rect buttonRectangle = button.getRectangle();
     drawText("Play", buttonRectangle);
     SDL_RenderPresent(renderer);
-    while (true)
+    while (screen == SCREEN_MENU)
     {
         while (SDL_PollEvent(&event) > 0)
         {
@@ -146,7 +146,7 @@ void Application::menuScreen(SCREEN *screen)
                 switch (event.key.keysym.scancode)
                 {
                 case SDL_SCANCODE_P:
-                    *screen = SCREEN_GAME;
+                    screen = SCREEN_GAME;
                     goto exit;
                 case SDL_SCANCODE_ESCAPE: // If the escape key is pressed, exit.
                     goto exit;
@@ -157,7 +157,7 @@ void Application::menuScreen(SCREEN *screen)
                 SDL_GetMouseState(&x, &y);
                 if (x > buttonRectangle.x && x < buttonRectangle.x + buttonRectangle.w && y > buttonRectangle.y && y < buttonRectangle.y + buttonRectangle.h)
                 {
-                    *screen = SCREEN_GAME;
+                    screen = SCREEN_GAME;
                     goto exit;
                 }
                 break;
@@ -166,17 +166,18 @@ void Application::menuScreen(SCREEN *screen)
         SDL_Delay(16);
     }
 exit:
+    if (screen != SCREEN_GAME)
+        screen = SCREEN_EXIT;
     return;
 }
 
 void Application::run(void)
 {
-    SCREEN screen = SCREEN_MENU;
     while (screen != SCREEN_EXIT)
     {
         if (screen == SCREEN_MENU)
-            menuScreen(&screen);
+            menuScreen();
         else if (screen == SCREEN_GAME)
-            gameScreen(&screen);
+            gameScreen();
     }
 }

@@ -3,6 +3,13 @@
 #include <SDL2/SDL_ttf.h>
 #include "../macros/macros.hpp"
 
+enum __attribute__((__packed__)) SCREEN
+{
+    SCREEN_EXIT,
+    SCREEN_GAME,
+    SCREEN_MENU
+};
+
 // Application Type is defined here because of circular dependencies issues. This occurs because 'global.hpp' requires 'application' of type 'Application', whilst 'application' needs access to the global variables.
 struct Application;
 struct GameObject;
@@ -22,3 +29,4 @@ extern LinkedList /* <GameObject> */ gameObjects;
 extern TileMap tileMap;
 extern Vector2 cameraPosition;
 extern TTF_Font *font;
+extern SCREEN screen;
