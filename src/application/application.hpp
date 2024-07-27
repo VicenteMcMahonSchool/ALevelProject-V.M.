@@ -10,11 +10,10 @@
 #include "../game_objects/player/player.hpp"
 
 // This is a header file for application, only needed because of '#include' directives.
-struct Application
+class Application
 {
-    Application();
+public:
+    Application(void);
     ~Application();
-    void updateGameObject(GameObject *gameObject, double deltaTime);
-    void drawGameObject(GameObject *gameObject);
     void run(void);
 };
