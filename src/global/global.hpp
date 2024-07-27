@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 #include "../macros/macros.hpp"
 
 // Application Type is defined here because of circular dependencies issues. This occurs because 'global.hpp' requires 'application' of type 'Application', whilst 'application' needs access to the global variables.
@@ -20,3 +21,4 @@ extern SDL_Renderer *renderer;
 extern LinkedList /* <GameObject> */ gameObjects;
 extern TileMap tileMap;
 extern Vector2 cameraPosition;
+extern TTF_Font *font;

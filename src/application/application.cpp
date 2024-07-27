@@ -6,15 +6,21 @@ SDL_Renderer *renderer;
 LinkedList /* <GameObject> */ gameObjects{};
 TileMap tileMap = TileMap({0, 0}, 120);
 Vector2 cameraPosition{0, 0};
+TTF_Font *font = NULL;
 
 // Constructor for application, this is used to make the class.
 Application::Application()
 {
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
         throw std::runtime_error(SDL_GetError());
+    if (TTF_Init() < 0)
+        throw std::runtime_error(TTF_GetError());
     SDL_DisplayMode displayMode{};
     if (SDL_GetCurrentDisplayMode(0, &displayMode))
         throw std::runtime_error(SDL_GetError()); // Gets data about the display.
+    font = TTF_OpenFont("OpenSans-VariableFont_wdth,wght.ttf", 256);
+    if (font == NULL)
+        throw std::runtime_error(TTF_GetError());
     window = SDL_CreateWindow(
         "Platformer",
         SDL_WINDOWPOS_CENTRED, SDL_WINDOWPOS_CENTRED,
@@ -35,6 +41,8 @@ Application::~Application()
 {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
+    TTF_CloseFont(font);
+    TTF_Quit();
     SDL_Quit();
 }
 
@@ -99,6 +107,19 @@ exit: // This is a section which can be reached using 'goto' statements.
     return;
 }
 
+void Application::drawText(const char *text, SDL_Rect *rectangle)
+{
+    SDL_Surface *textSurface = TTF_RenderText_Solid(font, text, {0X00, 0X00, 0X00});
+    SDL_Texture *textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+    SDL_RenderCopy(renderer, textTexture, NULL, rectangle);
+    SDL_FreeSurface(textSurface);
+    SDL_DestroyTexture(textTexture);
+}
+void Application::drawText(const char *text, SDL_Rect rectangle)
+{
+    drawText(text, &rectangle);
+}
+
 void Application::menuScreen(SCREEN *screen)
 {
     *screen = SCREEN_EXIT;
@@ -110,6 +131,8 @@ void Application::menuScreen(SCREEN *screen)
     SDL_RenderClear(renderer);
     button.update(0);
     button.draw();
+    SDL_Rect buttonRectangle = button.getRectangle();
+    drawText("Play", buttonRectangle);
     SDL_RenderPresent(renderer);
     while (true)
     {
@@ -126,6 +149,15 @@ void Application::menuScreen(SCREEN *screen)
                     *screen = SCREEN_GAME;
                     goto exit;
                 case SDL_SCANCODE_ESCAPE: // If the escape key is pressed, exit.
+                    goto exit;
+                }
+                break;
+            case SDL_MOUSEBUTTONDOWN:
+                int x, y;
+                SDL_GetMouseState(&x, &y);
+                if (x > buttonRectangle.x && x < buttonRectangle.x + buttonRectangle.w && y > buttonRectangle.y && y < buttonRectangle.y + buttonRectangle.h)
+                {
+                    *screen = SCREEN_GAME;
                     goto exit;
                 }
                 break;

@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include <stdexcept>
 #include "../global/global.hpp"
 #include "../game_objects/rectangle/rectangle.hpp"
@@ -25,6 +26,8 @@ public:
     void run(void);
 
 private:
+    void drawText(const char *text, SDL_Rect *rectangle);
+    void drawText(const char *text, SDL_Rect rectangle);
     void gameScreen(SCREEN *screen);
     void menuScreen(SCREEN *screen);
 };
