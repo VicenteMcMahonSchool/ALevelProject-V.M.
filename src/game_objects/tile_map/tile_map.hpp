@@ -43,6 +43,14 @@ struct TileCentres
     Vector2 bottomRight;
 };
 
+struct __attribute__((__packed__)) TileAttributes
+{
+    bool isCollidable;
+};
+
+TileAttributes getTileAttributes(TILE_TYPE tile);
+TileAttributes getTileAttributes(TILE_TYPE *tilePointer);
+
 class TileMap : public GeneralGameObject
 {
 private:

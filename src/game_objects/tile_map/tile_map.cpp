@@ -164,3 +164,19 @@ TileCentres TileMap::getTileCentresAroundPositionOfTile(TILE_TYPE *tile)
     output.bottomRight = output.centre + Vector2{(double)tileSize, (double)tileSize};
     return output;
 }
+
+TileAttributes getTileAttributes(TILE_TYPE tile)
+{
+    TileAttributes output{};
+    if (tile == TILE_PLATFORM || tile == TILE_BOARDER)
+        output.isCollidable = true;
+    else
+        output.isCollidable = false;
+    return output;
+}
+TileAttributes getTileAttributes(TILE_TYPE *tilePointer)
+{
+    if (tilePointer == NULL)
+        return getTileAttributes(TILE_AIR);
+    return getTileAttributes(*tilePointer);
+}
