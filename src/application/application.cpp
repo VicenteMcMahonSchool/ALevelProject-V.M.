@@ -41,7 +41,8 @@ Application::~Application()
 // This is the main loop for the code.
 void Application::run(void)
 {
-    Player player{{0, 0}};
+    unsigned int tileSize = tileMap.getTileSize();
+    Player player{{(double)tileSize, (double)tileSize}};
     gameObjects.add({&player});
     gameObjects.add({&tileMap});
     // tileMap.setTile(2, 4, TILE_PLATFORM);
