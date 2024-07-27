@@ -6,14 +6,11 @@ SRCS=$(shell find ${SRC_DIR} -name *.cpp -not -type d | xargs echo)
 OBJS=$(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRCS))
 HEADERS=$(shell find ${SRC_DIR} -name *.hpp -not -type d | xargs echo)
 BIN=./out/main
+DEPS=$(patsubst $(OBJ_DIR)/%.o, $(OBJ_DIR)/%.d, $(OBJS))
 
-DEPS := $(OBJS:.o=.d)
--include $(DEPS)
-
-$(BIN): $(OBJS)
-	clear
+$(BIN): $(OBJS) $(HEADERS)
 	$(COMPILER) $(OBJS) -o $@ $(FLAGS)
-
+-include $(DEPS)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	mkdir -p $(@D)
 	$(COMPILER) $(FLAGS) -MMD -c $< -o $@
