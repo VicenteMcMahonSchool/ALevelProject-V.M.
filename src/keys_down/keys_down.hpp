@@ -21,3 +21,8 @@ void setKeyDown(SDL_Scancode scancode);
  * @brief This sets the key in the 'keysDown' array to false.
  */
 void unsetKeyDown(SDL_Scancode scancode);
+
+/**
+ * @brief This sets all keys in the 'keysDown' array to false.
+ */
+void unsetAllKeys(void);

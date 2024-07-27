@@ -19,15 +19,21 @@
 //     this->head = newNode;
 // }
 
-LinkedList::~LinkedList()
+void LinkedList::makeEmpty(void)
 {
     LinkedListNode *current = this->head;
-    while (current)
+    while (current != NULL)
     {
         LinkedListNode *original = current;
         current = current->next;
         delete original;
     }
+    this->head = NULL;
+}
+
+LinkedList::~LinkedList()
+{
+    makeEmpty();
 }
 void LinkedList::add(GameObject item)
 {

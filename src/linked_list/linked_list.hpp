@@ -34,5 +34,6 @@ struct LinkedList
 {
     LinkedListNode *head = nullptr;
     void add(GameObject item);
+    void makeEmpty(void);
     ~LinkedList();
 };

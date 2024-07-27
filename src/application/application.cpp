@@ -41,6 +41,7 @@ Application::~Application()
 // This is the main loop for the game.
 void Application::gameScreen(SCREEN *screen)
 {
+    gameObjects.makeEmpty();
     unsigned int tileSize = tileMap.getTileSize();
     Player player{{(double)tileSize, (double)tileSize}};
     gameObjects.add({&player});
@@ -93,6 +94,7 @@ void Application::gameScreen(SCREEN *screen)
     }
 exit: // This is a section which can be reached using 'goto' statements.
     SDL_DestroyTexture(imageTexture);
+    unsetAllKeys();
     *screen = SCREEN_MENU;
     return;
 }

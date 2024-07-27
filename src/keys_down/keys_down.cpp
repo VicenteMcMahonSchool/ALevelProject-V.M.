@@ -16,3 +16,9 @@ void unsetKeyDown(SDL_Scancode scancode)
 {
     keysDown[scancode / 8] &= ~(1 << (scancode % 8));
 }
+
+void unsetAllKeys(void)
+{
+    for (size_t i = 0; i < SDL_NUM_SCANCODES / 8; i++)
+        keysDown[i] = 0;
+}
