@@ -5,8 +5,14 @@
 struct Vector2
 {
     double x, y;
-    double lengthSquared();
-    double length();
+    double lengthSquared(void);
+    double length(void);
+    bool isXBiggerThanY(void);
+    bool isYBiggerThanX(void);
+    bool isXBiggerThanNegativeY(void);
+    bool isYBiggerThanNegativeX(void);
+    bool isNegativeXBiggerThanY(void);
+    bool isNegativeYBiggerThanX(void);
     Vector2 operator+(const Vector2 &other) const;
     Vector2 operator-(const Vector2 &other) const;
     Vector2 operator+(const double &other) const;

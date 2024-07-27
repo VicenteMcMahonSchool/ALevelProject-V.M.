@@ -8,6 +8,30 @@ double Vector2::length()
 {
     return std::sqrt(this->x * this->x + this->y * this->y);
 }
+bool Vector2::isXBiggerThanY(void)
+{
+    return this->x > this->y;
+}
+bool Vector2::isYBiggerThanX(void)
+{
+    return this->x < this->y;
+}
+bool Vector2::isXBiggerThanNegativeY(void)
+{
+    return this->x > -this->y;
+}
+bool Vector2::isYBiggerThanNegativeX(void)
+{
+    return -this->x < this->y;
+}
+bool Vector2::isNegativeXBiggerThanY(void)
+{
+    return this->x > -this->y;
+}
+bool Vector2::isNegativeYBiggerThanX(void)
+{
+    return this->x < -this->y;
+}
 Vector2 Vector2::operator+(const Vector2 &other) const
 {
     return Vector2{this->x + other.x, this->y + other.y};
