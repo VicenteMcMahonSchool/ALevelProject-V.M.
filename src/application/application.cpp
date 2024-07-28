@@ -204,10 +204,20 @@ void Application::editScreen(void)
             case SDL_MOUSEBUTTONDOWN:
             {
                 int x, y;
-                SDL_GetMouseState(&x, &y);
+                Uint32 button = SDL_GetMouseState(&x, &y);
                 TILE_TYPE *tile = tileMap.getTileAtPosition({cameraPosition.x + x - windowWidth / 2, cameraPosition.y + y - windowHeight / 2});
                 if (tile != NULL)
-                    *tile = TILE_PLATFORM;
+                {
+                    if (button == 1)
+                    {
+                        if (*tile < TILE_MAXIMUM_VALUE - 1)
+                            *tile = (TILE_TYPE)(*tile + 1);
+                        else
+                            *tile = TILE_AIR;
+                    }
+                    else if (button == 4)
+                        *tile = TILE_AIR;
+                }
                 break;
             }
             case SDL_QUIT: // Quit event.
