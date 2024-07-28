@@ -68,6 +68,7 @@ public:
     bool tileOutlines = false;
     void update(double deltaTime);
     void draw(void);
+    void saveMap(void);
     void setTile(size_t x, size_t y, TILE_TYPE tileType);
     size_t getIndexFromPosition(Vector2 position);
     TILE_TYPE *getTileAtPosition(Vector2 position);

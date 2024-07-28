@@ -65,6 +65,13 @@ void TileMap::draw(void)
     GeneralGameObject::draw();
 }
 
+void TileMap::saveMap(void)
+{
+    FILE *file = fopen("./map", "wb");
+    fwrite(tileMap, sizeof(TILE_TYPE), NUMBER_OF_TILES, file);
+    fclose(file);
+}
+
 void TileMap::setTile(size_t x, size_t y, TILE_TYPE tileType)
 {
     tileMap[y * WIDTH_OF_TILE_MAP + x % WIDTH_OF_TILE_MAP] = tileType;

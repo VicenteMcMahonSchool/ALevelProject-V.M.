@@ -196,6 +196,9 @@ void Application::editScreen(void)
                 {
                 case SDL_SCANCODE_ESCAPE: // If the escape key is pressed, exit.
                     goto exit;
+                case SDL_SCANCODE_P:
+                    tileMap.saveMap();
+                    break;
                 default:
                     setKeyDown(event.key.keysym.scancode);
                     break;
