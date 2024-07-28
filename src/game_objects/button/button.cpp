@@ -1,6 +1,6 @@
 #include "button.hpp"
 
-Button::Button(Vector2 position, SDL_Colour colour, int width, int height, const char *text) : Rectangle(position, colour, width, height), text(text) {}
+Button::Button(Vector2 position, SDL_Colour colour, int width, int height, const char *text, void (*callBack)(void)) : Rectangle(position, colour, width, height), text(text), callBack(callBack) {}
 
 void Button::drawText(const char *text)
 {
@@ -28,7 +28,7 @@ void Button::onClick(void)
     rectangle.x -= cameraPosition.x - windowWidth / 2;
     rectangle.y -= cameraPosition.y - windowHeight / 2;
     if (x > rectangle.x && x < rectangle.x + rectangle.w && y > rectangle.y && y < rectangle.y + rectangle.h)
-        screen = SCREEN_GAME;
+        callBack();
     rectangle.x += cameraPosition.x - windowWidth / 2;
     rectangle.y += cameraPosition.y - windowHeight / 2;
 }

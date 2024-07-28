@@ -113,8 +113,14 @@ void Application::menuScreen(void)
     cameraPosition = {0, 0};
     constexpr int widthOfButton = 256, heightOfButton = 128;
     Button buttons[2] = {
-        {{-widthOfButton / 2, heightOfButton * 2 - windowHeight / 2}, {0X77, 0X77, 0X77, 0XFF}, widthOfButton, heightOfButton, "Play"},
-        {{-widthOfButton / 2, heightOfButton * 4 - windowHeight / 2}, {0X77, 0X77, 0X77, 0XFF}, widthOfButton, heightOfButton, "Quit"}};
+        {{-widthOfButton / 2, heightOfButton * 2 - (double)windowHeight / 2}, {0X77, 0X77, 0X77, 0XFF}, widthOfButton, heightOfButton, "Play", [](void) -> void
+         {
+             screen = SCREEN_GAME;
+         }},
+        {{-widthOfButton / 2, heightOfButton * 4 - (double)windowHeight / 2}, {0X77, 0X77, 0X77, 0XFF}, widthOfButton, heightOfButton, "Quit", [](void) -> void
+         {
+             screen = SCREEN_EXIT;
+         }}};
     SDL_Event event;
     while (screen == SCREEN_MENU)
     {
@@ -151,7 +157,7 @@ void Application::menuScreen(void)
         SDL_Delay(16);
     }
 exit:
-    if (screen != SCREEN_GAME)
+    if (screen == SCREEN_MENU)
         screen = SCREEN_EXIT;
     return;
 }
