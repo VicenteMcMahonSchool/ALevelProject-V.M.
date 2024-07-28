@@ -52,6 +52,7 @@ void Application::gameScreen(void)
 {
     gameObjects.makeEmpty();
     unsigned int tileSize = tileMap.getTileSize();
+    tileMap.tileOutlines = false;
     Player player{{(double)tileSize, (double)tileSize}};
     gameObjects.add({&player});
     gameObjects.add({&tileMap});
@@ -170,6 +171,7 @@ void Application::editScreen(void)
     gameObjects.makeEmpty();
     cameraPosition = {0, 0};
     unsigned int tileSize = tileMap.getTileSize();
+    tileMap.tileOutlines = true;
     gameObjects.add({&tileMap});
     SDL_Event event;
     // Delta Time code taken from https://gamedev.stackexchange.com/questions/110825/how-to-calculate-delta-time-with-sdl.

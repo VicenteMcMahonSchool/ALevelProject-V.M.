@@ -65,6 +65,7 @@ private:
 
 public:
     TileMap(Vector2 position, unsigned int tileSize);
+    bool tileOutlines = false;
     void update(double deltaTime);
     void draw(void);
     void setTile(size_t x, size_t y, TILE_TYPE tileType);
