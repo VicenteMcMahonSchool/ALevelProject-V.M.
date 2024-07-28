@@ -54,12 +54,22 @@ void TileMap::draw(void)
         if (tileMap[i] == TILE_PLATFORM)
         {
             // SDL_SetRenderDrawColour(renderer, 0X33, 0XDD, 0X33, 0XFF);
-            SDL_SetRenderDrawColour(renderer, 0X77, 0X33, 0X33, 0XFF);
+            SDL_SetRenderDrawColour(renderer, 0X55, 0X77, 0X77, 0XFF);
             SDL_RenderFillRect(renderer, rectangles + i); // Fill rectangle.
         }
         else if (tileMap[i] == TILE_BOARDER)
         {
             SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X77, 0XFF);
+            SDL_RenderFillRect(renderer, rectangles + i);
+        }
+        else if (tileMap[i] == TILE_WIN)
+        {
+            SDL_SetRenderDrawColour(renderer, 0X33, 0X77, 0X33, 0XFF);
+            SDL_RenderFillRect(renderer, rectangles + i);
+        }
+        else if (tileMap[i] == TILE_LOSE)
+        {
+            SDL_SetRenderDrawColour(renderer, 0X77, 0X33, 0X33, 0XFF);
             SDL_RenderFillRect(renderer, rectangles + i);
         }
         SDL_SetRenderDrawColour(renderer, 0XDD, 0X00, 0X00, 0X00);
@@ -134,25 +144,6 @@ void TileMap::setTilesAroundPosition(Vector2 position, TILE_TYPE tile)
         *tiles.bottomLeft = tile;
     if (tiles.bottomRight != NULL)
         *tiles.bottomRight = tile;
-    // size_t index = getIndexFromPosition(position);
-    // if (index <= NUMBER_OF_TILES && index >= 0)
-    //     tileMap[index] = tile;
-    // if (index - WIDTH_OF_TILE_MAP <= NUMBER_OF_TILES && index - WIDTH_OF_TILE_MAP >= 0)
-    //     tileMap[index - WIDTH_OF_TILE_MAP] = tile;
-    // if (index + WIDTH_OF_TILE_MAP <= NUMBER_OF_TILES && index + WIDTH_OF_TILE_MAP >= 0)
-    //     tileMap[index + WIDTH_OF_TILE_MAP] = tile;
-    // if (index + 1 <= NUMBER_OF_TILES && index + 1 >= 0)
-    //     tileMap[index + 1] = tile;
-    // if (index - 1 <= NUMBER_OF_TILES && index - 1 >= 0)
-    //     tileMap[index - 1] = tile;
-    // if (index - WIDTH_OF_TILE_MAP + 1 <= NUMBER_OF_TILES && index - WIDTH_OF_TILE_MAP + 1 >= 0)
-    //     tileMap[index - WIDTH_OF_TILE_MAP + 1] = tile;
-    // if (index - WIDTH_OF_TILE_MAP - 1 <= NUMBER_OF_TILES && index - WIDTH_OF_TILE_MAP - 1 >= 0)
-    //     tileMap[index - WIDTH_OF_TILE_MAP - 1] = tile;
-    // if (index + WIDTH_OF_TILE_MAP + 1 <= NUMBER_OF_TILES && index + WIDTH_OF_TILE_MAP + 1 >= 0)
-    //     tileMap[index + WIDTH_OF_TILE_MAP + 1] = tile;
-    // if (index + WIDTH_OF_TILE_MAP - 1 <= NUMBER_OF_TILES && index + WIDTH_OF_TILE_MAP - 1 >= 0)
-    //     tileMap[index + WIDTH_OF_TILE_MAP - 1] = tile;
 }
 
 Vector2 TileMap::getCentrePositionOfTile(TILE_TYPE *tile)
