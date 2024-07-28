@@ -100,7 +100,7 @@ void Application::gameScreen(void)
         TRAVERSE(gameObjects.head, GameObject, item->datum.draw()) // Draws all the 'GameObjects'.
         // SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF);            // Sets the colour.
         SDL_RenderPresent(renderer); // Renders everything.
-        SDL_Delay(16);
+        SDL_Delay(DELAY);
     }
 exit: // This is a section which can be reached using 'goto' statements.
     // SDL_DestroyTexture(imageTexture);
@@ -159,7 +159,7 @@ void Application::menuScreen(void)
             buttons[i].draw();
         }
         SDL_RenderPresent(renderer);
-        SDL_Delay(16);
+        SDL_Delay(DELAY);
     }
 exit:
     if (screen == SCREEN_MENU)
@@ -240,7 +240,7 @@ void Application::editScreen(void)
         TRAVERSE(gameObjects.head, GameObject, item->datum.update(deltaTime)) // Updates all the 'GameObjects'.
         TRAVERSE(gameObjects.head, GameObject, item->datum.draw())            // Draws all the 'GameObjects'.
         SDL_RenderPresent(renderer);                                          // Renders everything.
-        SDL_Delay(16);
+        SDL_Delay(DELAY);
     }
 exit: // This is a section which can be reached using 'goto' statements.
     unsetAllKeys();

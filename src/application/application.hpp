@@ -12,6 +12,8 @@
 #include "../game_objects/button/button.hpp"
 // This is a header file for application, only needed because of '#include' directives.
 
+#define DELAY 8
+
 class Application
 {
 public:
