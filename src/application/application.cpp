@@ -201,6 +201,15 @@ void Application::editScreen(void)
             case SDL_KEYUP:
                 unsetKeyDown(event.key.keysym.scancode);
                 break;
+            case SDL_MOUSEBUTTONDOWN:
+            {
+                int x, y;
+                SDL_GetMouseState(&x, &y);
+                TILE_TYPE *tile = tileMap.getTileAtPosition({cameraPosition.x + x - windowWidth / 2, cameraPosition.y + y - windowHeight / 2});
+                if (tile != NULL)
+                    *tile = TILE_PLATFORM;
+                break;
+            }
             case SDL_QUIT: // Quit event.
                 goto exit;
             }
