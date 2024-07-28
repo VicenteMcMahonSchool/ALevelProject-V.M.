@@ -7,7 +7,8 @@ enum __attribute__((__packed__)) SCREEN
 {
     SCREEN_EXIT,
     SCREEN_GAME,
-    SCREEN_MENU
+    SCREEN_MENU,
+    SCREEN_EDIT
 };
 
 // Application Type is defined here because of circular dependencies issues. This occurs because 'global.hpp' requires 'application' of type 'Application', whilst 'application' needs access to the global variables.

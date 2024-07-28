@@ -22,4 +22,5 @@ public:
 private:
     void gameScreen(void);
     void menuScreen(void);
+    void editScreen(void);
 };
