@@ -9,4 +9,5 @@ obj/game_objects/game_object/game_object.o: \
  src/game_objects/game_object/./../player/../movable_rectangle/../rectangle/../general_game_object/../../macros/macros.hpp \
  src/game_objects/game_object/./../player/../movable_rectangle/../rectangle/../../global/global.hpp \
  src/game_objects/game_object/./../player/../movable_rectangle/../tile_map/tile_map.hpp \
- src/game_objects/game_object/./../player/../../keys_down/keys_down.hpp
+ src/game_objects/game_object/./../player/../../keys_down/keys_down.hpp \
+ src/game_objects/game_object/./../button/button.hpp

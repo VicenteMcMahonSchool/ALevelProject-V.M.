@@ -5,68 +5,78 @@ GameObjectUnion::~GameObjectUnion(void) {}
 
 GameObject::GameObject(GeneralGameObject *value)
 {
-    this->type = GENERAL_GAME_OBJECT;
+    type = GENERAL_GAME_OBJECT;
     this->value.generalGameObject = value;
 }
 GameObject::GameObject(Rectangle *value)
 {
-    this->type = RECTANGLE;
+    type = RECTANGLE;
     this->value.rectangle = value;
 }
 GameObject::GameObject(MovableRectangle *value)
 {
-    this->type = MOVABLE_RECTANGLE;
+    type = MOVABLE_RECTANGLE;
     this->value.movableRectangle = value;
+}
+GameObject::GameObject(Button *value)
+{
+    type = BUTTON;
+    this->value.button = value;
 }
 GameObject::GameObject(TileMap *value)
 {
-    this->type = TILE_MAP;
+    type = TILE_MAP;
     this->value.tileMap = value;
 }
 GameObject::GameObject(Player *value)
 {
-    this->type = PLAYER;
+    type = PLAYER;
     this->value.player = value;
 }
 
 void GameObject::update(double deltaTime)
 {
-    switch (this->type)
+    switch (type)
     {
     case GENERAL_GAME_OBJECT:
-        this->value.generalGameObject->update(deltaTime);
+        value.generalGameObject->update(deltaTime);
         break;
     case RECTANGLE:
-        this->value.rectangle->update(deltaTime);
+        value.rectangle->update(deltaTime);
         break;
     case MOVABLE_RECTANGLE:
-        this->value.movableRectangle->update(deltaTime);
+        value.movableRectangle->update(deltaTime);
         break;
     case TILE_MAP:
-        this->value.tileMap->update(deltaTime);
+        value.tileMap->update(deltaTime);
         break;
     case PLAYER:
-        this->value.player->update(deltaTime);
+        value.player->update(deltaTime);
+    case BUTTON:
+        value.button->update(deltaTime);
     }
 }
 void GameObject::draw(void)
 {
-    switch (this->type)
+    switch (type)
     {
     case GENERAL_GAME_OBJECT:
-        this->value.generalGameObject->draw();
+        value.generalGameObject->draw();
         break;
     case RECTANGLE:
-        this->value.rectangle->draw();
+        value.rectangle->draw();
         break;
     case MOVABLE_RECTANGLE:
-        this->value.movableRectangle->draw();
+        value.movableRectangle->draw();
         break;
     case TILE_MAP:
-        this->value.tileMap->draw();
+        value.tileMap->draw();
         break;
     case PLAYER:
-        this->value.player->draw();
+        value.player->draw();
+        break;
+    case BUTTON:
+        value.button->draw();
         break;
     }
 }

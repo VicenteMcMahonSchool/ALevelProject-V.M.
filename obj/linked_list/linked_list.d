@@ -8,4 +8,5 @@ obj/linked_list/linked_list.o: src/linked_list/linked_list.cpp \
  src/linked_list/./../game_objects/game_object/../player/../movable_rectangle/../rectangle/../general_game_object/../../vector2/vector2.hpp \
  src/linked_list/./../game_objects/game_object/../player/../movable_rectangle/../rectangle/../../global/global.hpp \
  src/linked_list/./../game_objects/game_object/../player/../movable_rectangle/../tile_map/tile_map.hpp \
- src/linked_list/./../game_objects/game_object/../player/../../keys_down/keys_down.hpp
+ src/linked_list/./../game_objects/game_object/../player/../../keys_down/keys_down.hpp \
+ src/linked_list/./../game_objects/game_object/../button/button.hpp

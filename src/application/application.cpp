@@ -108,32 +108,17 @@ exit: // This is a section which can be reached using 'goto' statements.
     return;
 }
 
-void Application::drawText(const char *text, SDL_Rect *rectangle)
-{
-    SDL_Surface *textSurface = TTF_RenderText_Solid(font, text, {0X00, 0X00, 0X00});
-    SDL_Texture *textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
-    SDL_RenderCopy(renderer, textTexture, NULL, rectangle);
-    SDL_FreeSurface(textSurface);
-    SDL_DestroyTexture(textTexture);
-}
-void Application::drawText(const char *text, SDL_Rect rectangle)
-{
-    drawText(text, &rectangle);
-}
-
 void Application::menuScreen(void)
 {
     cameraPosition = {0, 0};
     constexpr int widthOfButton = 256, heightOfButton = 128;
-    Rectangle button{{-widthOfButton / 2, -heightOfButton / 2}, {0X77, 0X77, 0X77, 0XFF}, widthOfButton, heightOfButton};
+    // Rectangle button{{-widthOfButton / 2, -heightOfButton / 2}, {0X77, 0X77, 0X77, 0XFF}, widthOfButton, heightOfButton};
+    Button button{{-widthOfButton / 2, -heightOfButton / 2}, {0X77, 0X77, 0X77, 0XFF}, widthOfButton, heightOfButton, "Play"};
     SDL_Event event;
-    SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF);
-    SDL_RenderClear(renderer);
-    button.update(0);
-    button.draw();
-    SDL_Rect buttonRectangle = button.getRectangle();
-    drawText("Play", buttonRectangle);
-    SDL_RenderPresent(renderer);
+    // button.update(0);
+    // button.draw();
+    // SDL_Rect buttonRectangle = button.getRectangle();
+    // drawText("Play", buttonRectangle);
     while (screen == SCREEN_MENU)
     {
         while (SDL_PollEvent(&event) > 0)
@@ -153,16 +138,22 @@ void Application::menuScreen(void)
                 }
                 break;
             case SDL_MOUSEBUTTONDOWN:
-                int x, y;
-                SDL_GetMouseState(&x, &y);
-                if (x > buttonRectangle.x && x < buttonRectangle.x + buttonRectangle.w && y > buttonRectangle.y && y < buttonRectangle.y + buttonRectangle.h)
-                {
-                    screen = SCREEN_GAME;
-                    goto exit;
-                }
+                button.onClick();
+                // int x, y;
+                // SDL_GetMouseState(&x, &y);
+                // if (x > buttonRectangle.x && x < buttonRectangle.x + buttonRectangle.w && y > buttonRectangle.y && y < buttonRectangle.y + buttonRectangle.h)
+                // {
+                //     screen = SCREEN_GAME;
+                //     goto exit;
+                // }
                 break;
             }
         }
+        SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF);
+        SDL_RenderClear(renderer);
+        button.update(0);
+        button.draw();
+        SDL_RenderPresent(renderer);
         SDL_Delay(16);
     }
 exit:

@@ -14,6 +14,8 @@ void Rectangle::draw(void)
     rectangle.y -= cameraPosition.y - windowHeight / 2;
     SDL_RenderFillRect(renderer, &rectangle); // Fill rectangle.
     GeneralGameObject::draw();
+    rectangle.x += cameraPosition.x - windowWidth / 2;
+    rectangle.y += cameraPosition.y - windowHeight / 2;
 }
 GETTER_AND_SETTER_CPP(SDL_Colour, Rectangle, colour, Colour)
 GETTER_CPP(SDL_Rect, Rectangle, rectangle, Rectangle)

@@ -9,6 +9,7 @@
 #include "../linked_list/linked_list.hpp"
 #include "../keys_down/keys_down.hpp"
 #include "../game_objects/player/player.hpp"
+#include "../game_objects/button/button.hpp"
 // This is a header file for application, only needed because of '#include' directives.
 
 class Application
@@ -19,8 +20,6 @@ public:
     void run(void);
 
 private:
-    void drawText(const char *text, SDL_Rect *rectangle);
-    void drawText(const char *text, SDL_Rect rectangle);
     void gameScreen(void);
     void menuScreen(void);
 };
