@@ -31,27 +31,29 @@ void TileMap::draw(void)
     {
         rectangles[i].x -= cameraPosition.x - windowWidth / 2;
         rectangles[i].y -= cameraPosition.y - windowHeight / 2;
+        SDL_Rect shadowRectangle{rectangles[i].x + SHADOW_DISTANCE_X, rectangles[i].y + SHADOW_DISTANCE_Y, rectangles[i].w, rectangles[i].h};
+        if (tileMap[i] == TILE_AIR || tileMap[i] == TILE_NONE)
+            goto doNotFill;
+        SDL_SetRenderDrawColour(renderer, 0X11, 0X11, 0X11, 0XFF);
+        SDL_RenderFillRect(renderer, &shadowRectangle); // Fills the rectangle.
         if (tileMap[i] == TILE_PLATFORM)
         {
-            // SDL_SetRenderDrawColour(renderer, 0X33, 0XDD, 0X33, 0XFF);
             SDL_SetRenderDrawColour(renderer, 0X55, 0X77, 0X77, 0XFF);
-            SDL_RenderFillRect(renderer, rectangles + i); // Fill rectangle.
         }
         else if (tileMap[i] == TILE_BOARDER)
         {
             SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X77, 0XFF);
-            SDL_RenderFillRect(renderer, rectangles + i);
         }
         else if (tileMap[i] == TILE_WIN)
         {
             SDL_SetRenderDrawColour(renderer, 0X33, 0X77, 0X33, 0XFF);
-            SDL_RenderFillRect(renderer, rectangles + i);
         }
         else if (tileMap[i] == TILE_LOSE)
         {
             SDL_SetRenderDrawColour(renderer, 0X77, 0X33, 0X33, 0XFF);
-            SDL_RenderFillRect(renderer, rectangles + i);
         }
+        SDL_RenderFillRect(renderer, rectangles + i); // Fills the rectangle.
+    doNotFill:
         if (tileOutlines)
         {
             SDL_SetRenderDrawColour(renderer, 0XDD, 0X00, 0X00, 0X00);

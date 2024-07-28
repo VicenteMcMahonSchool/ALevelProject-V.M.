@@ -11,6 +11,9 @@ enum __attribute__((__packed__)) SCREEN
     SCREEN_EDIT
 };
 
+#define SHADOW_DISTANCE_X 6
+#define SHADOW_DISTANCE_Y 6
+
 // Application Type is defined here because of circular dependencies issues. This occurs because 'global.hpp' requires 'application' of type 'Application', whilst 'application' needs access to the global variables.
 struct Application;
 struct GameObject;

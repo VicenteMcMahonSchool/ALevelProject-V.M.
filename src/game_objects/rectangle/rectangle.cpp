@@ -9,10 +9,13 @@ void Rectangle::update(double deltaTime)
 }
 void Rectangle::draw(void)
 {
-    SDL_SetRenderDrawColour(renderer, colour.r, colour.g, colour.b, colour.a); // Sets draw colour.
     rectangle.x = position.x - (cameraPosition.x - windowWidth / 2);
     rectangle.y = position.y - (cameraPosition.y - windowHeight / 2);
-    SDL_RenderFillRect(renderer, &rectangle); // Fill rectangle.
+    SDL_SetRenderDrawColour(renderer, 0X11, 0X11, 0X11, 0XFF);
+    SDL_Rect shadowRectangle{rectangle.x + SHADOW_DISTANCE_X, rectangle.y + SHADOW_DISTANCE_Y, rectangle.w, rectangle.h};
+    SDL_RenderFillRect(renderer, &shadowRectangle);                            // Fills the rectangle.
+    SDL_SetRenderDrawColour(renderer, colour.r, colour.g, colour.b, colour.a); // Sets draw colour.
+    SDL_RenderFillRect(renderer, &rectangle);                                  // Fills the rectangle.
     GeneralGameObject::draw();
 }
 GETTER_AND_SETTER_CPP(SDL_Colour, Rectangle, colour, Colour)
