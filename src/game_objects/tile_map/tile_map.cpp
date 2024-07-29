@@ -90,7 +90,7 @@ void TileMap::setTileAtPosition(Vector2 position, TILE_TYPE tileType)
 
 size_t TileMap::getIndexFromPosition(Vector2 position)
 {
-    return (size_t)(position.y) / tileSize * WIDTH_OF_TILE_MAP + (size_t)(position.x) / tileSize;
+    return (size_t)round(position.y) / tileSize * WIDTH_OF_TILE_MAP + (size_t)round(position.x) / tileSize;
 }
 
 const TILE_TYPE *TileMap::getTileAtPosition(Vector2 position)
