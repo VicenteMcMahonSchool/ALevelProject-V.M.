@@ -170,7 +170,7 @@ exit:
 void Application::editScreen(void)
 {
     gameObjects.makeEmpty();
-    cameraPosition = {0, 0};
+    cameraPosition = tileMap.getCentrePositionOfTile(tileMap.getSpawnTile());
     unsigned int tileSize = tileMap.getTileSize();
     tileMap.tileOutlines = true;
     gameObjects.add({&tileMap});
