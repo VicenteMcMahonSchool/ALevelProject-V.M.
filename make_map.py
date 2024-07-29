@@ -9,14 +9,17 @@ tileTypes = {
     "TILE_BOARDER": b"\x02",
     "TILE_PLATFORM": b"\x03",
     "TILE_WIN": b"\x04",
-    "TILE_LOSE": b"\x05"
+    "TILE_LOSE": b"\x05",
+    "TILE_SPAWN": b"\x06"
 }
 
 if __name__ == "__main__":
     with open("./map", "wb") as file:
         buffer = b""
         for i in range(WIDTH_OF_TILE_MAP * HEIGHT_OF_TILE_MAP):
-            if i < WIDTH_OF_TILE_MAP:
+            if i == WIDTH_OF_TILE_MAP + 1:
+                buffer += tileTypes["TILE_SPAWN"]
+            elif i < WIDTH_OF_TILE_MAP:
                 buffer += tileTypes["TILE_BOARDER"]
             elif i % WIDTH_OF_TILE_MAP == 0 or i % WIDTH_OF_TILE_MAP == WIDTH_OF_TILE_MAP-1:
                 buffer += tileTypes["TILE_BOARDER"]

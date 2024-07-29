@@ -18,20 +18,21 @@ enum __attribute__((__packed__)) TILE_TYPE
     TILE_PLATFORM = 3,
     TILE_WIN = 4,
     TILE_LOSE = 5,
+    TILE_SPAWN = 6,
     TILE_MAXIMUM_VALUE,
 };
 
 struct TilesAroundPosition
 {
-    TILE_TYPE *centre = NULL;
-    TILE_TYPE *left = NULL;
-    TILE_TYPE *right = NULL;
-    TILE_TYPE *top = NULL;
-    TILE_TYPE *bottom = NULL;
-    TILE_TYPE *topLeft = NULL;
-    TILE_TYPE *topRight = NULL;
-    TILE_TYPE *bottomLeft = NULL;
-    TILE_TYPE *bottomRight = NULL;
+    const TILE_TYPE *centre = NULL;
+    const TILE_TYPE *left = NULL;
+    const TILE_TYPE *right = NULL;
+    const TILE_TYPE *top = NULL;
+    const TILE_TYPE *bottom = NULL;
+    const TILE_TYPE *topLeft = NULL;
+    const TILE_TYPE *topRight = NULL;
+    const TILE_TYPE *bottomLeft = NULL;
+    const TILE_TYPE *bottomRight = NULL;
 };
 
 struct TileCentres
@@ -52,8 +53,8 @@ struct __attribute__((__packed__)) TileAttributes
     bool isCollidable;
 };
 
-TileAttributes getTileAttributes(TILE_TYPE tile);
-TileAttributes getTileAttributes(TILE_TYPE *tilePointer);
+TileAttributes getTileAttributes(const TILE_TYPE tile);
+TileAttributes getTileAttributes(const TILE_TYPE *tilePointer);
 
 class TileMap : public GeneralGameObject
 {
@@ -61,7 +62,8 @@ private:
     TILE_TYPE tileMap[NUMBER_OF_TILES];
     SDL_Rect rectangles[NUMBER_OF_TILES];
     // unsigned int tileSize;
-    GETTER_AND_SETTER_HPP(unsigned int, tileSize, TileSize);
+    GETTER_AND_SETTER_HPP(unsigned int, tileSize, TileSize)
+    GETTER_HPP(TILE_TYPE *, spawnTile, SpawnTile)
 
 public:
     TileMap(Vector2 position, unsigned int tileSize);
@@ -69,11 +71,11 @@ public:
     void update(double deltaTime);
     void draw(void);
     void saveMap(void);
-    void setTile(size_t x, size_t y, TILE_TYPE tileType);
+    void setTileAtPosition(Vector2 position, TILE_TYPE tileType);
     size_t getIndexFromPosition(Vector2 position);
-    TILE_TYPE *getTileAtPosition(Vector2 position);
+    const TILE_TYPE *getTileAtPosition(Vector2 position);
     TilesAroundPosition getTilesAroundPosition(Vector2 position);
-    void setTilesAroundPosition(Vector2 position, TILE_TYPE tile);
-    Vector2 getCentrePositionOfTile(TILE_TYPE *tile);
-    TileCentres getTileCentresAroundPositionOfTile(TILE_TYPE *tile);
+    // void setTilesAroundPosition(Vector2 position, TILE_TYPE tile);
+    Vector2 getCentrePositionOfTile(const TILE_TYPE *tile);
+    TileCentres getTileCentresAroundPositionOfTile(const TILE_TYPE *tile);
 };

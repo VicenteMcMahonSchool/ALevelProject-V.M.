@@ -1,8 +1,10 @@
 #include "./tile_map.hpp"
 
 GETTER_AND_SETTER_CPP(unsigned int, TileMap, tileSize, TileSize)
+GETTER_CPP(TILE_TYPE *, TileMap, spawnTile, SpawnTile)
 TileMap::TileMap(Vector2 position, unsigned int tileSize) : GeneralGameObject(position), tileSize(tileSize)
 {
+    spawnTile = NULL;
     FILE *file = fopen("./map", "rb");
     fseek(file, 0, SEEK_END);
     size_t fileSize = ftell(file);
@@ -15,6 +17,8 @@ TileMap::TileMap(Vector2 position, unsigned int tileSize) : GeneralGameObject(po
         rectangles[i].w = tileSize;
         rectangles[i].h = tileSize;
         fread(tileMap + i, sizeof(TILE_TYPE), 1, file);
+        if (tileMap[i] == TILE_SPAWN && spawnTile == NULL)
+            spawnTile = tileMap + i;
     }
     fclose(file);
 }
@@ -32,26 +36,20 @@ void TileMap::draw(void)
         rectangles[i].x -= cameraPosition.x - windowWidth / 2;
         rectangles[i].y -= cameraPosition.y - windowHeight / 2;
         SDL_Rect shadowRectangle{rectangles[i].x + SHADOW_DISTANCE_X, rectangles[i].y + SHADOW_DISTANCE_Y, rectangles[i].w, rectangles[i].h};
-        if (tileMap[i] == TILE_AIR || tileMap[i] == TILE_NONE || (tileMap[i] == TILE_BOARDER && !tileOutlines))
+        if (tileMap[i] == TILE_AIR || tileMap[i] == TILE_NONE || ((tileMap[i] == TILE_BOARDER || tileMap[i] == TILE_SPAWN) && !tileOutlines))
             goto doNotFill;
         SDL_SetRenderDrawColour(renderer, 0X11, 0X11, 0X11, 0XFF);
         SDL_RenderFillRect(renderer, &shadowRectangle); // Fills the rectangle.
         if (tileMap[i] == TILE_PLATFORM)
-        {
             SDL_SetRenderDrawColour(renderer, 0X55, 0X77, 0X77, 0XFF);
-        }
         else if (tileMap[i] == TILE_BOARDER)
-        {
             SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X77, 0XFF);
-        }
         else if (tileMap[i] == TILE_WIN)
-        {
             SDL_SetRenderDrawColour(renderer, 0X33, 0X77, 0X33, 0XFF);
-        }
         else if (tileMap[i] == TILE_LOSE)
-        {
             SDL_SetRenderDrawColour(renderer, 0X77, 0X33, 0X33, 0XFF);
-        }
+        else if (tileMap[i] == TILE_SPAWN)
+            SDL_SetRenderDrawColour(renderer, 0X77, 0X77, 0X33, 0XFF);
         SDL_RenderFillRect(renderer, rectangles + i); // Fills the rectangle.
     doNotFill:
         if (tileOutlines)
@@ -72,9 +70,22 @@ void TileMap::saveMap(void)
     fclose(file);
 }
 
-void TileMap::setTile(size_t x, size_t y, TILE_TYPE tileType)
+void TileMap::setTileAtPosition(Vector2 position, TILE_TYPE tileType)
 {
-    tileMap[y * WIDTH_OF_TILE_MAP + x % WIDTH_OF_TILE_MAP] = tileType;
+    size_t tileIndex = getIndexFromPosition(position);
+    if (tileIndex >= NUMBER_OF_TILES || tileIndex < 0)
+        return;
+    if (tileType == TILE_SPAWN)
+    {
+        // This loop makes sure that there will only be one spawn tile.
+        for (size_t i = 0; i < NUMBER_OF_TILES; i++)
+            if (tileMap[i] == TILE_SPAWN)
+                tileMap[i] = TILE_AIR;
+        spawnTile = tileMap + tileIndex;
+    }
+    else if (tileMap[tileIndex] == TILE_SPAWN)
+        spawnTile = NULL;
+    tileMap[tileIndex] = tileType;
 }
 
 size_t TileMap::getIndexFromPosition(Vector2 position)
@@ -82,7 +93,7 @@ size_t TileMap::getIndexFromPosition(Vector2 position)
     return (size_t)(position.y) / tileSize * WIDTH_OF_TILE_MAP + (size_t)(position.x) / tileSize;
 }
 
-TILE_TYPE *TileMap::getTileAtPosition(Vector2 position)
+const TILE_TYPE *TileMap::getTileAtPosition(Vector2 position)
 {
     size_t index = getIndexFromPosition(position);
     if (index > NUMBER_OF_TILES || index < 0)
@@ -115,38 +126,40 @@ TilesAroundPosition TileMap::getTilesAroundPosition(Vector2 position)
     return tiles;
 }
 
-void TileMap::setTilesAroundPosition(Vector2 position, TILE_TYPE tile)
-{
-    TilesAroundPosition tiles = getTilesAroundPosition(position);
-    if (tiles.centre)
-        *tiles.centre = tile;
-    if (tiles.left != NULL)
-        *tiles.left = tile;
-    if (tiles.right != NULL)
-        *tiles.right = tile;
-    if (tiles.top != NULL)
-        *tiles.top = tile;
-    if (tiles.bottom != NULL)
-        *tiles.bottom = tile;
-    if (tiles.topLeft != NULL)
-        *tiles.topLeft = tile;
-    if (tiles.topRight != NULL)
-        *tiles.topRight = tile;
-    if (tiles.bottomLeft != NULL)
-        *tiles.bottomLeft = tile;
-    if (tiles.bottomRight != NULL)
-        *tiles.bottomRight = tile;
-}
+// void TileMap::setTilesAroundPosition(Vector2 position, TILE_TYPE tile)
+// {
+//     TilesAroundPosition tiles = getTilesAroundPosition(position);
+//     if (tiles.centre)
+//         *tiles.centre = tile;
+//     if (tiles.left != NULL)
+//         *tiles.left = tile;
+//     if (tiles.right != NULL)
+//         *tiles.right = tile;
+//     if (tiles.top != NULL)
+//         *tiles.top = tile;
+//     if (tiles.bottom != NULL)
+//         *tiles.bottom = tile;
+//     if (tiles.topLeft != NULL)
+//         *tiles.topLeft = tile;
+//     if (tiles.topRight != NULL)
+//         *tiles.topRight = tile;
+//     if (tiles.bottomLeft != NULL)
+//         *tiles.bottomLeft = tile;
+//     if (tiles.bottomRight != NULL)
+//         *tiles.bottomRight = tile;
+// }
 
-Vector2 TileMap::getCentrePositionOfTile(TILE_TYPE *tile)
+Vector2 TileMap::getCentrePositionOfTile(const TILE_TYPE *tile)
 {
+    if (tile == NULL)
+        return {(double)tileSize, (double)tileSize};
     size_t tileIndex = tile - tileMap;
     return {
         (tileIndex % WIDTH_OF_TILE_MAP) * tileSize + (double)tileSize / 2,
         tileIndex / WIDTH_OF_TILE_MAP * (tileSize) + (double)tileSize / 2};
 }
 
-TileCentres TileMap::getTileCentresAroundPositionOfTile(TILE_TYPE *tile)
+TileCentres TileMap::getTileCentresAroundPositionOfTile(const TILE_TYPE *tile)
 {
     TileCentres output;
     output.centre = getCentrePositionOfTile(tile);
@@ -161,7 +174,7 @@ TileCentres TileMap::getTileCentresAroundPositionOfTile(TILE_TYPE *tile)
     return output;
 }
 
-TileAttributes getTileAttributes(TILE_TYPE tile)
+TileAttributes getTileAttributes(const TILE_TYPE tile)
 {
     TileAttributes output{};
     if (tile == TILE_PLATFORM || tile == TILE_BOARDER)
@@ -170,7 +183,7 @@ TileAttributes getTileAttributes(TILE_TYPE tile)
         output.isCollidable = false;
     return output;
 }
-TileAttributes getTileAttributes(TILE_TYPE *tilePointer)
+TileAttributes getTileAttributes(const TILE_TYPE *tilePointer)
 {
     if (tilePointer == NULL)
         return getTileAttributes(TILE_AIR);

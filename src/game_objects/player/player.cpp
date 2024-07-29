@@ -16,7 +16,7 @@ void Player::update(double deltaTime)
         isOnGround = false;
         velocity.y -= 1;
     }
-    TILE_TYPE *centreTile = tileMap.getTileAtPosition(position + (Vector2){(double)rectangle.w / 2, (double)rectangle.h / 2});
+    const TILE_TYPE *centreTile = tileMap.getTileAtPosition(position + (Vector2){(double)rectangle.w / 2, (double)rectangle.h / 2});
     if (centreTile != NULL && (*centreTile == TILE_WIN || *centreTile == TILE_LOSE))
     {
         screen = SCREEN_MENU;

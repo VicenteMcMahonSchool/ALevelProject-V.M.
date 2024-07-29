@@ -53,7 +53,7 @@ void Application::gameScreen(void)
     gameObjects.makeEmpty();
     unsigned int tileSize = tileMap.getTileSize();
     tileMap.tileOutlines = false;
-    Player player{{(double)tileSize, (double)tileSize}};
+    Player player{tileMap.getCentrePositionOfTile(tileMap.getSpawnTile()) - (Vector2){(double)tileSize / 2, (double)tileSize / 2}};
     gameObjects.add({&tileMap});
     gameObjects.add({&player});
     // SDL_Texture *imageTexture = IMG_LoadTexture(renderer, "image.jpg");
@@ -211,18 +211,19 @@ void Application::editScreen(void)
             {
                 int x, y;
                 Uint32 button = SDL_GetMouseState(&x, &y);
-                TILE_TYPE *tile = tileMap.getTileAtPosition({cameraPosition.x + x - windowWidth / 2, cameraPosition.y + y - windowHeight / 2});
+                Vector2 position = {cameraPosition.x + x - windowWidth / 2, cameraPosition.y + y - windowHeight / 2};
+                const TILE_TYPE *tile = tileMap.getTileAtPosition(position);
                 if (tile != NULL)
                 {
                     if (button == 1)
                     {
                         if (*tile < TILE_MAXIMUM_VALUE - 1)
-                            *tile = (TILE_TYPE)(*tile + 1);
+                            tileMap.setTileAtPosition(position, (TILE_TYPE)(*tile + 1));
                         else
-                            *tile = TILE_AIR;
+                            tileMap.setTileAtPosition(position, TILE_AIR);
                     }
                     else if (button == 4)
-                        *tile = TILE_AIR;
+                        tileMap.setTileAtPosition(position, TILE_AIR);
                 }
                 break;
             }
