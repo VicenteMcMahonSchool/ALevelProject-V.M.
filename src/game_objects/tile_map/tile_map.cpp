@@ -32,7 +32,7 @@ void TileMap::draw(void)
         rectangles[i].x -= cameraPosition.x - windowWidth / 2;
         rectangles[i].y -= cameraPosition.y - windowHeight / 2;
         SDL_Rect shadowRectangle{rectangles[i].x + SHADOW_DISTANCE_X, rectangles[i].y + SHADOW_DISTANCE_Y, rectangles[i].w, rectangles[i].h};
-        if (tileMap[i] == TILE_AIR || tileMap[i] == TILE_NONE)
+        if (tileMap[i] == TILE_AIR || tileMap[i] == TILE_NONE || (tileMap[i] == TILE_BOARDER && !tileOutlines))
             goto doNotFill;
         SDL_SetRenderDrawColour(renderer, 0X11, 0X11, 0X11, 0XFF);
         SDL_RenderFillRect(renderer, &shadowRectangle); // Fills the rectangle.
