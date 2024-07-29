@@ -1,6 +1,6 @@
 #include "./movable_rectangle.hpp"
 
-MovableRectangle::MovableRectangle(Vector2 position, SDL_Colour colour, int width, int height) : Rectangle(position, colour, width, height) {}
+MovableRectangle::MovableRectangle(Vector2 position, SDL_Colour colour, int width, int height) : Rectangle(position, colour, width, height), velocity({0, 0}) {}
 void MovableRectangle::update(double deltaTime)
 {
     double localGravity = isOnGround ? 0 : gravity;
