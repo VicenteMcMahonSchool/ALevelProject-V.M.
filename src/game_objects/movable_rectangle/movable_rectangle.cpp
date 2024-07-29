@@ -9,8 +9,8 @@ void MovableRectangle::update(double deltaTime)
     isOnGround = false;
     Vector2 centrePosition = position + (Vector2){(double)rectangle.w / 2, (double)rectangle.h / 2};
     unsigned int tileSize = tileMap.getTileSize();
-    double averageWidth = (tileSize + rectangle.w) / 2;
-    double averageHeight = (tileSize + rectangle.h) / 2;
+    double averageWidth = (double)(tileSize + rectangle.w) / 2;
+    double averageHeight = (double)(tileSize + rectangle.h) / 2;
     TilesAroundPosition tiles = tileMap.getTilesAroundPosition(centrePosition);
     TileCentres tileCentres = tileMap.getTileCentresAroundPositionOfTile(tiles.centre);
     if (getTileAttributes(tiles.top).isCollidable || (getTileAttributes(tiles.topLeft).isCollidable && (centrePosition - tileCentres.topLeft).isYBiggerThanX()) || (getTileAttributes(tiles.topRight).isCollidable && (tileCentres.topRight - centrePosition).isNegativeYBiggerThanX()))
