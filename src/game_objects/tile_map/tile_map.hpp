@@ -19,10 +19,11 @@ enum __attribute__((__packed__)) TILE_TYPE
     TILE_WIN = 4,
     TILE_LOSE = 5,
     TILE_SPAWN = 6,
+    TILE_ROTATION = 7,
     TILE_MAXIMUM_VALUE,
 };
 
-struct TilesAroundPosition
+struct TilesAroundTile
 {
     const TILE_TYPE *centre = NULL;
     const TILE_TYPE *left = NULL;
@@ -61,6 +62,7 @@ class TileMap : public GeneralGameObject
 private:
     TILE_TYPE tileMap[NUMBER_OF_TILES];
     SDL_Rect rectangles[NUMBER_OF_TILES];
+    double timePast = 0;
     // unsigned int tileSize;
     GETTER_AND_SETTER_HPP(unsigned int, tileSize, TileSize)
     GETTER_HPP(TILE_TYPE *, spawnTile, SpawnTile)
@@ -74,7 +76,8 @@ public:
     void setTileAtPosition(Vector2 position, TILE_TYPE tileType);
     size_t getIndexFromPosition(Vector2 position);
     const TILE_TYPE *getTileAtPosition(Vector2 position);
-    TilesAroundPosition getTilesAroundPosition(Vector2 position);
+    TilesAroundTile getTilesAroundIndex(size_t index);
+    TilesAroundTile getTilesAroundPosition(Vector2 position);
     // void setTilesAroundPosition(Vector2 position, TILE_TYPE tile);
     Vector2 getCentrePositionOfTile(const TILE_TYPE *tile);
     TileCentres getTileCentresAroundPositionOfTile(const TILE_TYPE *tile);

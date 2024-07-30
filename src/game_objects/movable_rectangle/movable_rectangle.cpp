@@ -11,7 +11,7 @@ void MovableRectangle::update(double deltaTime)
     unsigned int tileSize = tileMap.getTileSize();
     double averageWidth = (double)(tileSize + rectangle.w) / 2;
     double averageHeight = (double)(tileSize + rectangle.h) / 2;
-    TilesAroundPosition tiles = tileMap.getTilesAroundPosition(centrePosition);
+    TilesAroundTile tiles = tileMap.getTilesAroundPosition(centrePosition);
     TileCentres tileCentres = tileMap.getTileCentresAroundPositionOfTile(tiles.centre);
     if (getTileAttributes(tiles.top).isCollidable || (getTileAttributes(tiles.topLeft).isCollidable && (centrePosition - tileCentres.topLeft).isYBiggerThanX()) || (getTileAttributes(tiles.topRight).isCollidable && (tileCentres.topRight - centrePosition).isNegativeYBiggerThanX()))
     {

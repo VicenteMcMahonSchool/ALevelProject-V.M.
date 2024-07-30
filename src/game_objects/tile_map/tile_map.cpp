@@ -24,10 +24,30 @@ TileMap::TileMap(Vector2 position, unsigned int tileSize) : GeneralGameObject(po
 }
 void TileMap::update(double deltaTime)
 {
+    timePast += deltaTime;
+    for (size_t i = 0; i < NUMBER_OF_TILES; i++)
+        if (tileMap[i] == TILE_ROTATION && timePast > 1000)
+        {
+            TileCentres tileCentres = getTileCentresAroundPositionOfTile(tileMap + i);
+            TilesAroundTile tiles = getTilesAroundIndex(i);
+            if (tiles.right == NULL || tiles.bottomRight == NULL || tiles.bottom == NULL || tiles.bottomLeft == NULL || tiles.left == NULL || tiles.topLeft == NULL || tiles.top == NULL || tiles.topRight == NULL)
+                continue;
+            TILE_TYPE tileValue[8] = {*tiles.right, *tiles.bottomRight, *tiles.bottom, *tiles.bottomLeft, *tiles.left, *tiles.topLeft, *tiles.top, *tiles.topRight};
+            setTileAtPosition(tileCentres.right, tileValue[7]);
+            setTileAtPosition(tileCentres.bottomRight, tileValue[0]);
+            setTileAtPosition(tileCentres.bottom, tileValue[1]);
+            setTileAtPosition(tileCentres.bottomLeft, tileValue[2]);
+            setTileAtPosition(tileCentres.left, tileValue[3]);
+            setTileAtPosition(tileCentres.topLeft, tileValue[4]);
+            setTileAtPosition(tileCentres.top, tileValue[5]);
+            setTileAtPosition(tileCentres.topRight, tileValue[6]);
+        }
     for (size_t i = 0; i < NUMBER_OF_TILES; i++)
     {
         TILE_MAP_RECTANGLES_POSITION
     }
+    while (timePast > 1000)
+        timePast -= 1000;
 }
 void TileMap::draw(void)
 {
@@ -50,6 +70,8 @@ void TileMap::draw(void)
             SDL_SetRenderDrawColour(renderer, 0X77, 0X33, 0X33, 0XFF);
         else if (tileMap[i] == TILE_SPAWN)
             SDL_SetRenderDrawColour(renderer, 0X77, 0X77, 0X33, 0XFF);
+        else if (tileMap[i] == TILE_ROTATION)
+            SDL_SetRenderDrawColour(renderer, 0X77, 0X77, 0X55, 0XFF);
         SDL_RenderFillRect(renderer, rectangles + i); // Fills the rectangle.
     doNotFill:
         if (tileOutlines)
@@ -101,10 +123,9 @@ const TILE_TYPE *TileMap::getTileAtPosition(Vector2 position)
     return tileMap + index;
 }
 
-TilesAroundPosition TileMap::getTilesAroundPosition(Vector2 position)
+TilesAroundTile TileMap::getTilesAroundIndex(size_t index)
 {
-    size_t index = getIndexFromPosition(position);
-    TilesAroundPosition tiles;
+    TilesAroundTile tiles;
     if (index <= NUMBER_OF_TILES && index >= 0)
         tiles.centre = tileMap + index;
     if (index - WIDTH_OF_TILE_MAP <= NUMBER_OF_TILES && index - WIDTH_OF_TILE_MAP >= 0)
@@ -124,6 +145,12 @@ TilesAroundPosition TileMap::getTilesAroundPosition(Vector2 position)
     if (index + WIDTH_OF_TILE_MAP + 1 <= NUMBER_OF_TILES && index + WIDTH_OF_TILE_MAP + 1 >= 0)
         tiles.bottomRight = tileMap + index + WIDTH_OF_TILE_MAP + 1;
     return tiles;
+}
+
+TilesAroundTile TileMap::getTilesAroundPosition(Vector2 position)
+{
+    size_t index = getIndexFromPosition(position);
+    return getTilesAroundIndex(index);
 }
 
 // void TileMap::setTilesAroundPosition(Vector2 position, TILE_TYPE tile)
