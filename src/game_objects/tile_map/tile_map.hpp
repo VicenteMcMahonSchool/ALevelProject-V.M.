@@ -18,8 +18,8 @@ enum __attribute__((__packed__)) TILE_TYPE
     TILE_PLATFORM = 3,
     TILE_WIN = 4,
     TILE_LOSE = 5,
-    TILE_SPAWN = 6,
-    TILE_ROTATION = 7,
+    TILE_ROTATION = 6,
+    TILE_SPAWN = 7,
     TILE_MAXIMUM_VALUE,
 };
 

@@ -10,7 +10,8 @@ tileTypes = {
     "TILE_PLATFORM": b"\x03",
     "TILE_WIN": b"\x04",
     "TILE_LOSE": b"\x05",
-    "TILE_SPAWN": b"\x06"
+    "TILE_ROTATION": b"\x06",
+    "TILE_SPAWN": b"\x07"
 }
 
 if __name__ == "__main__":
