@@ -313,6 +313,7 @@ void Application::editScreen(void)
             cameraPosition.x -= 1 * deltaTime;
         if (isButtonDown(SDL_SCANCODE_D) || isButtonDown(SDL_CONTROLLER_BUTTON_DPAD_RIGHT))
             cameraPosition.x += 1 * deltaTime;
+
         SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF);
         SDL_RenderClear(renderer);
         TRAVERSE(gameObjects.head, GameObject, item->datum.update(deltaTime)) // Updates all the 'GameObjects'.
@@ -324,7 +325,7 @@ void Application::editScreen(void)
             {
                 SDL_SetRenderDrawColour(renderer, 0XAA, 0XAA, 0XAA, 0XFF);
                 Vector2 centrePosition = tileMap.getCentrePositionOfTile(tile);
-                SDL_Rect rectangle = {centrePosition.x - tileSize / 2, centrePosition.y - tileSize / 2, tileSize, tileSize};
+                SDL_Rect rectangle = {(int)(centrePosition.x - (double)tileSize / 2 + (double)windowWidth / 2 - cameraPosition.x), (int)(centrePosition.y - (double)tileSize / 2 + (double)windowHeight / 2 - cameraPosition.y), (int)tileSize, (int)tileSize};
                 SDL_RenderDrawRect(renderer, &rectangle);
             }
         }
@@ -333,7 +334,7 @@ void Application::editScreen(void)
     }
 exit: // This is a section which can be reached using 'goto' statements.
     unsetAllButtons();
-    // tileMap.saveMap();
+    tileMap.saveMap();
     if (screen == SCREEN_EDIT)
         screen = SCREEN_MENU;
     return;
