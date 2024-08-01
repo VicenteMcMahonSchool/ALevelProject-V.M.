@@ -245,6 +245,23 @@ void Application::editScreen(void)
                     {
                     case SDL_CONTROLLER_BUTTON_START:
                         goto exit;
+                    case SDL_CONTROLLER_BUTTON_A:
+                    {
+                        Vector2 position = {cameraPosition.x - windowWidth / 2, cameraPosition.y - windowHeight / 2};
+                        const TILE_TYPE *tile = tileMap.getTileAtPosition(position);
+                        if (*tile < TILE_MAXIMUM_VALUE - 1)
+                            tileMap.setTileAtPosition(position, (TILE_TYPE)(*tile + 1));
+                        else
+                            tileMap.setTileAtPosition(position, TILE_AIR);
+                        break;
+                    }
+                    case SDL_CONTROLLER_BUTTON_B:
+                    {
+                        Vector2 position = {cameraPosition.x - windowWidth / 2, cameraPosition.y - windowHeight / 2};
+                        const TILE_TYPE *tile = tileMap.getTileAtPosition(position);
+                        tileMap.setTileAtPosition(position, TILE_AIR);
+                        break;
+                    }
                     default:
                         setButtonDown(event.cbutton.button);
                     }
