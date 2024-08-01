@@ -79,8 +79,6 @@ void TileMap::draw(void)
             SDL_SetRenderDrawColour(renderer, 0XDD, 0X00, 0X00, 0X00);
             SDL_RenderDrawRect(renderer, rectangles + i);
         }
-        // rectangles[i].x += cameraPosition.x - windowWidth / 2;
-        // rectangles[i].y += cameraPosition.y - windowHeight / 2;
     }
     GeneralGameObject::draw();
 }
@@ -152,29 +150,6 @@ TilesAroundTile TileMap::getTilesAroundPosition(Vector2 position)
     size_t index = getIndexFromPosition(position);
     return getTilesAroundIndex(index);
 }
-
-// void TileMap::setTilesAroundPosition(Vector2 position, TILE_TYPE tile)
-// {
-//     TilesAroundPosition tiles = getTilesAroundPosition(position);
-//     if (tiles.centre)
-//         *tiles.centre = tile;
-//     if (tiles.left != NULL)
-//         *tiles.left = tile;
-//     if (tiles.right != NULL)
-//         *tiles.right = tile;
-//     if (tiles.top != NULL)
-//         *tiles.top = tile;
-//     if (tiles.bottom != NULL)
-//         *tiles.bottom = tile;
-//     if (tiles.topLeft != NULL)
-//         *tiles.topLeft = tile;
-//     if (tiles.topRight != NULL)
-//         *tiles.topRight = tile;
-//     if (tiles.bottomLeft != NULL)
-//         *tiles.bottomLeft = tile;
-//     if (tiles.bottomRight != NULL)
-//         *tiles.bottomRight = tile;
-// }
 
 Vector2 TileMap::getCentrePositionOfTile(const TILE_TYPE *tile)
 {

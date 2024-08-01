@@ -78,7 +78,6 @@ public:
     const TILE_TYPE *getTileAtPosition(Vector2 position);
     TilesAroundTile getTilesAroundIndex(size_t index);
     TilesAroundTile getTilesAroundPosition(Vector2 position);
-    // void setTilesAroundPosition(Vector2 position, TILE_TYPE tile);
     Vector2 getCentrePositionOfTile(const TILE_TYPE *tile);
     TileCentres getTileCentresAroundPositionOfTile(const TILE_TYPE *tile);
 };

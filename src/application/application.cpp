@@ -56,7 +56,6 @@ void Application::gameScreen(void)
     Player player{tileMap.getCentrePositionOfTile(tileMap.getSpawnTile()) - (Vector2){(double)tileSize / 2, (double)tileSize / 2}};
     gameObjects.add({&tileMap});
     gameObjects.add({&player});
-    // SDL_Texture *imageTexture = IMG_LoadTexture(renderer, "image.jpg");
     SDL_Event event;
     // Delta Time code taken from https://gamedev.stackexchange.com/questions/110825/how-to-calculate-delta-time-with-sdl.
     Uint64 now = SDL_GetPerformanceCounter(), last = 0; // Will be used to calculate 'deltaTime'.
@@ -91,19 +90,15 @@ void Application::gameScreen(void)
                 goto exit;
             }
         }
-        // SDL_RenderCopy(renderer, imageTexture, NULL, NULL);
-        // SDL_RenderPresent(renderer);
         SDL_SetRenderDrawColour(renderer, 0X55, 0X55, 0X55, 0XFF);
         SDL_RenderClear(renderer);                                            // Clears the screen.
         TRAVERSE(gameObjects.head, GameObject, item->datum.update(deltaTime)) // Updates all the 'GameObjects'.
         cameraPosition = player.getPosition() + (Vector2){(double)player.getRectangle().w / 2, (double)player.getRectangle().h / 2};
         TRAVERSE(gameObjects.head, GameObject, item->datum.draw()) // Draws all the 'GameObjects'.
-        // SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF);            // Sets the colour.
-        SDL_RenderPresent(renderer); // Renders everything.
+        SDL_RenderPresent(renderer);                               // Renders everything.
         SDL_Delay(DELAY);
     }
 exit: // This is a section which can be reached using 'goto' statements.
-    // SDL_DestroyTexture(imageTexture);
     unsetAllKeys();
     screen = SCREEN_MENU;
     return;
