@@ -317,12 +317,23 @@ void Application::editScreen(void)
         SDL_RenderClear(renderer);
         TRAVERSE(gameObjects.head, GameObject, item->datum.update(deltaTime)) // Updates all the 'GameObjects'.
         TRAVERSE(gameObjects.head, GameObject, item->datum.draw())            // Draws all the 'GameObjects'.
-        SDL_RenderPresent(renderer);                                          // Renders everything.
+        if (controller != NULL)
+        {
+            const TILE_TYPE *tile = tileMap.getTileAtPosition(cameraPosition);
+            if (tile != NULL)
+            {
+                SDL_SetRenderDrawColour(renderer, 0XAA, 0XAA, 0XAA, 0XFF);
+                Vector2 centrePosition = tileMap.getCentrePositionOfTile(tile);
+                SDL_Rect rectangle = {centrePosition.x - tileSize / 2, centrePosition.y - tileSize / 2, tileSize, tileSize};
+                SDL_RenderDrawRect(renderer, &rectangle);
+            }
+        }
+        SDL_RenderPresent(renderer); // Renders everything.
         SDL_Delay(DELAY);
     }
 exit: // This is a section which can be reached using 'goto' statements.
     unsetAllButtons();
-    tileMap.saveMap();
+    // tileMap.saveMap();
     if (screen == SCREEN_EDIT)
         screen = SCREEN_MENU;
     return;
