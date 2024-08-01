@@ -249,7 +249,7 @@ void Application::editScreen(void)
                     {
                         Vector2 position = {cameraPosition.x - windowWidth / 2, cameraPosition.y - windowHeight / 2};
                         const TILE_TYPE *tile = tileMap.getTileAtPosition(position);
-                        if (*tile < TILE_MAXIMUM_VALUE - 1)
+                        if (tile != NULL && *tile < TILE_MAXIMUM_VALUE - 1)
                             tileMap.setTileAtPosition(position, (TILE_TYPE)(*tile + 1));
                         else
                             tileMap.setTileAtPosition(position, TILE_AIR);
