@@ -196,9 +196,6 @@ void Application::editScreen(void)
                 {
                 case SDL_SCANCODE_ESCAPE: // If the escape key is pressed, exit.
                     goto exit;
-                case SDL_SCANCODE_P:
-                    tileMap.saveMap();
-                    break;
                 default:
                     setKeyDown(event.key.keysym.scancode);
                     break;
@@ -231,13 +228,13 @@ void Application::editScreen(void)
                 goto exit;
             }
         }
-        if (isKeyDown(SDL_SCANCODE_W))
+        if (isKeyDown(SDL_SCANCODE_W) || isKeyDown(SDL_SCANCODE_UP))
             cameraPosition.y -= 16;
-        if (isKeyDown(SDL_SCANCODE_S))
+        if (isKeyDown(SDL_SCANCODE_S) || isKeyDown(SDL_SCANCODE_DOWN))
             cameraPosition.y += 16;
-        if (isKeyDown(SDL_SCANCODE_A))
+        if (isKeyDown(SDL_SCANCODE_A) || isKeyDown(SDL_SCANCODE_LEFT))
             cameraPosition.x -= 16;
-        if (isKeyDown(SDL_SCANCODE_D))
+        if (isKeyDown(SDL_SCANCODE_D) || isKeyDown(SDL_SCANCODE_RIGHT))
             cameraPosition.x += 16;
         SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF);
         SDL_RenderClear(renderer);
@@ -248,6 +245,7 @@ void Application::editScreen(void)
     }
 exit: // This is a section which can be reached using 'goto' statements.
     unsetAllKeys();
+    tileMap.saveMap();
     if (screen == SCREEN_EDIT)
         screen = SCREEN_MENU;
     return;

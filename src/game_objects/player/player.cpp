@@ -7,11 +7,11 @@ Player::Player(Vector2 position) : MovableRectangle(position, {0X33, 0X33, 0X77,
 void Player::update(double deltaTime)
 {
     Vector2 deltaVelocity{0, 0};
-    if (isKeyDown(SDL_SCANCODE_A))
+    if (isKeyDown(SDL_SCANCODE_A) || isKeyDown(SDL_SCANCODE_LEFT))
         deltaVelocity.x -= 1;
-    if (isKeyDown(SDL_SCANCODE_D))
+    if (isKeyDown(SDL_SCANCODE_D) || isKeyDown(SDL_SCANCODE_RIGHT))
         deltaVelocity.x += 1;
-    if (isKeyDown(SDL_SCANCODE_SPACE) && isOnGround)
+    if ((isKeyDown(SDL_SCANCODE_SPACE) || isKeyDown(SDL_SCANCODE_UP)) && isOnGround)
     {
         isOnGround = false;
         velocity.y -= 1;
