@@ -7,9 +7,9 @@ Player::Player(Vector2 position) : MovableRectangle(position, {0X33, 0X33, 0X77,
 void Player::update(double deltaTime)
 {
     Vector2 deltaVelocity{0, 0};
-    if (isButtonDown(SDL_SCANCODE_A) || isButtonDown(SDL_CONTROLLER_BUTTON_DPAD_RIGHT))
+    if (isButtonDown(SDL_SCANCODE_A) || isButtonDown(SDL_CONTROLLER_BUTTON_DPAD_LEFT))
         deltaVelocity.x -= 1;
-    if (isButtonDown(SDL_SCANCODE_D) || isButtonDown(SDL_CONTROLLER_BUTTON_DPAD_LEFT))
+    if (isButtonDown(SDL_SCANCODE_D) || isButtonDown(SDL_CONTROLLER_BUTTON_DPAD_RIGHT))
         deltaVelocity.x += 1;
     if ((isButtonDown(SDL_SCANCODE_SPACE) || isButtonDown(SDL_CONTROLLER_BUTTON_A)) && isOnGround)
     {

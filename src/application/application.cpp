@@ -222,6 +222,20 @@ void Application::editScreen(void)
         {
             switch (event.type)
             {
+            case SDL_CONTROLLERBUTTONDOWN:
+                if (controller != NULL && event.cdevice.which == SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(controller)))
+                    switch (event.cbutton.button)
+                    {
+                    case SDL_CONTROLLER_BUTTON_START:
+                        goto exit;
+                    default:
+                        setButtonDown(event.cbutton.button);
+                    }
+                break;
+            case SDL_CONTROLLERBUTTONUP:
+                if (controller != NULL && event.cdevice.which == SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(controller)))
+                    unsetButtonDown(event.cbutton.button);
+                break;
             case SDL_KEYDOWN:
                 switch (event.key.keysym.scancode)
                 {
@@ -259,13 +273,13 @@ void Application::editScreen(void)
                 goto exit;
             }
         }
-        if (isButtonDown(SDL_SCANCODE_W) || isButtonDown(SDL_SCANCODE_UP))
+        if (isButtonDown(SDL_SCANCODE_W) || isButtonDown(SDL_CONTROLLER_BUTTON_DPAD_UP))
             cameraPosition.y -= 4 * deltaTime;
-        if (isButtonDown(SDL_SCANCODE_S) || isButtonDown(SDL_SCANCODE_DOWN))
+        if (isButtonDown(SDL_SCANCODE_S) || isButtonDown(SDL_CONTROLLER_BUTTON_DPAD_DOWN))
             cameraPosition.y += 4 * deltaTime;
-        if (isButtonDown(SDL_SCANCODE_A) || isButtonDown(SDL_SCANCODE_LEFT))
+        if (isButtonDown(SDL_SCANCODE_A) || isButtonDown(SDL_CONTROLLER_BUTTON_DPAD_LEFT))
             cameraPosition.x -= 4 * deltaTime;
-        if (isButtonDown(SDL_SCANCODE_D) || isButtonDown(SDL_SCANCODE_RIGHT))
+        if (isButtonDown(SDL_SCANCODE_D) || isButtonDown(SDL_CONTROLLER_BUTTON_DPAD_RIGHT))
             cameraPosition.x += 4 * deltaTime;
         SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF);
         SDL_RenderClear(renderer);
