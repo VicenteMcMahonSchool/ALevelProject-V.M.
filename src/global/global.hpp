@@ -34,3 +34,4 @@ extern TileMap tileMap;
 extern Vector2 cameraPosition;
 extern TTF_Font *font;
 extern SCREEN screen;
+extern SDL_GameController *controller;

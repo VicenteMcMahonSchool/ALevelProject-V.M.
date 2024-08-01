@@ -9,5 +9,5 @@ obj/application/application.o: src/application/application.cpp \
  src/application/./../linked_list/linked_list.hpp \
  src/application/./../linked_list/../game_objects/game_object/game_object.hpp \
  src/application/./../linked_list/../game_objects/game_object/../player/player.hpp \
- src/application/./../linked_list/../game_objects/game_object/../player/../../keys_down/keys_down.hpp \
+ src/application/./../linked_list/../game_objects/game_object/../player/../../input/input.hpp \
  src/application/./../linked_list/../game_objects/game_object/../button/button.hpp

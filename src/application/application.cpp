@@ -8,11 +8,12 @@ TileMap tileMap = TileMap({0, 0}, 120);
 Vector2 cameraPosition{0, 0};
 TTF_Font *font = NULL;
 SCREEN screen = SCREEN_MENU;
+SDL_GameController *controller;
 
 // Constructor for application, this is used to make the class.
 Application::Application()
 {
-    if (SDL_Init(SDL_INIT_VIDEO) < 0)
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER) < 0)
         throw std::runtime_error(SDL_GetError());
     if (TTF_Init() < 0)
         throw std::runtime_error(TTF_GetError());
@@ -35,11 +36,21 @@ Application::Application()
         throw std::runtime_error(SDL_GetError());
     windowWidth = displayMode.w;
     windowHeight = displayMode.h;
+    // Finds game controller.
+    for (int i = 0; i < SDL_NumJoysticks(); i++)
+    {
+        if (SDL_IsGameController(i))
+        {
+            controller = SDL_GameControllerOpen(i);
+            break;
+        }
+    }
 }
 
 // Destructor for application, this is used to free memory.
 Application::~Application()
 {
+    SDL_GameControllerClose(controller);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     TTF_CloseFont(font);
@@ -73,21 +84,35 @@ void Application::gameScreen(void)
         {
             switch (event.type)
             {
+            case SDL_QUIT: // Quit event.
+                goto exit;
+            case SDL_CONTROLLERBUTTONDOWN:
+                if (controller != NULL && event.cdevice.which == SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(controller)))
+                    switch (event.cbutton.button)
+                    {
+                    case SDL_CONTROLLER_BUTTON_START:
+                        goto exit;
+                    default:
+                        setButtonDown(event.cbutton.button);
+                    }
+                break;
+            case SDL_CONTROLLERBUTTONUP:
+                if (controller != NULL && event.cdevice.which == SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(controller)))
+                    unsetButtonDown(event.cbutton.button);
+                break;
             case SDL_KEYDOWN:
                 switch (event.key.keysym.scancode)
                 {
                 case SDL_SCANCODE_ESCAPE: // If the escape key is pressed, exit.
                     goto exit;
                 default:
-                    setKeyDown(event.key.keysym.scancode);
+                    setButtonDown(event.key.keysym.scancode);
                     break;
                 }
                 break;
             case SDL_KEYUP:
-                unsetKeyDown(event.key.keysym.scancode);
+                unsetButtonDown(event.key.keysym.scancode);
                 break;
-            case SDL_QUIT: // Quit event.
-                goto exit;
             }
         }
         SDL_SetRenderDrawColour(renderer, 0X55, 0X55, 0X55, 0XFF);
@@ -99,7 +124,7 @@ void Application::gameScreen(void)
         SDL_Delay(DELAY);
     }
 exit: // This is a section which can be reached using 'goto' statements.
-    unsetAllKeys();
+    unsetAllButtons();
     screen = SCREEN_MENU;
     return;
 }
@@ -130,12 +155,23 @@ void Application::menuScreen(void)
             {
             case SDL_QUIT:
                 goto exit;
+            case SDL_CONTROLLERBUTTONDOWN:
+                if (controller != NULL && event.cdevice.which == SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(controller)))
+                    switch (event.cbutton.button)
+                    {
+                    case SDL_CONTROLLER_BUTTON_START:
+                        goto exit;
+                    default:
+                        setButtonDown(event.cbutton.button);
+                    }
+                break;
+            case SDL_CONTROLLERBUTTONUP:
+                if (controller != NULL && event.cdevice.which == SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(controller)))
+                    unsetButtonDown(event.cbutton.button);
+                break;
             case SDL_KEYDOWN:
                 switch (event.key.keysym.scancode)
                 {
-                case SDL_SCANCODE_P:
-                    screen = SCREEN_GAME;
-                    goto exit;
                 case SDL_SCANCODE_ESCAPE: // If the escape key is pressed, exit.
                     goto exit;
                 }
@@ -192,12 +228,12 @@ void Application::editScreen(void)
                 case SDL_SCANCODE_ESCAPE: // If the escape key is pressed, exit.
                     goto exit;
                 default:
-                    setKeyDown(event.key.keysym.scancode);
+                    setButtonDown(event.key.keysym.scancode);
                     break;
                 }
                 break;
             case SDL_KEYUP:
-                unsetKeyDown(event.key.keysym.scancode);
+                unsetButtonDown(event.key.keysym.scancode);
                 break;
             case SDL_MOUSEBUTTONDOWN:
             {
@@ -223,13 +259,13 @@ void Application::editScreen(void)
                 goto exit;
             }
         }
-        if (isKeyDown(SDL_SCANCODE_W) || isKeyDown(SDL_SCANCODE_UP))
+        if (isButtonDown(SDL_SCANCODE_W) || isButtonDown(SDL_SCANCODE_UP))
             cameraPosition.y -= 4 * deltaTime;
-        if (isKeyDown(SDL_SCANCODE_S) || isKeyDown(SDL_SCANCODE_DOWN))
+        if (isButtonDown(SDL_SCANCODE_S) || isButtonDown(SDL_SCANCODE_DOWN))
             cameraPosition.y += 4 * deltaTime;
-        if (isKeyDown(SDL_SCANCODE_A) || isKeyDown(SDL_SCANCODE_LEFT))
+        if (isButtonDown(SDL_SCANCODE_A) || isButtonDown(SDL_SCANCODE_LEFT))
             cameraPosition.x -= 4 * deltaTime;
-        if (isKeyDown(SDL_SCANCODE_D) || isKeyDown(SDL_SCANCODE_RIGHT))
+        if (isButtonDown(SDL_SCANCODE_D) || isButtonDown(SDL_SCANCODE_RIGHT))
             cameraPosition.x += 4 * deltaTime;
         SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF);
         SDL_RenderClear(renderer);
@@ -239,7 +275,7 @@ void Application::editScreen(void)
         SDL_Delay(DELAY);
     }
 exit: // This is a section which can be reached using 'goto' statements.
-    unsetAllKeys();
+    unsetAllButtons();
     tileMap.saveMap();
     if (screen == SCREEN_EDIT)
         screen = SCREEN_MENU;

@@ -7,10 +7,10 @@
 #include "../game_objects/rectangle/rectangle.hpp"
 #include "../game_objects/movable_rectangle/movable_rectangle.hpp"
 #include "../linked_list/linked_list.hpp"
-#include "../keys_down/keys_down.hpp"
+#include "../input/input.hpp"
 #include "../game_objects/player/player.hpp"
 #include "../game_objects/button/button.hpp"
-// This is a header file for application, only needed because of '#include' directives.
+#include "../game_objects/tile_map/tile_map.hpp"
 
 #define DELAY 8
 
