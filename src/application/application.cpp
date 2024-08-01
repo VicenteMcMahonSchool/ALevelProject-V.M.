@@ -224,13 +224,13 @@ void Application::editScreen(void)
             }
         }
         if (isKeyDown(SDL_SCANCODE_W) || isKeyDown(SDL_SCANCODE_UP))
-            cameraPosition.y -= 16;
+            cameraPosition.y -= 4 * deltaTime;
         if (isKeyDown(SDL_SCANCODE_S) || isKeyDown(SDL_SCANCODE_DOWN))
-            cameraPosition.y += 16;
+            cameraPosition.y += 4 * deltaTime;
         if (isKeyDown(SDL_SCANCODE_A) || isKeyDown(SDL_SCANCODE_LEFT))
-            cameraPosition.x -= 16;
+            cameraPosition.x -= 4 * deltaTime;
         if (isKeyDown(SDL_SCANCODE_D) || isKeyDown(SDL_SCANCODE_RIGHT))
-            cameraPosition.x += 16;
+            cameraPosition.x += 4 * deltaTime;
         SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF);
         SDL_RenderClear(renderer);
         TRAVERSE(gameObjects.head, GameObject, item->datum.update(deltaTime)) // Updates all the 'GameObjects'.
