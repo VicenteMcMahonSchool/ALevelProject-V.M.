@@ -133,6 +133,7 @@ void Application::menuScreen(void)
 {
     cameraPosition = {0, 0};
     constexpr int widthOfButton = 256, heightOfButton = 128;
+    size_t selectedButton = 0;
     Button buttons[3] = {
         {{-widthOfButton / 2, heightOfButton * 2 - (double)windowHeight / 2}, {0X77, 0X77, 0X77, 0XFF}, widthOfButton, heightOfButton, "Play", [](void) -> void
          {
@@ -161,6 +162,16 @@ void Application::menuScreen(void)
                     {
                     case SDL_CONTROLLER_BUTTON_START:
                         goto exit;
+                    case SDL_CONTROLLER_BUTTON_DPAD_DOWN:
+                        selectedButton = (selectedButton + 1) % (sizeof(buttons) / sizeof(decltype(*buttons)));
+                        printf("%llu\n", selectedButton);
+                    case SDL_CONTROLLER_BUTTON_DPAD_UP:
+                        selectedButton = (selectedButton - 1) % (sizeof(buttons) / sizeof(decltype(*buttons)));
+                        printf("%llu\n", selectedButton);
+                        break;
+                    case SDL_CONTROLLER_BUTTON_A:
+                        buttons[selectedButton].callBack();
+                        break;
                     default:
                         setButtonDown(event.cbutton.button);
                     }
@@ -177,17 +188,24 @@ void Application::menuScreen(void)
                 }
                 break;
             case SDL_MOUSEBUTTONDOWN:
-                for (size_t i = 0; i < sizeof(buttons) / sizeof(Button); i++)
+                for (size_t i = 0; i < sizeof(buttons) / sizeof(decltype(*buttons)); i++)
                     buttons[i].onClick();
                 break;
             }
         }
         SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF);
         SDL_RenderClear(renderer);
-        for (size_t i = 0; i < sizeof(buttons) / sizeof(Button); i++)
+        for (size_t i = 0; i < sizeof(buttons) / sizeof(decltype(*buttons)); i++)
         {
             buttons[i].update(0);
             buttons[i].draw();
+            if (i == selectedButton)
+            {
+                SDL_Rect rectangle = buttons[i].getRectangle();
+                rectangle.w += 6;
+                rectangle.h += 6;
+                SDL_RenderDrawRect(renderer, &rectangle);
+            }
         }
         SDL_RenderPresent(renderer);
         SDL_Delay(DELAY);
