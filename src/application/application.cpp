@@ -247,19 +247,17 @@ void Application::editScreen(void)
                         goto exit;
                     case SDL_CONTROLLER_BUTTON_A:
                     {
-                        Vector2 position = {cameraPosition.x - windowWidth / 2, cameraPosition.y - windowHeight / 2};
-                        const TILE_TYPE *tile = tileMap.getTileAtPosition(position);
+                        const TILE_TYPE *tile = tileMap.getTileAtPosition(cameraPosition);
                         if (tile != NULL && *tile < TILE_MAXIMUM_VALUE - 1)
-                            tileMap.setTileAtPosition(position, (TILE_TYPE)(*tile + 1));
+                            tileMap.setTileAtPosition(cameraPosition, (TILE_TYPE)(*tile + 1));
                         else
-                            tileMap.setTileAtPosition(position, TILE_AIR);
+                            tileMap.setTileAtPosition(cameraPosition, TILE_AIR);
                         break;
                     }
                     case SDL_CONTROLLER_BUTTON_B:
                     {
-                        Vector2 position = {cameraPosition.x - windowWidth / 2, cameraPosition.y - windowHeight / 2};
-                        const TILE_TYPE *tile = tileMap.getTileAtPosition(position);
-                        tileMap.setTileAtPosition(position, TILE_AIR);
+                        const TILE_TYPE *tile = tileMap.getTileAtPosition(cameraPosition);
+                        tileMap.setTileAtPosition(cameraPosition, TILE_AIR);
                         break;
                     }
                     default:
