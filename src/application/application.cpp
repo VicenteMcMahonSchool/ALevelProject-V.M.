@@ -164,11 +164,9 @@ void Application::menuScreen(void)
                         goto exit;
                     case SDL_CONTROLLER_BUTTON_DPAD_DOWN:
                         selectedButton = (selectedButton + 1) % (sizeof(buttons) / sizeof(decltype(*buttons)));
-                        printf("%llu\n", selectedButton);
                         break;
                     case SDL_CONTROLLER_BUTTON_DPAD_UP:
                         selectedButton = (selectedButton - 1) % (sizeof(buttons) / sizeof(decltype(*buttons)));
-                        printf("%llu\n", selectedButton);
                         break;
                     case SDL_CONTROLLER_BUTTON_A:
                         buttons[selectedButton].onAction(false);
