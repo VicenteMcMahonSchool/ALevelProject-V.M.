@@ -17,10 +17,15 @@ void Button::draw(void)
     drawText(text);
 }
 
-void Button::onClick(void)
+void Button::onAction(bool checkMousePosition)
 {
-    int x, y;
-    SDL_GetMouseState(&x, &y);
-    if (x > rectangle.x && x < rectangle.x + rectangle.w && y > rectangle.y && y < rectangle.y + rectangle.h)
+    if (checkMousePosition)
+    {
+        int x, y;
+        SDL_GetMouseState(&x, &y);
+        if (x > rectangle.x && x < rectangle.x + rectangle.w && y > rectangle.y && y < rectangle.y + rectangle.h)
+            callBack();
+    }
+    else
         callBack();
 }

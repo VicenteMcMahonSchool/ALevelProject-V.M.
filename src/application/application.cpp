@@ -170,7 +170,7 @@ void Application::menuScreen(void)
                         printf("%llu\n", selectedButton);
                         break;
                     case SDL_CONTROLLER_BUTTON_A:
-                        buttons[selectedButton].callBack();
+                        buttons[selectedButton].onAction(false);
                         break;
                     default:
                         setButtonDown(event.cbutton.button);
@@ -189,7 +189,7 @@ void Application::menuScreen(void)
                 break;
             case SDL_MOUSEBUTTONDOWN:
                 for (size_t i = 0; i < sizeof(buttons) / sizeof(decltype(*buttons)); i++)
-                    buttons[i].onClick();
+                    buttons[i].onAction(true);
                 break;
             }
         }
