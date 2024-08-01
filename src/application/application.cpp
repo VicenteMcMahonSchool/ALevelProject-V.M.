@@ -201,8 +201,10 @@ void Application::menuScreen(void)
             if (i == selectedButton)
             {
                 SDL_Rect rectangle = buttons[i].getRectangle();
-                rectangle.w += 6;
-                rectangle.h += 6;
+                rectangle.x -= 6;
+                rectangle.y -= 6;
+                rectangle.w += 12;
+                rectangle.h += 12;
                 SDL_RenderDrawRect(renderer, &rectangle);
             }
         }
