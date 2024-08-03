@@ -3,4 +3,5 @@
 
 class Enemy : public MovableRectangle
 {
+    Enemy(Vector2 position);
 };
