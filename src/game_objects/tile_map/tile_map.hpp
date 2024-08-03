@@ -12,14 +12,15 @@
 
 enum __attribute__((__packed__)) TILE_TYPE
 {
-    TILE_NONE = 0,
-    TILE_AIR = 1,
-    TILE_BOARDER = 2,
-    TILE_PLATFORM = 3,
-    TILE_WIN = 4,
-    TILE_LOSE = 5,
-    TILE_ROTATION = 6,
-    TILE_SPAWN = 7,
+    TILE_NONE = 0X00,
+    TILE_AIR = 0X01,
+    TILE_BOARDER = 0X02,
+    TILE_PLATFORM = 0X03,
+    TILE_WIN = 0X04,
+    TILE_LOSE = 0X05,
+    TILE_ROTATION = 0X06,
+    TILE_SPAWN = 0X07,
+    TILE_ENEMY_SPAWNER = 0X08,
     TILE_MAXIMUM_VALUE,
 };
 
