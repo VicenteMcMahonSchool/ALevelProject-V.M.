@@ -11,8 +11,8 @@ tileTypes = {
     "TILE_WIN": b"\x04",
     "TILE_LOSE": b"\x05",
     "TILE_ROTATION": b"\x06",
-    "TILE_SPAWN": b"\x07",
-    "ENEMY_SPAWNER": b"\x08"
+    "ENEMY_SPAWNER": b"\x07",
+    "TILE_SPAWN": b"\x08",
 }
 
 if __name__ == "__main__":

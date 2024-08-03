@@ -19,8 +19,8 @@ enum __attribute__((__packed__)) TILE_TYPE
     TILE_WIN = 0X04,
     TILE_LOSE = 0X05,
     TILE_ROTATION = 0X06,
-    TILE_SPAWN = 0X07,
-    TILE_ENEMY_SPAWNER = 0X08,
+    TILE_ENEMY_SPAWNER = 0X07,
+    TILE_SPAWN = 0X08,
     TILE_MAXIMUM_VALUE,
 };
 
