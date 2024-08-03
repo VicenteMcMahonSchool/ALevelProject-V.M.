@@ -17,9 +17,28 @@ void Player::update(double deltaTime)
         velocity.y -= 1;
     }
     const TILE_TYPE *centreTile = tileMap.getTileAtPosition(position + (Vector2){(double)rectangle.w / 2, (double)rectangle.h / 2});
-    if (centreTile != NULL && (*centreTile == TILE_WIN || *centreTile == TILE_LOSE))
+    if (centreTile != NULL)
     {
-        screen = SCREEN_MENU;
+        SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+        if ((getTileAttributes(centreTile).isCollidable || *centreTile == TILE_LOSE))
+        {
+            SDL_SetRenderDrawColour(renderer, 0XFF, 0X00, 0X00, 0X55);
+            SDL_Rect rectangle{0, 0, windowWidth, windowHeight};
+            SDL_RenderFillRect(renderer, &rectangle);
+            SDL_RenderPresent(renderer);
+            SDL_Delay(1000);
+            screen = SCREEN_MENU;
+        }
+        else if (*centreTile == TILE_WIN)
+        {
+            SDL_SetRenderDrawColour(renderer, 0X00, 0XFF, 0X00, 0X55);
+            SDL_Rect rectangle{0, 0, windowWidth, windowHeight};
+            SDL_RenderFillRect(renderer, &rectangle);
+            SDL_RenderPresent(renderer);
+            SDL_Delay(1000);
+            screen = SCREEN_MENU;
+        }
+        SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
     }
     double length = deltaVelocity.length();
     if (length != 0)

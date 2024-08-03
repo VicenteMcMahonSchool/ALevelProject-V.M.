@@ -115,10 +115,10 @@ void Application::gameScreen(void)
                 break;
             }
         }
-        SDL_SetRenderDrawColour(renderer, 0X55, 0X55, 0X55, 0XFF);
-        SDL_RenderClear(renderer);                                            // Clears the screen.
         TRAVERSE(gameObjects.head, GameObject, item->datum.update(deltaTime)) // Updates all the 'GameObjects'.
         cameraPosition = player.getPosition() + (Vector2){(double)player.getRectangle().w / 2, (double)player.getRectangle().h / 2};
+        SDL_SetRenderDrawColour(renderer, 0X55, 0X55, 0X55, 0XFF);
+        SDL_RenderClear(renderer);                                 // Clears the screen.
         TRAVERSE(gameObjects.head, GameObject, item->datum.draw()) // Draws all the 'GameObjects'.
         SDL_RenderPresent(renderer);                               // Renders everything.
         SDL_Delay(DELAY);
