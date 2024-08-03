@@ -179,7 +179,7 @@ TileCentres TileMap::getTileCentresAroundPositionOfTile(const TILE_TYPE *tile)
 TileAttributes getTileAttributes(const TILE_TYPE tile)
 {
     TileAttributes output{};
-    if (tile == TILE_PLATFORM || tile == TILE_BOARDER || tile == TILE_ROTATION)
+    if (tile == TILE_PLATFORM || tile == TILE_BOARDER || tile == TILE_ROTATION || tile == TILE_LOSE || tile == TILE_WIN)
         output.isCollidable = true;
     else
         output.isCollidable = false;

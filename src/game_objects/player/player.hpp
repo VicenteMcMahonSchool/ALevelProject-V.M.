@@ -4,6 +4,7 @@
 
 #define PLAYER_GRAVITY 0.002
 #define PLAYER_SPEED 0.01
+void playerHandleCollision(const TILE_TYPE *tile, MovableRectangle *movableRectangle);
 class Player : public MovableRectangle
 {
 public:

@@ -13,41 +13,95 @@ void MovableRectangle::update(double deltaTime)
     double averageHeight = (double)(tileSize + rectangle.h) / 2;
     TilesAroundTile tiles = tileMap.getTilesAroundPosition(centrePosition);
     TileCentres tileCentres = tileMap.getTileCentresAroundPositionOfTile(tiles.centre);
-    if (getTileAttributes(tiles.top).isCollidable || (getTileAttributes(tiles.topLeft).isCollidable && (centrePosition - tileCentres.topLeft).isYBiggerThanX()) || (getTileAttributes(tiles.topRight).isCollidable && (tileCentres.topRight - centrePosition).isNegativeYBiggerThanX()))
+    if (getTileAttributes(tiles.top).isCollidable && centrePosition.y < tileCentres.top.y + averageHeight)
     {
-        if (centrePosition.y < tileCentres.top.y + averageHeight)
-        {
-            centrePosition.y = tileCentres.top.y + averageHeight;
-            velocity.y = 0;
-        }
+        handleCollisionTop(tileCentres, centrePosition, averageWidth, averageHeight);
+        onCollision(tiles.top, this);
     }
-    if (getTileAttributes(tiles.bottom).isCollidable || (getTileAttributes(tiles.bottomLeft).isCollidable && (centrePosition - tileCentres.bottomLeft).isNegativeYBiggerThanX()) || (getTileAttributes(tiles.bottomRight).isCollidable && (tileCentres.bottomRight - centrePosition).isYBiggerThanX()))
+    else if (getTileAttributes(tiles.topLeft).isCollidable && (centrePosition - tileCentres.topLeft).isYBiggerThanX() && centrePosition.y < tileCentres.top.y + averageHeight)
     {
-        if (centrePosition.y > tileCentres.bottom.y - averageHeight)
-        {
-            centrePosition.y = tileCentres.bottom.y - averageHeight;
-            isOnGround = true;
-            velocity.y = 0;
-        }
+        handleCollisionTop(tileCentres, centrePosition, averageWidth, averageHeight);
+        onCollision(tiles.topLeft, this);
     }
-    if (getTileAttributes(tiles.left).isCollidable || (getTileAttributes(tiles.topLeft).isCollidable && (centrePosition - tileCentres.topLeft).isXBiggerThanY()) || (getTileAttributes(tiles.bottomLeft).isCollidable && (centrePosition - tileCentres.bottomLeft).isYBiggerThanNegativeX()))
+    else if (getTileAttributes(tiles.topRight).isCollidable && (tileCentres.topRight - centrePosition).isNegativeYBiggerThanX() && centrePosition.y < tileCentres.top.y + averageHeight)
     {
-        if (centrePosition.x < tileCentres.left.x + averageWidth)
-        {
-            centrePosition.x = tileCentres.left.x + averageWidth;
-            velocity.x = 0;
-        }
-    }
-    if (getTileAttributes(tiles.right).isCollidable || (getTileAttributes(tiles.topRight).isCollidable && (centrePosition - tileCentres.topRight).isNegativeYBiggerThanX()) || (getTileAttributes(tiles.bottomRight).isCollidable && (centrePosition - tileCentres.bottomRight).isYBiggerThanX()))
-    {
-        if (centrePosition.x > tileCentres.right.x - averageWidth)
-        {
-            centrePosition.x = tileCentres.right.x - averageWidth;
-            velocity.x = 0;
-        }
+        handleCollisionTop(tileCentres, centrePosition, averageWidth, averageHeight);
+        onCollision(tiles.topRight, this);
     }
 
+    if (getTileAttributes(tiles.bottom).isCollidable && centrePosition.y > tileCentres.bottom.y - averageHeight)
+    {
+        handleCollisionBottom(tileCentres, centrePosition, averageWidth, averageHeight);
+        onCollision(tiles.bottom, this);
+    }
+    else if (getTileAttributes(tiles.bottomLeft).isCollidable && (centrePosition - tileCentres.bottomLeft).isNegativeYBiggerThanX() && centrePosition.y > tileCentres.bottom.y - averageHeight)
+    {
+        handleCollisionBottom(tileCentres, centrePosition, averageWidth, averageHeight);
+        onCollision(tiles.bottomLeft, this);
+    }
+    else if (getTileAttributes(tiles.bottomRight).isCollidable && (tileCentres.bottomRight - centrePosition).isYBiggerThanX() && centrePosition.y > tileCentres.bottom.y - averageHeight)
+    {
+        handleCollisionBottom(tileCentres, centrePosition, averageWidth, averageHeight);
+        onCollision(tiles.bottomRight, this);
+    }
+
+    if (getTileAttributes(tiles.left).isCollidable && centrePosition.x < tileCentres.left.x + averageWidth)
+    {
+        handleCollisionLeft(tileCentres, centrePosition, averageWidth, averageHeight);
+        onCollision(tiles.left, this);
+    }
+    else if (getTileAttributes(tiles.topLeft).isCollidable && (centrePosition - tileCentres.topLeft).isXBiggerThanY() && centrePosition.x < tileCentres.left.x + averageWidth)
+    {
+        handleCollisionLeft(tileCentres, centrePosition, averageWidth, averageHeight);
+        onCollision(tiles.topLeft, this);
+    }
+    else if (getTileAttributes(tiles.bottomLeft).isCollidable && (centrePosition - tileCentres.bottomLeft).isYBiggerThanNegativeX() && centrePosition.x < tileCentres.left.x + averageWidth)
+    {
+        handleCollisionLeft(tileCentres, centrePosition, averageWidth, averageHeight);
+        onCollision(tiles.bottomLeft, this);
+    }
+
+    if (getTileAttributes(tiles.right).isCollidable && centrePosition.x > tileCentres.right.x - averageWidth)
+    {
+        handleCollisionRight(tileCentres, centrePosition, averageWidth, averageHeight);
+        onCollision(tiles.right, this);
+    }
+    else if (getTileAttributes(tiles.topRight).isCollidable && (centrePosition - tileCentres.topRight).isNegativeYBiggerThanX() && centrePosition.x > tileCentres.right.x - averageWidth)
+    {
+        handleCollisionRight(tileCentres, centrePosition, averageWidth, averageHeight);
+        onCollision(tiles.topRight, this);
+    }
+    else if (getTileAttributes(tiles.bottomRight).isCollidable && (centrePosition - tileCentres.bottomRight).isYBiggerThanX() && centrePosition.x > tileCentres.right.x - averageWidth)
+    {
+        handleCollisionRight(tileCentres, centrePosition, averageWidth, averageHeight);
+        onCollision(tiles.bottomRight, this);
+    }
+    if (getTileAttributes(tiles.centre).isCollidable)
+        onCollision(tiles.centre, this);
     position = centrePosition - (Vector2){(double)rectangle.w / 2, (double)rectangle.h / 2};
     Rectangle::update(deltaTime);
 }
+
+void MovableRectangle::handleCollisionTop(TileCentres &tileCentres, Vector2 &centrePosition, double averageWidth, double averageHeight)
+{
+    centrePosition.y = tileCentres.top.y + averageHeight;
+    velocity.y = 0;
+}
+void MovableRectangle::handleCollisionBottom(TileCentres &tileCentres, Vector2 &centrePosition, double averageWidth, double averageHeight)
+{
+    centrePosition.y = tileCentres.bottom.y - averageHeight;
+    isOnGround = true;
+    velocity.y = 0;
+}
+void MovableRectangle::handleCollisionLeft(TileCentres &tileCentres, Vector2 &centrePosition, double averageWidth, double averageHeight)
+{
+    centrePosition.x = tileCentres.left.x + averageWidth;
+    velocity.x = 0;
+}
+void MovableRectangle::handleCollisionRight(TileCentres &tileCentres, Vector2 &centrePosition, double averageWidth, double averageHeight)
+{
+    centrePosition.x = tileCentres.right.x - averageWidth;
+    velocity.x = 0;
+}
+
 GETTER_AND_SETTER_CPP(Vector2, MovableRectangle, velocity, Velocity)
