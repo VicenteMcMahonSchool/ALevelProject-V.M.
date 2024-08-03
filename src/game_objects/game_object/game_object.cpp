@@ -3,36 +3,13 @@
 GameObjectUnion::GameObjectUnion(void) : generalGameObject(NULL) {}
 GameObjectUnion::~GameObjectUnion(void) {}
 
-GameObject::GameObject(GeneralGameObject *value)
-{
-    type = GENERAL_GAME_OBJECT;
-    this->value.generalGameObject = value;
-}
-GameObject::GameObject(Rectangle *value)
-{
-    type = RECTANGLE;
-    this->value.rectangle = value;
-}
-GameObject::GameObject(MovableRectangle *value)
-{
-    type = MOVABLE_RECTANGLE;
-    this->value.movableRectangle = value;
-}
-GameObject::GameObject(Button *value)
-{
-    type = BUTTON;
-    this->value.button = value;
-}
-GameObject::GameObject(TileMap *value)
-{
-    type = TILE_MAP;
-    this->value.tileMap = value;
-}
-GameObject::GameObject(Player *value)
-{
-    type = PLAYER;
-    this->value.player = value;
-}
+GAME_OBJECT_CONSTRUCTOR_FUNCTION_CPP(GeneralGameObject, GENERAL_GAME_OBJECT, generalGameObject)
+GAME_OBJECT_CONSTRUCTOR_FUNCTION_CPP(Rectangle, RECTANGLE, rectangle)
+GAME_OBJECT_CONSTRUCTOR_FUNCTION_CPP(MovableRectangle, MOVABLE_RECTANGLE, movableRectangle)
+GAME_OBJECT_CONSTRUCTOR_FUNCTION_CPP(Button, BUTTON, button)
+GAME_OBJECT_CONSTRUCTOR_FUNCTION_CPP(TileMap, TILE_MAP, tileMap)
+GAME_OBJECT_CONSTRUCTOR_FUNCTION_CPP(Player, PLAYER, player)
+GAME_OBJECT_CONSTRUCTOR_FUNCTION_CPP(Enemy, ENEMY, enemy)
 
 void GameObject::update(double deltaTime)
 {
@@ -52,8 +29,12 @@ void GameObject::update(double deltaTime)
         break;
     case PLAYER:
         value.player->update(deltaTime);
+        break;
     case BUTTON:
         value.button->update(deltaTime);
+        break;
+    case ENEMY:
+        value.enemy->update(deltaTime);
     }
 }
 void GameObject::draw(void)
@@ -78,5 +59,7 @@ void GameObject::draw(void)
     case BUTTON:
         value.button->draw();
         break;
+    case ENEMY:
+        value.enemy->draw();
     }
 }
