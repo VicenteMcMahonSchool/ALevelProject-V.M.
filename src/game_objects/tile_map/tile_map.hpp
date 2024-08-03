@@ -1,10 +1,12 @@
 #pragma once
 #include <stdexcept>
+#include <dlfcn.h>
 #include "../../global/global.hpp"
 #include "../general_game_object/general_game_object.hpp"
 
 #define WIDTH_OF_TILE_MAP 512
 #define HEIGHT_OF_TILE_MAP 16
+#define MAXIMUM_NUMBER_OF_ENEMIES 1024
 #define NUMBER_OF_TILES WIDTH_OF_TILE_MAP *HEIGHT_OF_TILE_MAP
 #define TILE_MAP_RECTANGLES_POSITION                                                     \
     this->rectangles[i].x = (i % WIDTH_OF_TILE_MAP) * this->tileSize - this->position.x; \
@@ -63,6 +65,9 @@ class TileMap : public GeneralGameObject
 private:
     TILE_TYPE tileMap[NUMBER_OF_TILES];
     SDL_Rect rectangles[NUMBER_OF_TILES];
+#ifdef ENEMY_INCLUDED
+    Enemy enemies[MAXIMUM_NUMBER_OF_ENEMIES];
+#endif
     double timePast = 0;
     // unsigned int tileSize;
     GETTER_AND_SETTER_HPP(unsigned int, tileSize, TileSize)
@@ -70,6 +75,7 @@ private:
 
 public:
     TileMap(Vector2 position, unsigned int tileSize);
+    size_t nextEnemyIndex = 0;
     bool tileOutlines = false;
     void update(double deltaTime);
     void draw(void);

@@ -2,6 +2,7 @@
 #include "../player/player.hpp"
 #include "../enemy/enemy.hpp"
 #include "../button/button.hpp"
+#include "../tile_map/tile_map.hpp"
 
 #define GAME_OBJECT_CONSTRUCTOR_FUNCTION_CPP(typeName, capitalisedName, name) \
     GameObject::GameObject(typeName *value)                                   \
@@ -34,6 +35,7 @@ union GameObjectUnion
     TileMap *tileMap;
     Player *player;
     Enemy *enemy;
+    void *any;
 };
 
 class GameObject
@@ -50,4 +52,7 @@ public:
     GAME_OBJECT_CONSTRUCTOR_FUNCTION_HPP(Enemy, value);
     void update(double deltaTime);
     void draw(void);
+
+private:
+    GameObject(void);
 };

@@ -62,6 +62,7 @@ Application::~Application()
 void Application::gameScreen(void)
 {
     gameObjects.makeEmpty();
+    tileMap.nextEnemyIndex = 0;
     unsigned int tileSize = tileMap.getTileSize();
     tileMap.tileOutlines = false;
     Player player{tileMap.getCentrePositionOfTile(tileMap.getSpawnTile()) - (Vector2){(double)tileSize / 2, (double)tileSize / 2}};
@@ -220,6 +221,7 @@ exit:
 void Application::editScreen(void)
 {
     gameObjects.makeEmpty();
+    tileMap.nextEnemyIndex = 0;
     cameraPosition = tileMap.getCentrePositionOfTile(tileMap.getSpawnTile());
     unsigned int tileSize = tileMap.getTileSize();
     tileMap.tileOutlines = true;

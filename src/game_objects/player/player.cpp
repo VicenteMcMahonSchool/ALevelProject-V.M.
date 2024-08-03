@@ -1,15 +1,16 @@
 #include "./player.hpp"
+#include "../tile_map/tile_map.hpp"
 
 Player::Player(Vector2 position) : MovableRectangle(position, {0X33, 0X33, 0X77, 0XFF}, tileMap.getTileSize(), tileMap.getTileSize())
 {
     onCollision = &playerHandleCollision;
     gravity = PLAYER_GRAVITY;
 }
-void playerHandleCollision(const TILE_TYPE *tile, MovableRectangle *movableRectangle)
+void playerHandleCollision(const unsigned char *tile, MovableRectangle *movableRectangle)
 {
     const TILE_TYPE *centreTile = tileMap.getTileAtPosition(movableRectangle->getPosition() + (Vector2){(double)movableRectangle->getRectangle().w / 2, (double)movableRectangle->getRectangle().h / 2});
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-    if (*tile == TILE_LOSE || (tile == centreTile && getTileAttributes(tile).isCollidable))
+    if (*tile == TILE_LOSE || ((const TILE_TYPE *)tile == centreTile && getTileAttributes((const TILE_TYPE *)tile).isCollidable))
     {
         SDL_SetRenderDrawColour(renderer, 0XFF, 0X00, 0X00, 0X55);
         SDL_Rect rectangle{0, 0, windowWidth, windowHeight};

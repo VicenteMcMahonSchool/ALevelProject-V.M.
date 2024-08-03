@@ -1,6 +1,8 @@
 #pragma once
 #include "../rectangle/rectangle.hpp"
-#include "../tile_map/tile_map.hpp"
+
+struct TileCentres;
+// typedef char TILE_TYPE;
 
 class MovableRectangle : public Rectangle
 {
@@ -13,7 +15,7 @@ private:
 protected:
     double gravity = 0;
     bool isOnGround = false;
-    void (*onCollision)(const TILE_TYPE *tile, MovableRectangle *movableRectangle) = NULL;
+    void (*onCollision)(const /* TILE_TYPE */ unsigned char *tile, MovableRectangle *movableRectangle) = NULL;
 
 public:
     MovableRectangle(Vector2 position, SDL_Colour colour, int width, int height);

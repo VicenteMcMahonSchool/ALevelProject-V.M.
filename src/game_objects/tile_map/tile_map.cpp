@@ -1,4 +1,6 @@
+#include "../enemy/enemy.hpp"
 #include "./tile_map.hpp"
+#include "../../linked_list/linked_list.hpp"
 
 GETTER_AND_SETTER_CPP(unsigned int, TileMap, tileSize, TileSize)
 GETTER_CPP(TILE_TYPE *, TileMap, spawnTile, SpawnTile)
@@ -26,22 +28,32 @@ void TileMap::update(double deltaTime)
 {
     timePast += deltaTime;
     for (size_t i = 0; i < NUMBER_OF_TILES; i++)
+    {
         if (tileMap[i] == TILE_ROTATION && timePast > 1000)
         {
             TileCentres tileCentres = getTileCentresAroundPositionOfTile(tileMap + i);
             TilesAroundTile tiles = getTilesAroundIndex(i);
-            if (tiles.right == NULL || tiles.bottomRight == NULL || tiles.bottom == NULL || tiles.bottomLeft == NULL || tiles.left == NULL || tiles.topLeft == NULL || tiles.top == NULL || tiles.topRight == NULL)
-                continue;
-            TILE_TYPE tileValue[8] = {*tiles.right, *tiles.bottomRight, *tiles.bottom, *tiles.bottomLeft, *tiles.left, *tiles.topLeft, *tiles.top, *tiles.topRight};
-            setTileAtPosition(tileCentres.right, tileValue[7]);
-            setTileAtPosition(tileCentres.bottomRight, tileValue[0]);
-            setTileAtPosition(tileCentres.bottom, tileValue[1]);
-            setTileAtPosition(tileCentres.bottomLeft, tileValue[2]);
-            setTileAtPosition(tileCentres.left, tileValue[3]);
-            setTileAtPosition(tileCentres.topLeft, tileValue[4]);
-            setTileAtPosition(tileCentres.top, tileValue[5]);
-            setTileAtPosition(tileCentres.topRight, tileValue[6]);
+            if (tiles.right != NULL && tiles.bottomRight != NULL && tiles.bottom != NULL && tiles.bottomLeft != NULL && tiles.left != NULL && tiles.topLeft != NULL && tiles.top != NULL && tiles.topRight != NULL)
+            {
+                TILE_TYPE tileValue[8] = {*tiles.right, *tiles.bottomRight, *tiles.bottom, *tiles.bottomLeft, *tiles.left, *tiles.topLeft, *tiles.top, *tiles.topRight};
+                setTileAtPosition(tileCentres.right, tileValue[7]);
+                setTileAtPosition(tileCentres.bottomRight, tileValue[0]);
+                setTileAtPosition(tileCentres.bottom, tileValue[1]);
+                setTileAtPosition(tileCentres.bottomLeft, tileValue[2]);
+                setTileAtPosition(tileCentres.left, tileValue[3]);
+                setTileAtPosition(tileCentres.topLeft, tileValue[4]);
+                setTileAtPosition(tileCentres.top, tileValue[5]);
+                setTileAtPosition(tileCentres.topRight, tileValue[6]);
+            }
         }
+        if (tileMap[i] == TILE_ENEMY_SPAWNER && timePast > 1000 && nextEnemyIndex < MAXIMUM_NUMBER_OF_ENEMIES)
+        {
+            Vector2 position = getCentrePositionOfTile(tileMap + i);
+            enemies[nextEnemyIndex] = Enemy(position + (Vector2){tileSize / 2, tileSize / 2});
+            gameObjects.add(GameObject(enemies + nextEnemyIndex));
+            nextEnemyIndex++;
+        }
+    }
     for (size_t i = 0; i < NUMBER_OF_TILES; i++)
     {
         TILE_MAP_RECTANGLES_POSITION
@@ -56,7 +68,7 @@ void TileMap::draw(void)
         rectangles[i].x -= cameraPosition.x - windowWidth / 2;
         rectangles[i].y -= cameraPosition.y - windowHeight / 2;
         SDL_Rect shadowRectangle{rectangles[i].x + SHADOW_DISTANCE_X, rectangles[i].y + SHADOW_DISTANCE_Y, rectangles[i].w, rectangles[i].h};
-        if (tileMap[i] == TILE_AIR || tileMap[i] == TILE_NONE || ((tileMap[i] == TILE_BOARDER || tileMap[i] == TILE_SPAWN || tileMap[i] == TILE_SPAWN) && !tileOutlines))
+        if (tileMap[i] == TILE_AIR || tileMap[i] == TILE_NONE || ((tileMap[i] == TILE_BOARDER || tileMap[i] == TILE_SPAWN || tileMap[i] == TILE_ENEMY_SPAWNER) && !tileOutlines))
             goto doNotFill;
         SDL_SetRenderDrawColour(renderer, 0X11, 0X11, 0X11, 0XFF);
         SDL_RenderFillRect(renderer, &shadowRectangle); // Fills the rectangle.
@@ -72,8 +84,8 @@ void TileMap::draw(void)
             SDL_SetRenderDrawColour(renderer, 0X77, 0X77, 0X33, 0XFF);
         else if (tileMap[i] == TILE_ROTATION)
             SDL_SetRenderDrawColour(renderer, 0X77, 0X77, 0X55, 0XFF);
-        else if (tileMap[i] == TILE_SPAWN)
-            SDL_SetRenderDrawColour(renderer, 0X55, 0X55, 0X55, 0XFF);
+        else if (tileMap[i] == TILE_ENEMY_SPAWNER)
+            SDL_SetRenderDrawColour(renderer, 0XAA, 0XAA, 0XAA, 0XFF);
         SDL_RenderFillRect(renderer, rectangles + i); // Fills the rectangle.
     doNotFill:
         if (tileOutlines)
