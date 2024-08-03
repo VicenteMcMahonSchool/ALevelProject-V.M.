@@ -49,7 +49,7 @@ void TileMap::update(double deltaTime)
         if (tileMap[i] == TILE_ENEMY_SPAWNER && timePast > 1000 && nextEnemyIndex < MAXIMUM_NUMBER_OF_ENEMIES)
         {
             Vector2 position = getCentrePositionOfTile(tileMap + i);
-            enemies[nextEnemyIndex] = Enemy(position + (Vector2){tileSize / 2, tileSize / 2});
+            enemies[nextEnemyIndex] = Enemy(position - (Vector2){tileSize / 2, tileSize / 2});
             gameObjects.add(GameObject(enemies + nextEnemyIndex));
             nextEnemyIndex++;
         }
