@@ -4,7 +4,7 @@ MovableRectangle::MovableRectangle(Vector2 position, SDL_Colour colour, int widt
 void MovableRectangle::update(double deltaTime)
 {
     double localGravity = isOnGround ? 0 : gravity;
-    position += velocity * deltaTime + (Vector2){0, localGravity} / 2 * deltaTime * deltaTime;
+    position += (velocity * deltaTime + (Vector2){0, localGravity} / 2 * deltaTime * deltaTime) * tileMap.getTileSize() / 120;
     velocity += (Vector2){0, localGravity} * deltaTime;
     isOnGround = false;
     Vector2 centrePosition = position + (Vector2){(double)rectangle.w / 2, (double)rectangle.h / 2};
