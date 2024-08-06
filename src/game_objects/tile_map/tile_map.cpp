@@ -64,6 +64,7 @@ void TileMap::draw(void)
 {
     for (size_t i = 0; i < NUMBER_OF_TILES; i++)
     {
+        TILE_MAP_RECTANGLES_POSITION
         rectangles[i].x -= cameraPosition.x - windowWidth / 2;
         rectangles[i].y -= cameraPosition.y - windowHeight / 2;
         if (tileMap[i] == TILE_AIR || tileMap[i] == TILE_NONE || ((tileMap[i] == TILE_BOARDER || tileMap[i] == TILE_SPAWN || tileMap[i] == TILE_ENEMY_SPAWNER) && !tileOutlines))
@@ -96,6 +97,9 @@ void TileMap::drawShadows(void)
 {
     for (size_t i = 0; i < NUMBER_OF_TILES; i++)
     {
+        TILE_MAP_RECTANGLES_POSITION
+        rectangles[i].x -= cameraPosition.x - windowWidth / 2;
+        rectangles[i].y -= cameraPosition.y - windowHeight / 2;
         if (tileMap[i] == TILE_AIR || tileMap[i] == TILE_NONE || ((tileMap[i] == TILE_BOARDER || tileMap[i] == TILE_SPAWN || tileMap[i] == TILE_ENEMY_SPAWNER) && !tileOutlines))
             continue;
         SDL_Rect shadowRectangle{rectangles[i].x + SHADOW_DISTANCE_X, rectangles[i].y + SHADOW_DISTANCE_Y, rectangles[i].w, rectangles[i].h};
