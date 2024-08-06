@@ -31,7 +31,7 @@ Application::Application()
     if (window == NULL)
         throw std::runtime_error(SDL_GetError());
     SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN); // Makes the window fullscreen.
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE | SDL_RENDERER_PRESENTVSYNC);
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (!renderer)
         throw std::runtime_error(SDL_GetError());
     windowWidth = displayMode.w;
