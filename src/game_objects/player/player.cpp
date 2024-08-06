@@ -1,7 +1,7 @@
 #include "./player.hpp"
 #include "../tile_map/tile_map.hpp"
 
-Player::Player(Vector2 position) : MovableRectangle(position, {0X33, 0X33, 0X77, 0XFF}, tileMap.getTileSize(), tileMap.getTileSize())
+Player::Player(PLAYER_CONSTRUCTOR_ARGUMENTS) : MovableRectangle(position, {0X33, 0X33, 0X77, 0XFF}, tileMap.getTileSize(), tileMap.getTileSize())
 {
     onCollision = &playerHandleCollision;
     gravity = PLAYER_GRAVITY;

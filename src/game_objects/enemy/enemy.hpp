@@ -1,10 +1,12 @@
-#define ENEMY_INCLUDED 1
 #pragma once
 #include "../movable_rectangle/movable_rectangle.hpp"
+
+#define ENEMY_CONSTRUCTOR_ARGUMENTS Vector2 position
+#define ENEMY_CONSTRUCTOR_ARGUMENTS_NAMES position
 
 class Enemy : public MovableRectangle
 {
 public:
     Enemy(void);
-    Enemy(Vector2 position);
+    Enemy(ENEMY_CONSTRUCTOR_ARGUMENTS);
 };

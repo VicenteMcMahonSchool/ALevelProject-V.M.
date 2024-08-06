@@ -1,10 +1,10 @@
 #include "../enemy/enemy.hpp"
 #include "./tile_map.hpp"
-#include "../../linked_list/linked_list.hpp"
+#include "../game_object/game_object.hpp"
 
 GETTER_AND_SETTER_CPP(unsigned int, TileMap, tileSize, TileSize)
 GETTER_CPP(TILE_TYPE *, TileMap, spawnTile, SpawnTile)
-TileMap::TileMap(Vector2 position, unsigned int tileSize) : GeneralGameObject(position), tileSize(tileSize)
+TileMap::TileMap(TILE_MAP_CONSTRUCTOR_ARGUMENTS) : GeneralGameObject(position), tileSize(tileSize)
 {
     spawnTile = NULL;
     FILE *file = fopen("./map", "rb");
@@ -46,12 +46,13 @@ void TileMap::update(double deltaTime)
                 setTileAtPosition(tileCentres.topRight, tileValue[6]);
             }
         }
-        if (tileMap[i] == TILE_ENEMY_SPAWNER && timePast > 1000 && nextEnemyIndex < MAXIMUM_NUMBER_OF_ENEMIES)
+        if (tileMap[i] == TILE_ENEMY_SPAWNER && timePast > 1000)
         {
             Vector2 position = getCentrePositionOfTile(tileMap + i);
-            enemies[nextEnemyIndex] = Enemy(position - (Vector2){(double)tileSize / 2, (double)tileSize / 2});
-            gameObjects.add(GameObject(enemies + nextEnemyIndex));
-            nextEnemyIndex++;
+            // enemies[nextEnemyIndex] = Enemy(position - (Vector2){(double)tileSize / 2, (double)tileSize / 2});
+            // gameObjects.add(GameObject(enemies + nextEnemyIndex));`
+            GameObject *enemy = gameObjects.add(ENEMY);
+            enemy->value.enemy = {position - (Vector2){(double)tileSize / 2, (double)tileSize / 2}};
         }
     }
     for (size_t i = 0; i < NUMBER_OF_TILES; i++)

@@ -11,4 +11,5 @@ obj/game_objects/game_object/game_object.o: \
  src/game_objects/game_object/./../player/../../input/input.hpp \
  src/game_objects/game_object/./../enemy/enemy.hpp \
  src/game_objects/game_object/./../button/button.hpp \
- src/game_objects/game_object/./../tile_map/tile_map.hpp
+ src/game_objects/game_object/./../tile_map/tile_map.hpp \
+ src/game_objects/game_object/./../tile_map/../../game_objects_class/game_objects_class.hpp

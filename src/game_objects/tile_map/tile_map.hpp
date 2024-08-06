@@ -3,10 +3,12 @@
 #include <dlfcn.h>
 #include "../../global/global.hpp"
 #include "../general_game_object/general_game_object.hpp"
+#include "../../game_objects_class/game_objects_class.hpp"
 
+#define TILE_MAP_CONSTRUCTOR_ARGUMENTS Vector2 position, unsigned int tileSize
+#define TILE_MAP_CONSTRUCTOR_ARGUMENTS_NAMES position, tileSize
 #define WIDTH_OF_TILE_MAP 128
 #define HEIGHT_OF_TILE_MAP 64
-#define MAXIMUM_NUMBER_OF_ENEMIES 1024
 #define NUMBER_OF_TILES WIDTH_OF_TILE_MAP *HEIGHT_OF_TILE_MAP
 #define TILE_MAP_RECTANGLES_POSITION                                                     \
     this->rectangles[i].x = (i % WIDTH_OF_TILE_MAP) * this->tileSize - this->position.x; \
@@ -65,17 +67,13 @@ class TileMap : public GeneralGameObject
 private:
     TILE_TYPE tileMap[NUMBER_OF_TILES];
     SDL_Rect rectangles[NUMBER_OF_TILES];
-#ifdef ENEMY_INCLUDED
-    Enemy enemies[MAXIMUM_NUMBER_OF_ENEMIES];
-#endif
     double timePast = 0;
     // unsigned int tileSize;
     GETTER_AND_SETTER_HPP(unsigned int, tileSize, TileSize)
     GETTER_HPP(TILE_TYPE *, spawnTile, SpawnTile)
 
 public:
-    TileMap(Vector2 position, unsigned int tileSize);
-    size_t nextEnemyIndex = 0;
+    TileMap(TILE_MAP_CONSTRUCTOR_ARGUMENTS);
     bool tileOutlines = false;
     void update(double deltaTime);
     void draw(void);

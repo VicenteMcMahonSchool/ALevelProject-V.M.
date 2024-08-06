@@ -1,6 +1,6 @@
 #include "./rectangle.hpp"
 
-Rectangle::Rectangle(Vector2 position, SDL_Colour colour, int width, int height) : GeneralGameObject(position), colour(colour), rectangle{(int)round(position.x), (int)round(position.y), width, height} {}
+Rectangle::Rectangle(RECTANGLE_CONSTRUCTOR_ARGUMENTS) : GeneralGameObject(position), colour(colour), rectangle{(int)round(position.x), (int)round(position.y), width, height} {}
 void Rectangle::update(double deltaTime)
 {
     rectangle.x = (int)round(position.x);

@@ -2,6 +2,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include "../macros/macros.hpp"
+// #include "../game_objects_class/game_objects_class.hpp"
 
 enum __attribute__((__packed__)) SCREEN
 {
@@ -17,11 +18,10 @@ enum __attribute__((__packed__)) SCREEN
 // Application Type is defined here because of circular dependencies issues. This occurs because 'global.hpp' requires 'application' of type 'Application', whilst 'application' needs access to the global variables.
 struct Application;
 struct GameObject;
+struct GameObjects;
 struct TileMap;
 struct Vector2;
-// template <typename>
-// struct LinkedList;
-struct LinkedList;
+
 // Extern allows other files to know about global variables stored else where.
 extern Application application; // In 'main.cpp'.
 // These are stored in 'application.cpp'.
@@ -29,9 +29,20 @@ extern Application application; // In 'main.cpp'.
 extern int windowWidth, windowHeight;
 extern SDL_Window *window;
 extern SDL_Renderer *renderer;
-extern LinkedList /* <GameObject> */ gameObjects;
+extern GameObjects gameObjects;
 extern TileMap tileMap;
 extern Vector2 cameraPosition;
 extern TTF_Font *font;
 extern SCREEN screen;
 extern SDL_GameController *controller;
+
+enum __attribute__((__packed__)) GAME_OBJECT_TYPE
+{
+    GENERAL_GAME_OBJECT,
+    RECTANGLE,
+    MOVABLE_RECTANGLE,
+    BUTTON,
+    TILE_MAP,
+    PLAYER,
+    ENEMY
+};

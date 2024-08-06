@@ -1,6 +1,6 @@
 #include "button.hpp"
 
-Button::Button(Vector2 position, SDL_Colour colour, int width, int height, const char *text, void (*callBack)(void)) : Rectangle(position, colour, width, height), text(text), callBack(callBack) {}
+Button::Button(BUTTON_CONSTRUCTOR_ARGUMENTS) : Rectangle(position, colour, width, height), text(text), callBack(callBack) {}
 
 void Button::drawText(const char *text)
 {
