@@ -7,10 +7,14 @@
 
 class Rectangle : public GeneralGameObject
 {
+private:
+    SDL_Rect shadowRectangle;
+
 public:
     Rectangle(RECTANGLE_CONSTRUCTOR_ARGUMENTS);
     void update(double deltaTime);
     void draw(void);
+    void drawShadows(void);
     GETTER_AND_SETTER_HPP(SDL_Colour, colour, Colour)
     GETTER_HPP(SDL_Rect, rectangle, Rectangle)
 };

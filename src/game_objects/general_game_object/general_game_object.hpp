@@ -11,5 +11,6 @@ public:
     GeneralGameObject(GENERAL_GAME_OBJECT_CONSTRUCTOR_ARGUMENTS);
     void update(double deltaTime);
     void draw(void);
+    void drawShadows(void);
     GETTER_AND_SETTER_HPP(Vector2, position, Position)
 };

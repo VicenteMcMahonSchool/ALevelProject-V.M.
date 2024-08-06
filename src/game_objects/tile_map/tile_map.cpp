@@ -66,11 +66,8 @@ void TileMap::draw(void)
     {
         rectangles[i].x -= cameraPosition.x - windowWidth / 2;
         rectangles[i].y -= cameraPosition.y - windowHeight / 2;
-        SDL_Rect shadowRectangle{rectangles[i].x + SHADOW_DISTANCE_X, rectangles[i].y + SHADOW_DISTANCE_Y, rectangles[i].w, rectangles[i].h};
         if (tileMap[i] == TILE_AIR || tileMap[i] == TILE_NONE || ((tileMap[i] == TILE_BOARDER || tileMap[i] == TILE_SPAWN || tileMap[i] == TILE_ENEMY_SPAWNER) && !tileOutlines))
-            goto doNotFill;
-        SDL_SetRenderDrawColour(renderer, 0X11, 0X11, 0X11, 0XFF);
-        SDL_RenderFillRect(renderer, &shadowRectangle); // Fills the rectangle.
+            continue;
         if (tileMap[i] == TILE_PLATFORM)
             SDL_SetRenderDrawColour(renderer, 0X55, 0X77, 0X77, 0XFF);
         else if (tileMap[i] == TILE_BOARDER)
@@ -94,6 +91,17 @@ void TileMap::draw(void)
         }
     }
     GeneralGameObject::draw();
+}
+void TileMap::drawShadows(void)
+{
+    for (size_t i = 0; i < NUMBER_OF_TILES; i++)
+    {
+        if (tileMap[i] == TILE_AIR || tileMap[i] == TILE_NONE || ((tileMap[i] == TILE_BOARDER || tileMap[i] == TILE_SPAWN || tileMap[i] == TILE_ENEMY_SPAWNER) && !tileOutlines))
+            continue;
+        SDL_Rect shadowRectangle{rectangles[i].x + SHADOW_DISTANCE_X, rectangles[i].y + SHADOW_DISTANCE_Y, rectangles[i].w, rectangles[i].h};
+        SDL_SetRenderDrawColour(renderer, 0X11, 0X11, 0X11, 0XFF);
+        SDL_RenderFillRect(renderer, &shadowRectangle); // Fills the rectangle.
+    }
 }
 
 void TileMap::saveMap(void)

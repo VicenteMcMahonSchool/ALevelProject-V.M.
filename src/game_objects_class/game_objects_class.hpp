@@ -18,6 +18,7 @@ public:
     GameObject *add(GAME_OBJECT_TYPE type);
     void update(double deltaTime);
     void draw(void);
+    void drawShadows(void);
 
 private:
     GameObject *gameObjects;

@@ -63,3 +63,9 @@ void GameObjects::draw(void)
     for (size_t i = 0; i < index; i++)
         gameObjects[i].draw();
 }
+
+void GameObjects::drawShadows(void)
+{
+    for (size_t i = 0; i < index; i++)
+        gameObjects[i].drawShadows();
+}
