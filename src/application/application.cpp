@@ -3,7 +3,6 @@
 int windowWidth, windowHeight;
 SDL_Window *window;
 SDL_Renderer *renderer;
-// LinkedList /* <GameObject> */ gameObjects{};
 GameObjects gameObjects{};
 TileMap tileMap = TileMap({0, 0}, 120);
 Vector2 cameraPosition{0, 0};
@@ -65,12 +64,8 @@ void Application::gameScreen(void)
     gameObjects.makeEmpty();
     unsigned int tileSize = tileMap.getTileSize();
     tileMap.tileOutlines = false;
-    // Player player{tileMap.getCentrePositionOfTile(tileMap.getSpawnTile()) - (Vector2){(double)tileSize / 2, (double)tileSize / 2}};
-    // gameObjects.add({tileMap});
-    // gameObjects.add({player});
     GameObject *player = gameObjects.add(PLAYER);
     player->value.player = {tileMap.getCentrePositionOfTile(tileMap.getSpawnTile()) - (Vector2){(double)tileSize / 2, (double)tileSize / 2}};
-    // GameObject *tileMap
     SDL_Event event;
     // Delta Time code taken from https://gamedev.stackexchange.com/questions/110825/how-to-calculate-delta-time-with-sdl.
     Uint64 now = SDL_GetPerformanceCounter(), last = 0; // Will be used to calculate 'deltaTime'.
@@ -119,13 +114,11 @@ void Application::gameScreen(void)
                 break;
             }
         }
-        // TRAVERSE(gameObjects.head, GameObject, item->datum.update(deltaTime)) // Updates all the 'GameObjects'.
         tileMap.update(deltaTime);
         gameObjects.update(deltaTime);
         cameraPosition = player->value.player.getPosition() + (Vector2){(double)player->value.player.getRectangle().w / 2, (double)player->value.player.getRectangle().h / 2};
         SDL_SetRenderDrawColour(renderer, 0X55, 0X55, 0X55, 0XFF);
         SDL_RenderClear(renderer); // Clears the screen.
-        // TRAVERSE(gameObjects.head, GameObject, item->datum.draw()) // Draws all the 'GameObjects'.
         tileMap.draw();
         gameObjects.draw();
         SDL_RenderPresent(renderer); // Renders everything.
@@ -326,10 +319,6 @@ void Application::editScreen(void)
 
         SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF);
         SDL_RenderClear(renderer);
-        // TRAVERSE(gameObjects.head, GameObject, item->datum.update(deltaTime)) // Updates all the 'GameObjects'.
-        // TRAVERSE(gameObjects.head, GameObject, item->datum.draw())            // Draws all the 'GameObjects'.
-        // gameObjects.update(deltaTime);
-        // gameObjects.draw();
         tileMap.update(deltaTime);
         tileMap.draw();
         if (controller != NULL)
