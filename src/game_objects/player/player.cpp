@@ -9,26 +9,10 @@ Player::Player(PLAYER_CONSTRUCTOR_ARGUMENTS) : MovableRectangle(position, {0X33,
 void playerHandleCollision(const unsigned char *tile, MovableRectangle *movableRectangle)
 {
     const TILE_TYPE *centreTile = tileMap.getTileAtPosition(movableRectangle->getPosition() + (Vector2){(double)movableRectangle->getRectangle().w / 2, (double)movableRectangle->getRectangle().h / 2});
-    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
     if (*tile == TILE_LOSE || ((const TILE_TYPE *)tile == centreTile && getTileAttributes((const TILE_TYPE *)tile).isCollidable))
-    {
-        SDL_SetRenderDrawColour(renderer, 0XFF, 0X00, 0X00, 0X55);
-        SDL_Rect rectangle{0, 0, windowWidth, windowHeight};
-        SDL_RenderFillRect(renderer, &rectangle);
-        SDL_RenderPresent(renderer);
-        SDL_Delay(1000);
-        screen = SCREEN_MENU;
-    }
+        screen = SCREEN_LOSE;
     else if (*tile == TILE_WIN)
-    {
-        SDL_SetRenderDrawColour(renderer, 0X00, 0XFF, 0X00, 0X55);
-        SDL_Rect rectangle{0, 0, windowWidth, windowHeight};
-        SDL_RenderFillRect(renderer, &rectangle);
-        SDL_RenderPresent(renderer);
-        SDL_Delay(1000);
-        screen = SCREEN_MENU;
-    }
-    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
+        screen = SCREEN_WIN;
 }
 
 void Player::update(double deltaTime)
@@ -43,30 +27,6 @@ void Player::update(double deltaTime)
         isOnGround = false;
         velocity.y -= 1;
     }
-    // const TILE_TYPE *centreTile = tileMap.getTileAtPosition(position + (Vector2){(double)rectangle.w / 2, (double)rectangle.h / 2});
-    // if (centreTile != NULL)
-    // {
-    //     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-    //     if ((getTileAttributes(centreTile).isCollidable || *centreTile == TILE_LOSE))
-    //     {
-    //         SDL_SetRenderDrawColour(renderer, 0XFF, 0X00, 0X00, 0X55);
-    //         SDL_Rect rectangle{0, 0, windowWidth, windowHeight};
-    //         SDL_RenderFillRect(renderer, &rectangle);
-    //         SDL_RenderPresent(renderer);
-    //         SDL_Delay(1000);
-    //         screen = SCREEN_MENU;
-    //     }
-    //     else if (*centreTile == TILE_WIN)
-    //     {
-    //         SDL_SetRenderDrawColour(renderer, 0X00, 0XFF, 0X00, 0X55);
-    //         SDL_Rect rectangle{0, 0, windowWidth, windowHeight};
-    //         SDL_RenderFillRect(renderer, &rectangle);
-    //         SDL_RenderPresent(renderer);
-    //         SDL_Delay(1000);
-    //         screen = SCREEN_MENU;
-    //     }
-    //     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
-    // }
     double length = deltaVelocity.length();
     if (length != 0)
         velocity += deltaVelocity / length * PLAYER_SPEED;

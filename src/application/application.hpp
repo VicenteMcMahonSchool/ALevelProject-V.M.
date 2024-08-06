@@ -16,6 +16,8 @@ public:
     void run(void);
 
 private:
+    void winScreen(void);
+    void loseScreen(void);
     void gameScreen(void);
     void menuScreen(void);
     void editScreen(void);

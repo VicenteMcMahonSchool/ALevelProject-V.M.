@@ -9,7 +9,9 @@ enum __attribute__((__packed__)) SCREEN
     SCREEN_EXIT,
     SCREEN_GAME,
     SCREEN_MENU,
-    SCREEN_EDIT
+    SCREEN_EDIT,
+    SCREEN_WIN,
+    SCREEN_LOSE
 };
 
 #define SHADOW_DISTANCE_X 6

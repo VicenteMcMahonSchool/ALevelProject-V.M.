@@ -126,7 +126,8 @@ void Application::gameScreen(void)
     }
 exit: // This is a section which can be reached using 'goto' statements.
     unsetAllButtons();
-    screen = SCREEN_MENU;
+    if (screen == SCREEN_GAME)
+        screen = SCREEN_MENU;
     return;
 }
 
@@ -343,6 +344,29 @@ exit: // This is a section which can be reached using 'goto' statements.
     return;
 }
 
+void Application::winScreen(void)
+{
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+    SDL_SetRenderDrawColour(renderer, 0X00, 0XFF, 0X00, 0X55);
+    SDL_Rect rectangle{0, 0, windowWidth, windowHeight};
+    SDL_RenderFillRect(renderer, &rectangle);
+    SDL_RenderPresent(renderer);
+    SDL_Delay(1000);
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
+    screen = SCREEN_MENU;
+}
+void Application::loseScreen(void)
+{
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+    SDL_SetRenderDrawColour(renderer, 0XFF, 0X00, 0X00, 0X55);
+    SDL_Rect rectangle{0, 0, windowWidth, windowHeight};
+    SDL_RenderFillRect(renderer, &rectangle);
+    SDL_RenderPresent(renderer);
+    SDL_Delay(1000);
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
+    screen = SCREEN_MENU;
+}
+
 void Application::run(void)
 {
     while (screen != SCREEN_EXIT)
@@ -353,6 +377,10 @@ void Application::run(void)
             gameScreen();
         else if (screen == SCREEN_EDIT)
             editScreen();
+        else if (screen == SCREEN_WIN)
+            winScreen();
+        else if (screen == SCREEN_LOSE)
+            loseScreen();
         else
         {
             puts("Unkown screen value.");
