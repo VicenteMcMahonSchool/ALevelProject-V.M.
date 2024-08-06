@@ -45,6 +45,7 @@ Application::Application()
             break;
         }
     }
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 }
 
 // Destructor for application, this is used to free memory.
@@ -121,6 +122,8 @@ void Application::gameScreen(void)
         SDL_RenderClear(renderer); // Clears the screen.
         tileMap.draw();
         gameObjects.draw();
+        if (screen != SCREEN_GAME)
+            break;
         SDL_RenderPresent(renderer); // Renders everything.
         SDL_Delay(DELAY);
     }
@@ -346,24 +349,24 @@ exit: // This is a section which can be reached using 'goto' statements.
 
 void Application::winScreen(void)
 {
-    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+    // SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
     SDL_SetRenderDrawColour(renderer, 0X00, 0XFF, 0X00, 0X55);
     SDL_Rect rectangle{0, 0, windowWidth, windowHeight};
     SDL_RenderFillRect(renderer, &rectangle);
     SDL_RenderPresent(renderer);
     SDL_Delay(1000);
-    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
+    // SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
     screen = SCREEN_MENU;
 }
 void Application::loseScreen(void)
 {
-    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+    // SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
     SDL_SetRenderDrawColour(renderer, 0XFF, 0X00, 0X00, 0X55);
     SDL_Rect rectangle{0, 0, windowWidth, windowHeight};
     SDL_RenderFillRect(renderer, &rectangle);
     SDL_RenderPresent(renderer);
     SDL_Delay(1000);
-    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
+    // SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
     screen = SCREEN_MENU;
 }
 
