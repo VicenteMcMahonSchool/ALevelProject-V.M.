@@ -117,7 +117,7 @@ void Application::gameScreen(void)
         tileMap.update(deltaTime);
         gameObjects.update(deltaTime);
         cameraPosition = player->value.player.getPosition() + (Vector2){(double)player->value.player.getRectangle().w / 2, (double)player->value.player.getRectangle().h / 2};
-        SDL_SetRenderDrawColour(renderer, 0X55, 0X55, 0X55, 0XFF);
+        SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF);
         SDL_RenderClear(renderer); // Clears the screen.
         tileMap.draw();
         gameObjects.draw();

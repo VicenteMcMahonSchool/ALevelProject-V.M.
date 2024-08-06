@@ -89,7 +89,7 @@ void TileMap::draw(void)
     doNotFill:
         if (tileOutlines)
         {
-            SDL_SetRenderDrawColour(renderer, 0XDD, 0X00, 0X00, 0X00);
+            SDL_SetRenderDrawColour(renderer, 0X22, 0X22, 0X22, 0XFF);
             SDL_RenderDrawRect(renderer, rectangles + i);
         }
     }
