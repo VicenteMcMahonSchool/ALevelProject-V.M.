@@ -46,11 +46,9 @@ void TileMap::update(double deltaTime)
                 setTileAtPosition(tileCentres.topRight, tileValue[6]);
             }
         }
-        if (tileMap[i] == TILE_ENEMY_SPAWNER && timePast > 1000)
+        if (tileMap[i] == TILE_ENEMY_SPAWNER && timePast > 1000 && tileOutlines == false)
         {
             Vector2 position = getCentrePositionOfTile(tileMap + i);
-            // enemies[nextEnemyIndex] = Enemy(position - (Vector2){(double)tileSize / 2, (double)tileSize / 2});
-            // gameObjects.add(GameObject(enemies + nextEnemyIndex));`
             GameObject *enemy = gameObjects.add(ENEMY);
             enemy->value.enemy = {position - (Vector2){(double)tileSize / 2, (double)tileSize / 2}};
         }
