@@ -16,7 +16,7 @@ private:
     void handleCollisionRight(TileCentres &tileCentres, Vector2 &centrePosition, double averageWidth, double averageHeight);
 
 protected:
-    double gravity = 0;
+    double gravity = 0.002;
     bool isOnGround = false;
     void (*onCollision)(const /* TILE_TYPE */ unsigned char *tile, MovableRectangle *movableRectangle) = NULL;
 
