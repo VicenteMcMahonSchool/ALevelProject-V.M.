@@ -4,8 +4,8 @@
 #include "../../global/global.hpp"
 #include "../general_game_object/general_game_object.hpp"
 
-#define WIDTH_OF_TILE_MAP 512
-#define HEIGHT_OF_TILE_MAP 16
+#define WIDTH_OF_TILE_MAP 128
+#define HEIGHT_OF_TILE_MAP 64
 #define MAXIMUM_NUMBER_OF_ENEMIES 1024
 #define NUMBER_OF_TILES WIDTH_OF_TILE_MAP *HEIGHT_OF_TILE_MAP
 #define TILE_MAP_RECTANGLES_POSITION                                                     \
