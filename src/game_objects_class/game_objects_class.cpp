@@ -20,7 +20,6 @@ void GameObjects::makeEmpty(void)
 
 GameObject *GameObjects::add(GAME_OBJECT_TYPE type)
 {
-    printf("%llu\n", index);
     GameObject gameObject{GENERAL_GAME_OBJECT};
     if (type == GENERAL_GAME_OBJECT)
         gameObject = GameObject(GENERAL_GAME_OBJECT);
