@@ -120,10 +120,10 @@ void Application::gameScreen(void)
         cameraPosition = player->value.player.getPosition() + (Vector2){(double)player->value.player.getRectangle().w / 2, (double)player->value.player.getRectangle().h / 2};
         SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF);
         SDL_RenderClear(renderer); // Clears the screen.
-        tileMap.drawShadows();
         gameObjects.drawShadows();
-        tileMap.draw();
+        tileMap.drawShadows();
         gameObjects.draw();
+        tileMap.draw();
         if (screen != SCREEN_GAME)
             break;
         SDL_RenderPresent(renderer); // Renders everything.
