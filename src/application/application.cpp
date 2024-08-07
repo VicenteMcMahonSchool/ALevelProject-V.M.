@@ -326,6 +326,7 @@ void Application::editScreen(void)
         SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF);
         SDL_RenderClear(renderer);
         tileMap.update(deltaTime);
+        tileMap.drawShadows();
         tileMap.draw();
         if (controller != NULL)
         {
