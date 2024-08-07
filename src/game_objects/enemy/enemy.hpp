@@ -7,6 +7,5 @@
 class Enemy : public MovableRectangle
 {
 public:
-    Enemy(void);
     Enemy(ENEMY_CONSTRUCTOR_ARGUMENTS);
 };
