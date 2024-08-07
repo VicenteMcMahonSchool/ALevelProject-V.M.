@@ -68,7 +68,7 @@ void TileMap::draw(void)
         rectangles[i].x -= cameraPosition.x - windowWidth / 2;
         rectangles[i].y -= cameraPosition.y - windowHeight / 2;
         if (tileMap[i] == TILE_AIR || tileMap[i] == TILE_NONE || ((tileMap[i] == TILE_BOARDER || tileMap[i] == TILE_SPAWN || tileMap[i] == TILE_ENEMY_SPAWNER) && !tileOutlines))
-            continue;
+            goto doNotFill;
         if (tileMap[i] == TILE_PLATFORM)
             SDL_SetRenderDrawColour(renderer, 0X55, 0X77, 0X77, 0XFF);
         else if (tileMap[i] == TILE_BOARDER)
