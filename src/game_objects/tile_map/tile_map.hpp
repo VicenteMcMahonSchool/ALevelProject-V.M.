@@ -70,7 +70,7 @@ private:
     double timePast = 0;
     // unsigned int tileSize;
     GETTER_AND_SETTER_HPP(unsigned int, tileSize, TileSize)
-    GETTER_HPP(TILE_TYPE *, spawnTile, SpawnTile)
+    // GETTER_HPP_DEFAULT(TILE_TYPE *, spawnTile, SpawnTile, NULL)
 
 public:
     TileMap(TILE_MAP_CONSTRUCTOR_ARGUMENTS);
@@ -80,6 +80,7 @@ public:
     void drawShadows(void);
     void saveMap(void);
     void setTileAtPosition(Vector2 position, TILE_TYPE tileType);
+    const TILE_TYPE *getSpawnTile(void);
     size_t getIndexFromPosition(Vector2 position);
     const TILE_TYPE *getTileAtPosition(Vector2 position);
     TilesAroundTile getTilesAroundIndex(size_t index);

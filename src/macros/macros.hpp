@@ -12,6 +12,12 @@ protected:                            \
                                       \
 public:                               \
     type get##name2(void);
+#define GETTER_HPP_DEFAULT(type, name, name2, value) \
+protected:                                           \
+    type name = value;                               \
+                                                     \
+public:                                              \
+    type get##name2(void);
 
 #define GETTER_AND_SETTER_CPP(type, className, name, name2) \
     GETTER_CPP(type, className, name, name2)                \
@@ -19,4 +25,7 @@ public:                               \
 
 #define GETTER_AND_SETTER_HPP(type, name, name2) \
     GETTER_HPP(type, name, name2)                \
+    void set##name2(type newValue);
+#define GETTER_AND_SETTER_HPP_DEFAULT(type, name, name2, value) \
+    GETTER_HPP_DEFAULT(type, name, name2, value)                \
     void set##name2(type newValue);

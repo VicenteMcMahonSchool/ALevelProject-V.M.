@@ -62,12 +62,12 @@ Application::~Application()
 void Application::gameScreen(void)
 {
     gameObjects.makeEmpty();
-    GameObject *player = gameObjects.add(PLAYER);
-    GameObject *tileMap = gameObjects.add(TILE_MAP);
-    tileMap->value.tileMap = {{0, 0}, 120};
-    unsigned int tileSize = tileMap->value.tileMap.getTileSize();
-    player->value.player = {tileMap->value.tileMap.getCentrePositionOfTile(tileMap->value.tileMap.getSpawnTile()) - (Vector2){(double)tileSize / 2, (double)tileSize / 2}};
-    tileMap->value.tileMap.tileOutlines = false;
+    GameObjectUnion *player = gameObjects.add(PLAYER);
+    GameObjectUnion *tileMap = gameObjects.add(TILE_MAP);
+    tileMap->tileMap = TileMap{{0, 0}, 120};
+    unsigned int tileSize = tileMap->tileMap.getTileSize();
+    player->player = Player{tileMap->tileMap.getCentrePositionOfTile(tileMap->tileMap.getSpawnTile()) - (Vector2){(double)tileSize / 2, (double)tileSize / 2} /* (Vector2){(double)tileSize / 2, (double)tileSize / 2} */};
+    tileMap->tileMap.tileOutlines = false;
     SDL_Event event;
     // Delta Time code taken from https://gamedev.stackexchange.com/questions/110825/how-to-calculate-delta-time-with-sdl.
     Uint64 now = SDL_GetPerformanceCounter(), last = 0; // Will be used to calculate 'deltaTime'.
@@ -117,7 +117,7 @@ void Application::gameScreen(void)
             }
         }
         gameObjects.update(deltaTime);
-        cameraPosition = player->value.player.getPosition() + (Vector2){(double)player->value.player.getRectangle().w / 2, (double)player->value.player.getRectangle().h / 2};
+        cameraPosition = player->player.getPosition() + (Vector2){(double)player->player.getRectangle().w / 2, (double)player->player.getRectangle().h / 2};
         SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF);
         SDL_RenderClear(renderer); // Clears the screen.
         gameObjects.drawShadows();
@@ -225,11 +225,11 @@ exit:
 void Application::editScreen(void)
 {
     gameObjects.makeEmpty();
-    GameObject *tileMap = gameObjects.add(TILE_MAP);
-    tileMap->value.tileMap = {{0, 0}, 120};
-    cameraPosition = tileMap->value.tileMap.getCentrePositionOfTile(tileMap->value.tileMap.getSpawnTile());
-    unsigned int tileSize = tileMap->value.tileMap.getTileSize();
-    tileMap->value.tileMap.tileOutlines = true;
+    GameObjectUnion *tileMap = gameObjects.add(TILE_MAP);
+    tileMap->tileMap = {{0, 0}, 120};
+    cameraPosition = tileMap->tileMap.getCentrePositionOfTile(tileMap->tileMap.getSpawnTile());
+    unsigned int tileSize = tileMap->tileMap.getTileSize();
+    tileMap->tileMap.tileOutlines = true;
     // gameObjects.add({tileMap});
     SDL_Event event;
     // Delta Time code taken from https://gamedev.stackexchange.com/questions/110825/how-to-calculate-delta-time-with-sdl.
@@ -256,17 +256,17 @@ void Application::editScreen(void)
                         goto exit;
                     case SDL_CONTROLLER_BUTTON_A:
                     {
-                        const TILE_TYPE *tile = tileMap->value.tileMap.getTileAtPosition(cameraPosition);
+                        const TILE_TYPE *tile = tileMap->tileMap.getTileAtPosition(cameraPosition);
                         if (tile != NULL && *tile < TILE_MAXIMUM_VALUE - 1)
-                            tileMap->value.tileMap.setTileAtPosition(cameraPosition, (TILE_TYPE)(*tile + 1));
+                            tileMap->tileMap.setTileAtPosition(cameraPosition, (TILE_TYPE)(*tile + 1));
                         else
-                            tileMap->value.tileMap.setTileAtPosition(cameraPosition, TILE_AIR);
+                            tileMap->tileMap.setTileAtPosition(cameraPosition, TILE_AIR);
                         break;
                     }
                     case SDL_CONTROLLER_BUTTON_B:
                     {
-                        const TILE_TYPE *tile = tileMap->value.tileMap.getTileAtPosition(cameraPosition);
-                        tileMap->value.tileMap.setTileAtPosition(cameraPosition, TILE_AIR);
+                        const TILE_TYPE *tile = tileMap->tileMap.getTileAtPosition(cameraPosition);
+                        tileMap->tileMap.setTileAtPosition(cameraPosition, TILE_AIR);
                         break;
                     }
                     default:
@@ -295,18 +295,18 @@ void Application::editScreen(void)
                 int x, y;
                 Uint32 button = SDL_GetMouseState(&x, &y);
                 Vector2 position = {cameraPosition.x + x - windowWidth / 2, cameraPosition.y + y - windowHeight / 2};
-                const TILE_TYPE *tile = tileMap->value.tileMap.getTileAtPosition(position);
+                const TILE_TYPE *tile = tileMap->tileMap.getTileAtPosition(position);
                 if (tile != NULL)
                 {
                     if (button == 1)
                     {
                         if (*tile < TILE_MAXIMUM_VALUE - 1)
-                            tileMap->value.tileMap.setTileAtPosition(position, (TILE_TYPE)(*tile + 1));
+                            tileMap->tileMap.setTileAtPosition(position, (TILE_TYPE)(*tile + 1));
                         else
-                            tileMap->value.tileMap.setTileAtPosition(position, TILE_AIR);
+                            tileMap->tileMap.setTileAtPosition(position, TILE_AIR);
                     }
                     else if (button == 4)
-                        tileMap->value.tileMap.setTileAtPosition(position, TILE_AIR);
+                        tileMap->tileMap.setTileAtPosition(position, TILE_AIR);
                 }
                 break;
             }
@@ -330,11 +330,11 @@ void Application::editScreen(void)
         gameObjects.draw();
         if (controller != NULL)
         {
-            const TILE_TYPE *tile = tileMap->value.tileMap.getTileAtPosition(cameraPosition);
+            const TILE_TYPE *tile = tileMap->tileMap.getTileAtPosition(cameraPosition);
             if (tile != NULL)
             {
                 SDL_SetRenderDrawColour(renderer, 0XAA, 0XAA, 0XAA, 0XFF);
-                Vector2 centrePosition = tileMap->value.tileMap.getCentrePositionOfTile(tile);
+                Vector2 centrePosition = tileMap->tileMap.getCentrePositionOfTile(tile);
                 SDL_Rect rectangle = {(int)(centrePosition.x - (double)tileSize / 2 + (double)windowWidth / 2 - cameraPosition.x), (int)(centrePosition.y - (double)tileSize / 2 + (double)windowHeight / 2 - cameraPosition.y), (int)tileSize, (int)tileSize};
                 SDL_RenderDrawRect(renderer, &rectangle);
             }
@@ -344,7 +344,7 @@ void Application::editScreen(void)
     }
 exit: // This is a section which can be reached using 'goto' statements.
     unsetAllButtons();
-    tileMap->value.tileMap.saveMap();
+    tileMap->tileMap.saveMap();
     if (screen == SCREEN_EDIT)
         screen = SCREEN_MENU;
     return;

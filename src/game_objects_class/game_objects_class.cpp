@@ -18,7 +18,7 @@ void GameObjects::makeEmpty(void)
     index = 0;
 }
 
-GameObject *GameObjects::add(GAME_OBJECT_TYPE type)
+GameObjectUnion *GameObjects::add(GAME_OBJECT_TYPE type)
 {
     GameObject gameObject{GENERAL_GAME_OBJECT};
     if (type == GENERAL_GAME_OBJECT)
@@ -49,14 +49,14 @@ GameObject *GameObjects::add(GAME_OBJECT_TYPE type)
     }
 addToArray:
     gameObjects[index] = gameObject;
-    return gameObjects + index++;
+    return &gameObjects[index++].value;
 }
 
-GameObject *GameObjects::getGameObject(GAME_OBJECT_TYPE type)
+GameObjectUnion *GameObjects::getGameObject(GAME_OBJECT_TYPE type)
 {
     for (size_t i = 0; i < index; i++)
         if (gameObjects[i].type == type)
-            return gameObjects + i;
+            return &gameObjects[i].value;
     return NULL;
 }
 

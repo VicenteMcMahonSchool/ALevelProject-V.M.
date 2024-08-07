@@ -2,11 +2,9 @@
 #include "./tile_map.hpp"
 #include "../game_object/game_object.hpp"
 
-GETTER_AND_SETTER_CPP(unsigned int, TileMap, tileSize, TileSize)
-GETTER_CPP(TILE_TYPE *, TileMap, spawnTile, SpawnTile)
 TileMap::TileMap(TILE_MAP_CONSTRUCTOR_ARGUMENTS) : GeneralGameObject(position), tileSize(tileSize)
 {
-    spawnTile = NULL;
+    // spawnTile = NULL;
     FILE *file = fopen("./map", "rb");
     fseek(file, 0, SEEK_END);
     size_t fileSize = ftell(file);
@@ -19,11 +17,24 @@ TileMap::TileMap(TILE_MAP_CONSTRUCTOR_ARGUMENTS) : GeneralGameObject(position), 
         rectangles[i].w = tileSize;
         rectangles[i].h = tileSize;
         fread(tileMap + i, sizeof(TILE_TYPE), 1, file);
-        if (tileMap[i] == TILE_SPAWN && spawnTile == NULL)
-            spawnTile = tileMap + i;
     }
+    // if (spawnTile == NULL)
+    //     spawnTile = tileMap + WIDTH_OF_TILE_MAP + 1;
     fclose(file);
 }
+
+GETTER_AND_SETTER_CPP(unsigned int, TileMap, tileSize, TileSize)
+// GETTER_CPP(TILE_TYPE *, TileMap, spawnTile, SpawnTile)
+
+const TILE_TYPE *TileMap::getSpawnTile(void)
+{
+    for (size_t i = 0; i < NUMBER_OF_TILES; i++)
+
+        if (tileMap[i] == TILE_SPAWN)
+            return tileMap + i;
+    return tileMap + WIDTH_OF_TILE_MAP + 1;
+}
+
 void TileMap::update(double deltaTime)
 {
     timePast += deltaTime;
@@ -49,8 +60,8 @@ void TileMap::update(double deltaTime)
         if (tileMap[i] == TILE_ENEMY_SPAWNER && timePast > 1000 && tileOutlines == false)
         {
             Vector2 position = getCentrePositionOfTile(tileMap + i);
-            GameObject *enemy = gameObjects.add(ENEMY);
-            enemy->value.enemy = {position - (Vector2){(double)tileSize / 2, (double)tileSize / 2}};
+            GameObjectUnion *enemy = gameObjects.add(ENEMY);
+            enemy->enemy = {position - (Vector2){(double)tileSize / 2, (double)tileSize / 2}};
         }
     }
     for (size_t i = 0; i < NUMBER_OF_TILES; i++)
@@ -126,10 +137,10 @@ void TileMap::setTileAtPosition(Vector2 position, TILE_TYPE tileType)
         for (size_t i = 0; i < NUMBER_OF_TILES; i++)
             if (tileMap[i] == TILE_SPAWN)
                 tileMap[i] = TILE_AIR;
-        spawnTile = tileMap + tileIndex;
+        // spawnTile = tileMap + tileIndex;
     }
-    else if (tileMap[tileIndex] == TILE_SPAWN)
-        spawnTile = NULL;
+    // else if (tileMap[tileIndex] == TILE_SPAWN)
+    // spawnTile = NULL;
     tileMap[tileIndex] = tileType;
 }
 
