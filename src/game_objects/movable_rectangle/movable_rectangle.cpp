@@ -1,19 +1,21 @@
 #include "./movable_rectangle.hpp"
-#include "../tile_map/tile_map.hpp"
+#include "../../game_objects_class/game_objects_class.hpp"
+#include "../game_object/game_object.hpp"
 
 MovableRectangle::MovableRectangle(MOVABLE_RECTANGLE_CONSTRUCTOR_ARGUMENTS) : Rectangle(position, colour, width, height), velocity({0, 0}) {}
 void MovableRectangle::update(double deltaTime)
 {
+    TileMap *tileMap = &gameObjects.getGameObject(TILE_MAP)->value.tileMap; // Made it a pointer to avoid copying the tile map.
     double localGravity = isOnGround ? 0 : gravity;
-    position += (velocity * deltaTime + (Vector2){0, localGravity} / 2 * deltaTime * deltaTime) * tileMap.getTileSize() / 120;
+    position += (velocity * deltaTime + (Vector2){0, localGravity} / 2 * deltaTime * deltaTime) * tileMap->getTileSize() / 120;
     velocity += (Vector2){0, localGravity} * deltaTime;
     isOnGround = false;
     Vector2 centrePosition = position + (Vector2){(double)rectangle.w / 2, (double)rectangle.h / 2};
-    unsigned int tileSize = tileMap.getTileSize();
+    unsigned int tileSize = tileMap->getTileSize();
     double averageWidth = (double)(tileSize + rectangle.w) / 2;
     double averageHeight = (double)(tileSize + rectangle.h) / 2;
-    TilesAroundTile tiles = tileMap.getTilesAroundPosition(centrePosition);
-    TileCentres tileCentres = tileMap.getTileCentresAroundPositionOfTile(tiles.centre);
+    TilesAroundTile tiles = tileMap->getTilesAroundPosition(centrePosition);
+    TileCentres tileCentres = tileMap->getTileCentresAroundPositionOfTile(tiles.centre);
     if (getTileAttributes(tiles.top).isCollidable && centrePosition.y < tileCentres.top.y + averageHeight)
     {
         handleCollisionTop(tileCentres, centrePosition, averageWidth, averageHeight);

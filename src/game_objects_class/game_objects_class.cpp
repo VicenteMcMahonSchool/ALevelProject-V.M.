@@ -52,6 +52,14 @@ addToArray:
     return gameObjects + index++;
 }
 
+GameObject *GameObjects::getGameObject(GAME_OBJECT_TYPE type)
+{
+    for (size_t i = 0; i < index; i++)
+        if (gameObjects[i].type == type)
+            return gameObjects + i;
+    return NULL;
+}
+
 void GameObjects::update(double deltaTime)
 {
     for (size_t i = 0; i < index; i++)

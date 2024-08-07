@@ -32,7 +32,6 @@ extern int windowWidth, windowHeight;
 extern SDL_Window *window;
 extern SDL_Renderer *renderer;
 extern GameObjects gameObjects;
-extern TileMap tileMap;
 extern Vector2 cameraPosition;
 extern TTF_Font *font;
 extern SCREEN screen;

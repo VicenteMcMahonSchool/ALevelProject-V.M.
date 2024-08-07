@@ -14,8 +14,8 @@ public:
     GameObjects(void);
     ~GameObjects();
     void makeEmpty(void);
-    // GameObject *add(GameObject gameObject);
     GameObject *add(GAME_OBJECT_TYPE type);
+    GameObject *getGameObject(GAME_OBJECT_TYPE type);
     void update(double deltaTime);
     void draw(void);
     void drawShadows(void);
