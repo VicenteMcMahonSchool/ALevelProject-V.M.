@@ -17,9 +17,9 @@ void Enemy::update(double deltaTime)
     if (isOnGround)
     {
         Vector2 lookaheadPosition;
-        if (velocity.x < 0.75)
+        if (velocity.x < PLAYER_SPEED * deltaTime && velocity.x > 0)
             lookaheadPosition = position + velocity * ENEMY_LOOKAHEAD;
-        else if (velocity.x > 0.75)
+        else if (velocity.x > PLAYER_SPEED * deltaTime && velocity.y < 0)
             lookaheadPosition = position + velocity * ENEMY_LOOKAHEAD + rectangle.w;
         else
             lookaheadPosition = position + (velocity / abs(velocity.length())) * rectangle.w;
