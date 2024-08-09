@@ -17,15 +17,15 @@ void Enemy::update(double deltaTime)
     if (isOnGround)
     {
         Vector2 lookaheadPosition;
-        if (velocity.x < 0)
+        if (velocity.x < 0.75)
             lookaheadPosition = position + velocity * ENEMY_LOOKAHEAD;
-        else if (velocity.x > 0)
+        else if (velocity.x > 0.75)
             lookaheadPosition = position + velocity * ENEMY_LOOKAHEAD + rectangle.w;
+        else
+            lookaheadPosition = position + (velocity / abs(velocity.length())) * rectangle.w;
         TilesAroundTile tiles = tileMap.getTilesAroundPosition(lookaheadPosition);
         if (getTileAttributes(tiles.centre).isCollidable || !getTileAttributes(tiles.bottom).isCollidable)
-        {
             velocity.y -= PLAYER_JUMP_SPEED;
-        }
     }
     MovableRectangle::update(deltaTime);
 }
