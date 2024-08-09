@@ -3,6 +3,7 @@
 
 #define ENEMY_CONSTRUCTOR_ARGUMENTS Vector2 position
 #define ENEMY_CONSTRUCTOR_ARGUMENTS_NAMES position
+#define ENEMY_LOOKAHEAD 0.01
 
 class Enemy : public MovableRectangle
 {

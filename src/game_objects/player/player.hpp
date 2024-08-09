@@ -6,6 +6,7 @@
 #define PLAYER_CONSTRUCTOR_ARGUMENTS_NAMES position
 #define PLAYER_GRAVITY 0.002
 #define PLAYER_SPEED 0.001
+#define PLAYER_JUMP_SPEED 1
 
 void playerHandleCollision(const /* TILE_TYPE */ unsigned char *tile, MovableRectangle *movableRectangle);
 class Player : public MovableRectangle

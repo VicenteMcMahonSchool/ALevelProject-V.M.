@@ -116,10 +116,10 @@ void Application::gameScreen(void)
                 break;
             }
         }
-        gameObjects.update(deltaTime);
-        cameraPosition = player->player.getPosition() + (Vector2){(double)player->player.getRectangle().w / 2, (double)player->player.getRectangle().h / 2};
         SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF);
         SDL_RenderClear(renderer); // Clears the screen.
+        gameObjects.update(deltaTime);
+        cameraPosition = player->player.getPosition() + (Vector2){(double)player->player.getRectangle().w / 2, (double)player->player.getRectangle().h / 2};
         gameObjects.drawShadows();
         gameObjects.draw();
         if (screen != SCREEN_GAME)

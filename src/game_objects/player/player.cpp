@@ -19,18 +19,14 @@ void playerHandleCollision(const unsigned char *tile, MovableRectangle *movableR
 
 void Player::update(double deltaTime)
 {
-    Vector2 deltaVelocity{0, 0};
     if (isButtonDown(SDL_SCANCODE_A) || isButtonDown(SDL_CONTROLLER_BUTTON_DPAD_LEFT))
-        deltaVelocity.x -= 1;
+        velocity.x -= PLAYER_SPEED * deltaTime;
     if (isButtonDown(SDL_SCANCODE_D) || isButtonDown(SDL_CONTROLLER_BUTTON_DPAD_RIGHT))
-        deltaVelocity.x += 1;
+        velocity.x += PLAYER_SPEED * deltaTime;
     if ((isButtonDown(SDL_SCANCODE_SPACE) || isButtonDown(SDL_CONTROLLER_BUTTON_A)) && isOnGround)
     {
         isOnGround = false;
-        velocity.y -= 1;
+        velocity.y -= PLAYER_JUMP_SPEED; // Probably doesn't need to be multiplied by delta time as it should only be for one frame no matter the framerate.
     }
-    double length = deltaVelocity.length();
-    if (length != 0)
-        velocity += deltaVelocity / length * PLAYER_SPEED * deltaTime;
     MovableRectangle::update(deltaTime);
 }
