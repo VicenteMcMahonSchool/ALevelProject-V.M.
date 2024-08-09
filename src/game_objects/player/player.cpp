@@ -2,7 +2,7 @@
 #include "../../game_objects_class/game_objects_class.hpp"
 #include "../game_object/game_object.hpp"
 
-Player::Player(PLAYER_CONSTRUCTOR_ARGUMENTS) : MovableRectangle(position, {0X33, 0X33, 0X77, 0XFF}, gameObjects.getGameObject(TILE_MAP)->tileMap.getTileSize(), gameObjects.getGameObject(TILE_MAP)->tileMap.getTileSize())
+Player::Player(PLAYER_CONSTRUCTOR_ARGUMENTS) : MovableRectangle(position, {0X22, 0X22, 0X44, 0XFF}, gameObjects.getGameObject(TILE_MAP)->tileMap.getTileSize(), gameObjects.getGameObject(TILE_MAP)->tileMap.getTileSize())
 {
     onCollision = &playerHandleCollision;
     gravity = PLAYER_GRAVITY;
