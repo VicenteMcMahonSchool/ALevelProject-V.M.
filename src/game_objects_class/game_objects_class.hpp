@@ -17,6 +17,7 @@ public:
     void makeEmpty(void);
     GameObjectUnion *add(GAME_OBJECT_TYPE type);
     GameObjectUnion *getGameObject(GAME_OBJECT_TYPE type);
+    void tick(void);
     void update(double deltaTime);
     void draw(void);
     void drawShadows(void);

@@ -67,14 +67,12 @@ class TileMap : public GeneralGameObject
 private:
     TILE_TYPE tileMap[NUMBER_OF_TILES];
     SDL_Rect rectangles[NUMBER_OF_TILES];
-    double timePast = 0;
-    // unsigned int tileSize;
     GETTER_AND_SETTER_HPP(unsigned int, tileSize, TileSize)
-    // GETTER_HPP_DEFAULT(TILE_TYPE *, spawnTile, SpawnTile, NULL)
 
 public:
     TileMap(TILE_MAP_CONSTRUCTOR_ARGUMENTS);
     bool tileOutlines = false;
+    void tick(void);
     void update(double deltaTime);
     void draw(void);
     void drawShadows(void);

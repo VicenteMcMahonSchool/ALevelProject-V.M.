@@ -23,6 +23,7 @@ public:
     GAME_OBJECT_TYPE type;
     GameObjectUnion value{};
     GameObject(GAME_OBJECT_TYPE type);
+    void tick(void);
     void update(double deltaTime);
     void draw(void);
     void drawShadows(void);

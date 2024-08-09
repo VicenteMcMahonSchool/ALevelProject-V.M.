@@ -36,6 +36,8 @@ extern Vector2 cameraPosition;
 extern TTF_Font *font;
 extern SCREEN screen;
 extern SDL_GameController *controller;
+extern unsigned int numberOfTicks;
+extern double timePassed;
 
 enum __attribute__((__packed__)) GAME_OBJECT_TYPE
 {

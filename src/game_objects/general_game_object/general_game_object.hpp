@@ -9,6 +9,7 @@ class GeneralGameObject
 {
 public:
     GeneralGameObject(GENERAL_GAME_OBJECT_CONSTRUCTOR_ARGUMENTS);
+    void tick(void);
     void update(double deltaTime);
     void draw(void);
     void drawShadows(void);

@@ -4,7 +4,6 @@
 
 TileMap::TileMap(TILE_MAP_CONSTRUCTOR_ARGUMENTS) : GeneralGameObject(position), tileSize(tileSize)
 {
-    // spawnTile = NULL;
     FILE *file = fopen("./map", "rb");
     fseek(file, 0, SEEK_END);
     size_t fileSize = ftell(file);
@@ -18,13 +17,10 @@ TileMap::TileMap(TILE_MAP_CONSTRUCTOR_ARGUMENTS) : GeneralGameObject(position), 
         rectangles[i].h = tileSize;
         fread(tileMap + i, sizeof(TILE_TYPE), 1, file);
     }
-    // if (spawnTile == NULL)
-    //     spawnTile = tileMap + WIDTH_OF_TILE_MAP + 1;
     fclose(file);
 }
 
 GETTER_AND_SETTER_CPP(unsigned int, TileMap, tileSize, TileSize)
-// GETTER_CPP(TILE_TYPE *, TileMap, spawnTile, SpawnTile)
 
 const TILE_TYPE *TileMap::getSpawnTile(void)
 {
@@ -35,12 +31,11 @@ const TILE_TYPE *TileMap::getSpawnTile(void)
     return tileMap + WIDTH_OF_TILE_MAP + 1;
 }
 
-void TileMap::update(double deltaTime)
+void TileMap::tick(void)
 {
-    timePast += deltaTime;
     for (size_t i = 0; i < NUMBER_OF_TILES; i++)
     {
-        if (tileMap[i] == TILE_ROTATION && timePast > 1000)
+        if (tileMap[i] == TILE_ROTATION)
         {
             TileCentres tileCentres = getTileCentresAroundPositionOfTile(tileMap + i);
             TilesAroundTile tiles = getTilesAroundIndex(i);
@@ -57,19 +52,21 @@ void TileMap::update(double deltaTime)
                 setTileAtPosition(tileCentres.topRight, tileValue[6]);
             }
         }
-        if (tileMap[i] == TILE_ENEMY_SPAWNER && timePast > 1000 && tileOutlines == false)
+        if (tileMap[i] == TILE_ENEMY_SPAWNER && tileOutlines == false && numberOfTicks % 3 == 0)
         {
             Vector2 position = getCentrePositionOfTile(tileMap + i);
             GameObjectUnion *enemy = gameObjects.add(ENEMY);
             enemy->enemy = {position - (Vector2){(double)tileSize / 2, (double)tileSize / 2}};
         }
     }
+}
+
+void TileMap::update(double deltaTime)
+{
     for (size_t i = 0; i < NUMBER_OF_TILES; i++)
     {
         TILE_MAP_RECTANGLES_POSITION
     }
-    while (timePast > 1000)
-        timePast -= 1000;
 }
 void TileMap::draw(void)
 {

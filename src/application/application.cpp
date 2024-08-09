@@ -7,7 +7,9 @@ GameObjects gameObjects{};
 Vector2 cameraPosition{0, 0};
 TTF_Font *font = NULL;
 SCREEN screen = SCREEN_MENU;
-SDL_GameController *controller;
+SDL_GameController *controller = NULL;
+unsigned int numberOfTicks = 0;
+double timePassed = 0;
 
 // Constructor for application, this is used to make the class.
 Application::Application()
@@ -62,6 +64,7 @@ Application::~Application()
 void Application::gameScreen(void)
 {
     gameObjects.makeEmpty();
+    timePassed = numberOfTicks = 0; // Sets both of them to 0.
     GameObjectUnion *player = gameObjects.add(PLAYER);
     GameObjectUnion *tileMap = gameObjects.add(TILE_MAP);
     tileMap->tileMap = TileMap{{0, 0}, 120};
@@ -77,6 +80,7 @@ void Application::gameScreen(void)
         last = now;
         now = SDL_GetPerformanceCounter();
         deltaTime = (double)((now - last) * 1000 / (double)SDL_GetPerformanceFrequency());
+        timePassed += deltaTime;
         /*
         Loops until there is an error getting the event. The 'event' variable is passed by reference to 'SDL_PollEvent',
         this function will get the current event and store it in 'event'.
@@ -118,6 +122,12 @@ void Application::gameScreen(void)
         }
         SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF);
         SDL_RenderClear(renderer); // Clears the screen.
+        while (timePassed > 1000)
+        {
+            timePassed -= 1000;
+            numberOfTicks++;
+            gameObjects.tick();
+        }
         gameObjects.update(deltaTime);
         cameraPosition = player->player.getPosition() + (Vector2){(double)player->player.getRectangle().w / 2, (double)player->player.getRectangle().h / 2};
         gameObjects.drawShadows();
@@ -240,6 +250,7 @@ void Application::editScreen(void)
         last = now;
         now = SDL_GetPerformanceCounter();
         deltaTime = (double)((now - last) * 1000 / (double)SDL_GetPerformanceFrequency());
+        timePassed += deltaTime;
         /*
         Loops until there is an error getting the event. The 'event' variable is passed by reference to 'SDL_PollEvent',
         this function will get the current event and store it in 'event'.
@@ -325,6 +336,12 @@ void Application::editScreen(void)
 
         SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X33, 0XFF);
         SDL_RenderClear(renderer);
+        while (timePassed > 1000)
+        {
+            timePassed -= 1000;
+            numberOfTicks++;
+            gameObjects.tick();
+        }
         gameObjects.update(deltaTime);
         gameObjects.drawShadows();
         gameObjects.draw();

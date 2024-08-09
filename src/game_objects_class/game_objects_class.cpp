@@ -60,6 +60,12 @@ GameObjectUnion *GameObjects::getGameObject(GAME_OBJECT_TYPE type)
     return NULL;
 }
 
+    void GameObjects::tick(void) {
+            for (size_t i = 0; i < index; i++)
+        gameObjects[i].tick();
+    }
+
+
 void GameObjects::update(double deltaTime)
 {
     for (size_t i = 0; i < index; i++)

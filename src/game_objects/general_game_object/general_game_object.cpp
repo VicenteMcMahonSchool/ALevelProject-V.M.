@@ -1,6 +1,7 @@
 #include "./general_game_object.hpp"
 
 GeneralGameObject::GeneralGameObject(GENERAL_GAME_OBJECT_CONSTRUCTOR_ARGUMENTS) : position(position) {}
+void GeneralGameObject::tick(void) {}
 void GeneralGameObject::update(double deltaTime) {}
 void GeneralGameObject::draw(void) {}
 void GeneralGameObject::drawShadows(void) {}
