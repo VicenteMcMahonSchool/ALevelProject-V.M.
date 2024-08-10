@@ -122,10 +122,7 @@ void TileMap::setTileAtPosition(Vector2 position, TILE_TYPE tileType)
         for (size_t i = 0; i < NUMBER_OF_TILES; i++)
             if (tileMap[i] == TILE_SPAWN)
                 tileMap[i] = TILE_AIR;
-        // spawnTile = tileMap + tileIndex;
     }
-    // else if (tileMap[tileIndex] == TILE_SPAWN)
-    // spawnTile = NULL;
     tileMap[tileIndex] = tileType;
 }
 
