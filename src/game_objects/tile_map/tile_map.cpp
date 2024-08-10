@@ -7,7 +7,7 @@
 TileMap::TileMap(TILE_MAP_CONSTRUCTOR_ARGUMENTS) : GeneralGameObject(position), tileSize(tileSize)
 {
     int tileColoursFile = open("./settings/tile_colours", O_RDONLY);
-    read(tileColoursFile, tileColours, sizeof(tileColours));
+    read(tileColoursFile, &tileColourData, sizeof(tileColourData));
     close(tileColoursFile);
     int mapFile = open("./map", O_RDONLY);
     read(mapFile, tileMap, sizeof(tileMap));
@@ -75,8 +75,8 @@ void TileMap::draw(void)
         TILE_MAP_RECTANGLES_POSITION
         rectangles[i].x -= cameraPosition.x - windowWidth / 2;
         rectangles[i].y -= cameraPosition.y - windowHeight / 2;
-        SDL_Colour colour = tileColours[tileMap[i]];
-        if (tileMap[i] == TILE_AIR || tileMap[i] == TILE_NONE || ((tileMap[i] == TILE_BOARDER || tileMap[i] == TILE_SPAWN || tileMap[i] == TILE_ENEMY_SPAWNER) && !tileOutlines))
+        SDL_Colour colour = tileColourData.tileColours[tileMap[i]];
+        if (tileMap[i] == TILE_AIR || tileMap[i] == TILE_NONE || ((tileColourData.onlyVisibleInEditor[tileMap[i] / 8 + (tileMap[i] % 8 != 0)] >> (8 - tileMap[i] % 8) & 0) && tileOutlines) /* ((tileMap[i] == TILE_BOARDER || tileMap[i] == TILE_SPAWN || tileMap[i] == TILE_ENEMY_SPAWNER) && !tileOutlines) */)
             goto doNotFill;
         SDL_SetRenderDrawColour(renderer, colour.r, colour.g, colour.b, colour.a);
         SDL_RenderFillRect(renderer, rectangles + i); // Fills the rectangle.

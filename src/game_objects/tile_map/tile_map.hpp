@@ -62,10 +62,16 @@ struct __attribute__((__packed__)) TileAttributes
 TileAttributes getTileAttributes(const TILE_TYPE tile);
 TileAttributes getTileAttributes(const TILE_TYPE *tilePointer);
 
+struct TileColourData
+{
+    SDL_Colour tileColours[TILE_MAXIMUM_VALUE];
+    unsigned char onlyVisibleInEditor[TILE_MAXIMUM_VALUE / 8 + (TILE_MAXIMUM_VALUE % 8 != 0)];
+};
+
 class TileMap : public GeneralGameObject
 {
 private:
-    SDL_Colour tileColours[TILE_MAXIMUM_VALUE];
+    TileColourData tileColourData;
     TILE_TYPE tileMap[NUMBER_OF_TILES];
     SDL_Rect rectangles[NUMBER_OF_TILES];
     GETTER_AND_SETTER_HPP(unsigned int, tileSize, TileSize)
