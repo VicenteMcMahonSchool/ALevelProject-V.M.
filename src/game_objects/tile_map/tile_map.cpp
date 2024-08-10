@@ -76,6 +76,11 @@ void TileMap::draw(void)
         rectangles[i].x -= cameraPosition.x - windowWidth / 2;
         rectangles[i].y -= cameraPosition.y - windowHeight / 2;
         SDL_Colour colour = tileColourData.tileColours[tileMap[i]];
+        if (rectangles[i].x + tileSize > windowWidth)
+        {
+            i = i + WIDTH_OF_TILE_MAP - i % WIDTH_OF_TILE_MAP;
+            continue;
+        }
         if (tileMap[i] == TILE_AIR || tileMap[i] == TILE_NONE || (((tileColourData.onlyVisibleInEditor[tileMap[i] / 8] >> (7 - (tileMap[i] % 8))) & 1) && !tileOutlines))
             goto doNotFill;
         SDL_SetRenderDrawColour(renderer, colour.r, colour.g, colour.b, colour.a);
