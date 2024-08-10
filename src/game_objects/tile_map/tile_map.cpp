@@ -7,7 +7,6 @@
 TileMap::TileMap(TILE_MAP_CONSTRUCTOR_ARGUMENTS) : GeneralGameObject(position), tileSize(tileSize)
 {
     int tileColoursFile = open("./settings/tile_colours", O_RDONLY);
-    printf("%d\n", tileColoursFile);
     read(tileColoursFile, tileColours, sizeof(tileColours));
     close(tileColoursFile);
     int mapFile = open("./map", O_RDONLY);
