@@ -83,7 +83,9 @@ void TileMap::draw(void)
         }
         else if (rectangles[i].x + (int)tileSize < 0)
         {
-            i += (cameraPosition.x - position.x - windowWidth / 2) / tileSize;
+            double addedOn = (cameraPosition.x - position.x - windowWidth / 2) / (int)tileSize - 1;
+            if (addedOn > 0)
+                i += (size_t)addedOn;
             continue;
         }
         if (tileMap[i] == TILE_AIR || tileMap[i] == TILE_NONE || (((tileColourData.onlyVisibleInEditor[tileMap[i] / 8] >> (7 - (tileMap[i] % 8))) & 1) && !tileOutlines))
@@ -113,7 +115,9 @@ void TileMap::drawShadows(void)
         }
         else if (rectangles[i].x + (int)tileSize < 0)
         {
-            i += (cameraPosition.x - position.x - windowWidth / 2) / tileSize;
+            double addedOn = (cameraPosition.x - position.x - windowWidth / 2) / (int)tileSize - 1;
+            if (addedOn > 0)
+                i += (size_t)addedOn;
             continue;
         }
         if (tileMap[i] == TILE_AIR || tileMap[i] == TILE_NONE || (((tileColourData.onlyVisibleInEditor[tileMap[i] / 8] >> (7 - (tileMap[i] % 8))) & 1) && !tileOutlines))
