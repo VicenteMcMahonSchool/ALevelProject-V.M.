@@ -10,20 +10,15 @@ TileMap::TileMap(TILE_MAP_CONSTRUCTOR_ARGUMENTS) : GeneralGameObject(position), 
     printf("%d\n", tileColoursFile);
     read(tileColoursFile, tileColours, sizeof(tileColours));
     close(tileColoursFile);
-    FILE *mapFile = fopen("./map", "rb");
-    fseek(mapFile, 0, SEEK_END);
-    size_t fileSize = ftell(mapFile);
-    rewind(mapFile);
-    if (fileSize != sizeof(tileMap))
-        throw std::runtime_error("File size of map file is incorrect.");
+    int mapFile = open("./map", O_RDONLY);
+    read(mapFile, tileMap, sizeof(tileMap));
     for (size_t i = 0; i < NUMBER_OF_TILES; i++)
     {
         TILE_MAP_RECTANGLES_POSITION
         rectangles[i].w = tileSize;
         rectangles[i].h = tileSize;
-        fread(tileMap + i, sizeof(TILE_TYPE), 1, mapFile);
     }
-    fclose(mapFile);
+    close(mapFile);
 }
 
 GETTER_AND_SETTER_CPP(unsigned int, TileMap, tileSize, TileSize)
