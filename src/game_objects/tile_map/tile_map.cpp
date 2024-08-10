@@ -76,9 +76,9 @@ void TileMap::draw(void)
         rectangles[i].x -= cameraPosition.x - windowWidth / 2;
         rectangles[i].y -= cameraPosition.y - windowHeight / 2;
         SDL_Colour colour = tileColourData.tileColours[tileMap[i]];
-        if (rectangles[i].x + tileSize > windowWidth)
+        if (rectangles[i].x > windowWidth)
         {
-            i = i + WIDTH_OF_TILE_MAP - i % WIDTH_OF_TILE_MAP;
+            i = (i / WIDTH_OF_TILE_MAP + 1) * WIDTH_OF_TILE_MAP - 1;
             continue;
         }
         if (tileMap[i] == TILE_AIR || tileMap[i] == TILE_NONE || (((tileColourData.onlyVisibleInEditor[tileMap[i] / 8] >> (7 - (tileMap[i] % 8))) & 1) && !tileOutlines))
@@ -101,7 +101,12 @@ void TileMap::drawShadows(void)
         TILE_MAP_RECTANGLES_POSITION
         rectangles[i].x = (int)round((double)rectangles[i].x - cameraPosition.x + (double)windowWidth / 2);
         rectangles[i].y = (int)round((double)rectangles[i].y - cameraPosition.y + (double)windowHeight / 2);
-        if (tileMap[i] == TILE_AIR || tileMap[i] == TILE_NONE || ((tileMap[i] == TILE_BOARDER || tileMap[i] == TILE_SPAWN || tileMap[i] == TILE_ENEMY_SPAWNER) && !tileOutlines))
+        if (rectangles[i].x > windowWidth)
+        {
+            i = (i / WIDTH_OF_TILE_MAP + 1) * WIDTH_OF_TILE_MAP - 1;
+            continue;
+        }
+        if (tileMap[i] == TILE_AIR || tileMap[i] == TILE_NONE || (((tileColourData.onlyVisibleInEditor[tileMap[i] / 8] >> (7 - (tileMap[i] % 8))) & 1) && !tileOutlines))
             continue;
         SDL_Rect shadowRectangle{rectangles[i].x, rectangles[i].y, rectangles[i].w + SHADOW_DISTANCE_X, rectangles[i].h + SHADOW_DISTANCE_Y};
         SDL_SetRenderDrawColour(renderer, 0X11, 0X11, 0X11, 0XFF);
