@@ -65,6 +65,7 @@ TileAttributes getTileAttributes(const TILE_TYPE *tilePointer);
 class TileMap : public GeneralGameObject
 {
 private:
+    SDL_Colour tileColours[TILE_MAXIMUM_VALUE];
     TILE_TYPE tileMap[NUMBER_OF_TILES];
     SDL_Rect rectangles[NUMBER_OF_TILES];
     GETTER_AND_SETTER_HPP(unsigned int, tileSize, TileSize)

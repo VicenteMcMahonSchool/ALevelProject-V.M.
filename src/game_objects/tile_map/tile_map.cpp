@@ -1,13 +1,19 @@
 #include "../enemy/enemy.hpp"
 #include "./tile_map.hpp"
 #include "../game_object/game_object.hpp"
+#include <unistd.h>
+#include <fcntl.h>
 
 TileMap::TileMap(TILE_MAP_CONSTRUCTOR_ARGUMENTS) : GeneralGameObject(position), tileSize(tileSize)
 {
-    FILE *file = fopen("./map", "rb");
-    fseek(file, 0, SEEK_END);
-    size_t fileSize = ftell(file);
-    rewind(file);
+    int tileColoursFile = open("./settings/tile_colours", O_RDONLY);
+    printf("%d\n", tileColoursFile);
+    read(tileColoursFile, tileColours, sizeof(tileColours));
+    close(tileColoursFile);
+    FILE *mapFile = fopen("./map", "rb");
+    fseek(mapFile, 0, SEEK_END);
+    size_t fileSize = ftell(mapFile);
+    rewind(mapFile);
     if (fileSize != sizeof(tileMap))
         throw std::runtime_error("File size of map file is incorrect.");
     for (size_t i = 0; i < NUMBER_OF_TILES; i++)
@@ -15,9 +21,9 @@ TileMap::TileMap(TILE_MAP_CONSTRUCTOR_ARGUMENTS) : GeneralGameObject(position), 
         TILE_MAP_RECTANGLES_POSITION
         rectangles[i].w = tileSize;
         rectangles[i].h = tileSize;
-        fread(tileMap + i, sizeof(TILE_TYPE), 1, file);
+        fread(tileMap + i, sizeof(TILE_TYPE), 1, mapFile);
     }
-    fclose(file);
+    fclose(mapFile);
 }
 
 GETTER_AND_SETTER_CPP(unsigned int, TileMap, tileSize, TileSize)
@@ -75,22 +81,10 @@ void TileMap::draw(void)
         TILE_MAP_RECTANGLES_POSITION
         rectangles[i].x -= cameraPosition.x - windowWidth / 2;
         rectangles[i].y -= cameraPosition.y - windowHeight / 2;
+        SDL_Colour colour = tileColours[tileMap[i]];
         if (tileMap[i] == TILE_AIR || tileMap[i] == TILE_NONE || ((tileMap[i] == TILE_BOARDER || tileMap[i] == TILE_SPAWN || tileMap[i] == TILE_ENEMY_SPAWNER) && !tileOutlines))
             goto doNotFill;
-        if (tileMap[i] == TILE_PLATFORM)
-            SDL_SetRenderDrawColour(renderer, 0X55, 0X77, 0X77, 0XFF);
-        else if (tileMap[i] == TILE_BOARDER)
-            SDL_SetRenderDrawColour(renderer, 0X33, 0X33, 0X77, 0XFF);
-        else if (tileMap[i] == TILE_WIN)
-            SDL_SetRenderDrawColour(renderer, 0X33, 0X77, 0X33, 0XFF);
-        else if (tileMap[i] == TILE_LOSE)
-            SDL_SetRenderDrawColour(renderer, 0X77, 0X33, 0X33, 0XFF);
-        else if (tileMap[i] == TILE_SPAWN)
-            SDL_SetRenderDrawColour(renderer, 0X77, 0X77, 0X33, 0XFF);
-        else if (tileMap[i] == TILE_ROTATION)
-            SDL_SetRenderDrawColour(renderer, 0X77, 0X77, 0X55, 0XFF);
-        else if (tileMap[i] == TILE_ENEMY_SPAWNER)
-            SDL_SetRenderDrawColour(renderer, 0XAA, 0XAA, 0XAA, 0XFF);
+        SDL_SetRenderDrawColour(renderer, colour.r, colour.g, colour.b, colour.a);
         SDL_RenderFillRect(renderer, rectangles + i); // Fills the rectangle.
     doNotFill:
         if (tileOutlines)
