@@ -88,6 +88,15 @@ void TileMap::draw(void)
                 i += (size_t)addedOn;
             continue;
         }
+        if (rectangles[i].y > windowHeight)
+            break;
+        else if (rectangles[i].y + (int)tileSize < 0)
+        {
+            long int addedOn = ((long int)(cameraPosition.y - position.y - windowHeight / 2) / (long int)tileSize) * WIDTH_OF_TILE_MAP - 2;
+            if (addedOn > 0)
+                i += addedOn;
+            continue;
+        }
         if (tileMap[i] == TILE_AIR || tileMap[i] == TILE_NONE || (((tileColourData.onlyVisibleInEditor[tileMap[i] / 8] >> (7 - (tileMap[i] % 8))) & 1) && !tileOutlines))
             goto doNotFill;
         SDL_SetRenderDrawColour(renderer, colour.r, colour.g, colour.b, colour.a);
@@ -118,6 +127,15 @@ void TileMap::drawShadows(void)
             double addedOn = (cameraPosition.x - position.x - windowWidth / 2) / (int)tileSize - 1;
             if (addedOn > 0)
                 i += (size_t)addedOn;
+            continue;
+        }
+        if (rectangles[i].y > windowHeight)
+            break;
+        else if (rectangles[i].y + (int)tileSize < 0)
+        {
+            long int addedOn = ((long int)(cameraPosition.y - position.y - windowHeight / 2) / (long int)tileSize) * WIDTH_OF_TILE_MAP - 2;
+            if (addedOn > 0)
+                i += addedOn;
             continue;
         }
         if (tileMap[i] == TILE_AIR || tileMap[i] == TILE_NONE || (((tileColourData.onlyVisibleInEditor[tileMap[i] / 8] >> (7 - (tileMap[i] % 8))) & 1) && !tileOutlines))
