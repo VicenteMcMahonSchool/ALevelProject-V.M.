@@ -82,7 +82,10 @@ void TileMap::draw(void)
             continue;
         }
         else if (rectangles[i].x + (int)tileSize < 0)
+        {
+            i += (cameraPosition.x - position.x - windowWidth / 2) / tileSize;
             continue;
+        }
         if (tileMap[i] == TILE_AIR || tileMap[i] == TILE_NONE || (((tileColourData.onlyVisibleInEditor[tileMap[i] / 8] >> (7 - (tileMap[i] % 8))) & 1) && !tileOutlines))
             goto doNotFill;
         SDL_SetRenderDrawColour(renderer, colour.r, colour.g, colour.b, colour.a);
@@ -109,7 +112,10 @@ void TileMap::drawShadows(void)
             continue;
         }
         else if (rectangles[i].x + (int)tileSize < 0)
+        {
+            i += (cameraPosition.x - position.x - windowWidth / 2) / tileSize;
             continue;
+        }
         if (tileMap[i] == TILE_AIR || tileMap[i] == TILE_NONE || (((tileColourData.onlyVisibleInEditor[tileMap[i] / 8] >> (7 - (tileMap[i] % 8))) & 1) && !tileOutlines))
             continue;
         SDL_Rect shadowRectangle{rectangles[i].x, rectangles[i].y, rectangles[i].w + SHADOW_DISTANCE_X, rectangles[i].h + SHADOW_DISTANCE_Y};
