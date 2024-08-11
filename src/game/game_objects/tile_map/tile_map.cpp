@@ -92,7 +92,7 @@ void TileMap::draw(void)
             break;
         else if (rectangles[i].y + (int)tileSize < 0)
         {
-            long int addedOn = ((long int)(cameraPosition.y - position.y - windowHeight / 2) / (long int)tileSize) * WIDTH_OF_TILE_MAP - 2;
+            long int addedOn = ((long int)(cameraPosition.y - position.y - (float)windowHeight / 2 + 1) / (long int)tileSize) * WIDTH_OF_TILE_MAP - 1;
             if (addedOn > 0)
                 i += addedOn;
             continue;
@@ -133,7 +133,7 @@ void TileMap::drawShadows(void)
             break;
         else if (rectangles[i].y + (int)tileSize < 0)
         {
-            long int addedOn = ((long int)(cameraPosition.y - position.y - windowHeight / 2) / (long int)tileSize) * WIDTH_OF_TILE_MAP - 2;
+            long int addedOn = ((long int)(cameraPosition.y - position.y - (float)windowHeight / 2 + 1) / (long int)tileSize) * WIDTH_OF_TILE_MAP - 1;
             if (addedOn > 0)
                 i += addedOn;
             continue;
