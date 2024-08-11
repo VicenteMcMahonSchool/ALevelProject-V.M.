@@ -2,14 +2,14 @@
 #include "../../game_objects_class/game_objects_class.hpp"
 #include "../game_object/game_object.hpp"
 
-Player::Player(PLAYER_CONSTRUCTOR_ARGUMENTS) : MovableRectangle(position, {0X22, 0X22, 0X44, 0XFF}, gameObjects.getGameObject(TILE_MAP)->tileMap.getTileSize(), gameObjects.getGameObject(TILE_MAP)->tileMap.getTileSize())
+Player::Player(PLAYER_CONSTRUCTOR_ARGUMENTS) : MovableRectangle(position, {0X22, 0X22, 0X44, 0XFF}, gameObjects.getGameObjectOfType(TILE_MAP)->tileMap.getTileSize(), gameObjects.getGameObjectOfType(TILE_MAP)->tileMap.getTileSize())
 {
     onCollision = &playerHandleCollision;
     gravity = PLAYER_GRAVITY;
 }
 void playerHandleCollision(const unsigned char *tile, MovableRectangle *movableRectangle)
 {
-    TileMap *tileMap = &gameObjects.getGameObject(TILE_MAP)->tileMap; // Made it a pointer to avoid copying the tile map.
+    TileMap *tileMap = &gameObjects.getGameObjectOfType(TILE_MAP)->tileMap; // Made it a pointer to avoid copying the tile map.
     const TILE_TYPE *centreTile = tileMap->getTileAtPosition(movableRectangle->getPosition() + (Vector2){(double)movableRectangle->getRectangle().w / 2, (double)movableRectangle->getRectangle().h / 2});
     if (*tile == TILE_LOSE || ((const TILE_TYPE *)tile == centreTile && getTileAttributes((const TILE_TYPE *)tile).isCollidable))
         screen = SCREEN_LOSE;

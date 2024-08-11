@@ -3,12 +3,12 @@
 #include "../game_object/game_object.hpp"
 #include "../tile_map/tile_map.hpp"
 
-Enemy::Enemy(ENEMY_CONSTRUCTOR_ARGUMENTS) : MovableRectangle(position, {0X33, 0X77, 0X33, 0XFF}, gameObjects.getGameObject(TILE_MAP)->tileMap.getTileSize(), gameObjects.getGameObject(TILE_MAP)->tileMap.getTileSize()) {}
+Enemy::Enemy(ENEMY_CONSTRUCTOR_ARGUMENTS) : MovableRectangle(position, {0X33, 0X77, 0X33, 0XFF}, gameObjects.getGameObjectOfType(TILE_MAP)->tileMap.getTileSize(), gameObjects.getGameObjectOfType(TILE_MAP)->tileMap.getTileSize()) {}
 
 void Enemy::update(double deltaTime)
 {
-    Player &player = gameObjects.getGameObject(PLAYER)->player;
-    TileMap &tileMap = gameObjects.getGameObject(TILE_MAP)->tileMap;
+    Player &player = gameObjects.getGameObjectOfType(PLAYER)->player;
+    TileMap &tileMap = gameObjects.getGameObjectOfType(TILE_MAP)->tileMap;
     double deltaPositionX = position.x - player.getPosition().x;
     if (deltaPositionX > 0)
         velocity.x -= PLAYER_SPEED * deltaTime;

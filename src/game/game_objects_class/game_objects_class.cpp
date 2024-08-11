@@ -1,6 +1,8 @@
 #include "game_objects_class.hpp"
 #include "../game_objects/game_object/game_object.hpp"
 
+GETTER_CPP(size_t, GameObjects, capacity, Capacity)
+
 GameObjects::GameObjects(void)
 {
     gameObjects = (GameObject *)malloc(sizeof(GameObject) * INITIAL_NUMBER_OF_GAME_OBJECTS);
@@ -52,19 +54,25 @@ addToArray:
     return &gameObjects[index++].value;
 }
 
-GameObjectUnion *GameObjects::getGameObject(GAME_OBJECT_TYPE type)
+GameObjectUnion *GameObjects::getGameObjectOfType(GAME_OBJECT_TYPE type)
 {
+    GameObjectUnion *output[1] = {NULL};
+    getGameObjectsOfType(type, output, 1);
+    return *output;
+}
+void GameObjects::getGameObjectsOfType(GAME_OBJECT_TYPE type, GameObjectUnion *output[], size_t lengthOfOutput)
+{
+    size_t nextSetIndex = 0;
     for (size_t i = 0; i < index; i++)
-        if (gameObjects[i].type == type)
-            return &gameObjects[i].value;
-    return NULL;
+        if (gameObjects[i].type == type && nextSetIndex < lengthOfOutput)
+            output[nextSetIndex++] = &gameObjects[i].value;
 }
 
-    void GameObjects::tick(void) {
-            for (size_t i = 0; i < index; i++)
+void GameObjects::tick(void)
+{
+    for (size_t i = 0; i < index; i++)
         gameObjects[i].tick();
-    }
-
+}
 
 void GameObjects::update(double deltaTime)
 {

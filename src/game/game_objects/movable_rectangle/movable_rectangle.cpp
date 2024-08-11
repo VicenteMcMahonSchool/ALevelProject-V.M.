@@ -5,7 +5,7 @@
 MovableRectangle::MovableRectangle(MOVABLE_RECTANGLE_CONSTRUCTOR_ARGUMENTS) : Rectangle(position, colour, width, height), velocity({0, 0}) {}
 void MovableRectangle::update(double deltaTime)
 {
-    TileMap *tileMap = &gameObjects.getGameObject(TILE_MAP)->tileMap; // Made it a pointer to avoid copying the tile map.
+    TileMap *tileMap = &gameObjects.getGameObjectOfType(TILE_MAP)->tileMap; // Made it a pointer to avoid copying the tile map.
     double localGravity = isOnGround ? 0 : gravity;
     position += (velocity * deltaTime + (Vector2){0, localGravity} / 2 * deltaTime * deltaTime) * tileMap->getTileSize() / 120;
     velocity += (Vector2){0, localGravity} * deltaTime;
