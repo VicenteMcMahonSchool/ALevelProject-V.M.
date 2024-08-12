@@ -1,5 +1,5 @@
 COMPILER=g++
-FLAGS=`sdl2-config --cflags --libs` -std=c++23 -ldl -lm -lSDL2_image -lSDL2_ttf
+FLAGS=`sdl2-config --cflags --libs` -std=c++23 -ldl -lm -lSDL2_image -lSDL2_ttf -DONE_TILE_MAP=1
 SRC_DIR=./src
 HEADERS=$(shell find ${SRC_DIR} -name *.hpp -not -type d | xargs echo)
 

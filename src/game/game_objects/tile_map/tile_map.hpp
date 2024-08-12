@@ -10,9 +10,9 @@
 #define WIDTH_OF_TILE_MAP 128
 #define HEIGHT_OF_TILE_MAP 64
 #define NUMBER_OF_TILES WIDTH_OF_TILE_MAP *HEIGHT_OF_TILE_MAP
-#define TILE_MAP_RECTANGLES_POSITION                                                     \
-    this->rectangles[i].x = (i % WIDTH_OF_TILE_MAP) * this->tileSize - this->position.x; \
-    this->rectangles[i].y = (i / WIDTH_OF_TILE_MAP) * this->tileSize - this->position.y;
+#define TILE_MAP_RECTANGLES_POSITION                                   \
+    rectangles[i].x = (i % WIDTH_OF_TILE_MAP) * tileSize - position.x; \
+    rectangles[i].y = (i / WIDTH_OF_TILE_MAP) * tileSize - position.y;
 
 enum __attribute__((__packed__)) TILE_TYPE
 {
@@ -68,12 +68,21 @@ struct TileColourData
     unsigned char onlyVisibleInEditor[TILE_MAXIMUM_VALUE / 8 + (TILE_MAXIMUM_VALUE % 8 != 0)];
 };
 
+#ifdef ONE_TILE_MAP
+static TileColourData tileColourData;
+static TILE_TYPE tileMap[NUMBER_OF_TILES];
+static SDL_Rect rectangles[NUMBER_OF_TILES];
+static bool tileFilesHaveBeenRead = false;
+#endif
+
 class TileMap : public GeneralGameObject
 {
 private:
+#ifndef ONE_TILE_MAP
     TileColourData tileColourData;
     TILE_TYPE tileMap[NUMBER_OF_TILES];
     SDL_Rect rectangles[NUMBER_OF_TILES];
+#endif
     GETTER_AND_SETTER_HPP(unsigned int, tileSize, TileSize)
 
 public:

@@ -6,6 +6,11 @@
 
 TileMap::TileMap(TILE_MAP_CONSTRUCTOR_ARGUMENTS) : GeneralGameObject(position), tileSize(tileSize)
 {
+#ifdef ONE_TILE_MAP
+    if (tileFilesHaveBeenRead)
+        return;
+    tileFilesHaveBeenRead = true;
+#endif
     int tileColoursFile = open("./settings/tile_colours", O_RDONLY);
     read(tileColoursFile, &tileColourData, sizeof(tileColourData));
     close(tileColoursFile);
