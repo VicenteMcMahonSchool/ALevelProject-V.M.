@@ -29,4 +29,15 @@ void Player::update(double deltaTime)
         velocity.y -= PLAYER_JUMP_SPEED; // Probably doesn't need to be multiplied by delta time as it should only be for one frame no matter the framerate.
     }
     MovableRectangle::update(deltaTime);
+    GameObjectUnion *enemies[gameObjects.getCapacity()];
+    gameObjects.getGameObjectsOfType(ENEMY, enemies, sizeof(enemies) / sizeof(Enemy));
+    for (size_t i = 0; i < gameObjects.getCapacity(); i++)
+    {
+        if (enemies[i] == NULL)
+            continue; // Avoids dereferencing a null pointer.
+        const Vector2 &enemiesPosition = enemies[i]->enemy.getPosition();
+        const SDL_Rect &enemiesRectangle = enemies[i]->enemy.getRectangle();
+        if (position.x > enemiesPosition.x - rectangle.x && position.x < enemiesPosition.x + enemiesRectangle.w || position.y > enemiesPosition.y - rectangle.h && position.y < enemiesPosition.y + enemiesRectangle.h)
+            puts("a");
+    }
 }
