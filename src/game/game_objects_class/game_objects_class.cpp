@@ -60,12 +60,13 @@ GameObjectUnion *GameObjects::getGameObjectOfType(GAME_OBJECT_TYPE type)
     getGameObjectsOfType(type, output, 1);
     return *output;
 }
-void GameObjects::getGameObjectsOfType(GAME_OBJECT_TYPE type, GameObjectUnion *output[], size_t lengthOfOutput)
+size_t GameObjects::getGameObjectsOfType(GAME_OBJECT_TYPE type, GameObjectUnion *output[], size_t lengthOfOutput)
 {
     size_t nextSetIndex = 0;
     for (size_t i = 0; i < index; i++)
         if (gameObjects[i].type == type && nextSetIndex < lengthOfOutput)
             output[nextSetIndex++] = &gameObjects[i].value;
+    return nextSetIndex;
 }
 
 void GameObjects::tick(void)

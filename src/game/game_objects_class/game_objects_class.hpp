@@ -22,7 +22,7 @@ public:
     void makeEmpty(void);
     GameObjectUnion *add(GAME_OBJECT_TYPE type);
     GameObjectUnion *getGameObjectOfType(GAME_OBJECT_TYPE type);
-    void getGameObjectsOfType(GAME_OBJECT_TYPE type, GameObjectUnion *output[], size_t lengthOfOutput);
+    size_t getGameObjectsOfType(GAME_OBJECT_TYPE type, GameObjectUnion *output[], size_t lengthOfOutput);
     void tick(void);
     void update(double deltaTime);
     void draw(void);

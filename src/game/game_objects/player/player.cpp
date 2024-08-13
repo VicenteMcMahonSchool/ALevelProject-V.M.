@@ -30,8 +30,8 @@ void Player::update(double deltaTime)
     }
     MovableRectangle::update(deltaTime);
     GameObjectUnion *enemies[gameObjects.getCapacity()];
-    gameObjects.getGameObjectsOfType(ENEMY, enemies, sizeof(enemies) / sizeof(Enemy));
-    for (size_t i = 0; i < gameObjects.getCapacity(); i++)
+    size_t numberOfEnemies = gameObjects.getGameObjectsOfType(ENEMY, enemies, sizeof(enemies) / sizeof(Enemy));
+    for (size_t i = 0; i < numberOfEnemies; i++)
     {
         if (enemies[i] == NULL)
             continue; // Avoids dereferencing a null pointer.
