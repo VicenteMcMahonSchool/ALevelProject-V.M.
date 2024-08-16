@@ -7,7 +7,8 @@
 enum __attribute__((__packed__)) SCREEN
 {
     SCREEN_EXIT,
-    SCREEN_GAME,
+    SCREEN_GAME_TIME_SCALE,
+    SCREEN_GAME_NORMAL,
     SCREEN_MENU,
     SCREEN_EDIT,
     SCREEN_WIN,

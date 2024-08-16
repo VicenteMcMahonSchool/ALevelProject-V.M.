@@ -40,11 +40,14 @@ void Player::update(double deltaTime)
         if (position.x > enemiesPosition.x - rectangle.w && position.x < enemiesPosition.x + enemiesRectangle.w && position.y > enemiesPosition.y - rectangle.h && position.y < enemiesPosition.y + enemiesRectangle.h)
             screen = SCREEN_LOSE;
     }
-    double velocityLengthSquared = velocity.lengthSquared();
-    if (velocityLengthSquared > 0.05)
-        timeScale = TIME_SCALE_EQUATION(velocityLengthSquared);
-    else
+    if (screen == SCREEN_GAME_TIME_SCALE)
     {
-        timeScale = TIME_SCALE_EQUATION(0.05);
+        double velocityLengthSquared = velocity.lengthSquared();
+        if (velocityLengthSquared > 0.05)
+            timeScale = TIME_SCALE_EQUATION(velocityLengthSquared);
+        else
+        {
+            timeScale = TIME_SCALE_EQUATION(0.05);
+        }
     }
 }

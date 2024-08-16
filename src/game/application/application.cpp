@@ -76,11 +76,20 @@ void Application::gameScreen(void)
     // Delta Time code taken from https://gamedev.stackexchange.com/questions/110825/how-to-calculate-delta-time-with-sdl.
     Uint64 now = SDL_GetPerformanceCounter(), last = 0; // Will be used to calculate 'deltaTime'.
     double deltaTime = 0;
-    while (screen == SCREEN_GAME)
+    while (screen == SCREEN_GAME_NORMAL || screen == SCREEN_GAME_TIME_SCALE)
     {
         last = now;
         now = SDL_GetPerformanceCounter();
-        deltaTime = (double)((now - last) * 1000 / (double)SDL_GetPerformanceFrequency()) * timeScale;
+        switch (screen)
+        {
+
+        case SCREEN_GAME_TIME_SCALE:
+            deltaTime = (double)((now - last) * 1000 / (double)SDL_GetPerformanceFrequency()) * timeScale;
+            break;
+        case SCREEN_GAME_NORMAL:
+            deltaTime = (double)((now - last) * 1000 / (double)SDL_GetPerformanceFrequency());
+            break;
+        }
         timePassed += deltaTime;
         /*
         Loops until there is an error getting the event. The 'event' variable is passed by reference to 'SDL_PollEvent',
@@ -133,14 +142,14 @@ void Application::gameScreen(void)
         cameraPosition = player->player.getPosition() + (Vector2){(double)player->player.getRectangle().w / 2, (double)player->player.getRectangle().h / 2};
         gameObjects.drawShadows();
         gameObjects.draw();
-        if (screen != SCREEN_GAME)
+        if (screen != SCREEN_GAME_NORMAL && screen != SCREEN_GAME_TIME_SCALE)
             break;
         SDL_RenderPresent(renderer); // Renders everything.
         SDL_Delay(DELAY);
     }
 exit: // This is a section which can be reached using 'goto' statements.
     unsetAllButtons();
-    if (screen == SCREEN_GAME)
+    if (screen == SCREEN_GAME_NORMAL || screen == SCREEN_GAME_TIME_SCALE)
         screen = SCREEN_MENU;
     return;
 }
@@ -148,18 +157,22 @@ exit: // This is a section which can be reached using 'goto' statements.
 void Application::menuScreen(void)
 {
     cameraPosition = {0, 0};
-    constexpr int widthOfButton = 256, heightOfButton = 128;
+    int widthOfButton = (256 * windowWidth) / 1920, heightOfButton = (108 * windowHeight) / 1080;
     size_t selectedButton = 0;
-    Button buttons[3] = {
-        {{-widthOfButton / 2, heightOfButton * 2 - (double)windowHeight / 2}, {0X77, 0X77, 0X77, 0XFF}, widthOfButton, heightOfButton, "Play", [](void) -> void
+    Button buttons[4] = {
+        {{-(double)widthOfButton / 2, heightOfButton * 2 - (double)windowHeight / 2}, {0X77, 0X77, 0X77, 0XFF}, widthOfButton, heightOfButton, "Play", [](void) -> void
          {
-             screen = SCREEN_GAME;
+             screen = SCREEN_GAME_NORMAL;
          }},
-        {{-widthOfButton / 2, heightOfButton * 4 - (double)windowHeight / 2}, {0X77, 0X77, 0X77, 0XFF}, widthOfButton, heightOfButton, "Edit", [](void) -> void
+        {{-(double)widthOfButton / 2, heightOfButton * 4 - (double)windowHeight / 2}, {0X77, 0X77, 0X77, 0XFF}, widthOfButton, heightOfButton, "Challenge", [](void) -> void
+         {
+             screen = SCREEN_GAME_TIME_SCALE;
+         }},
+        {{-(double)widthOfButton / 2, heightOfButton * 6 - (double)windowHeight / 2}, {0X77, 0X77, 0X77, 0XFF}, widthOfButton, heightOfButton, "Edit", [](void) -> void
          {
              screen = SCREEN_EDIT;
          }},
-        {{-widthOfButton / 2, heightOfButton * 6 - (double)windowHeight / 2}, {0X77, 0X77, 0X77, 0XFF}, widthOfButton, heightOfButton, "Quit", [](void) -> void
+        {{-(double)widthOfButton / 2, heightOfButton * 8 - (double)windowHeight / 2}, {0X77, 0X77, 0X77, 0XFF}, widthOfButton, heightOfButton, "Quit", [](void) -> void
          {
              screen = SCREEN_EXIT;
          }}};
@@ -406,7 +419,7 @@ void Application::run(void)
     {
         if (screen == SCREEN_MENU)
             menuScreen();
-        else if (screen == SCREEN_GAME)
+        else if (screen == SCREEN_GAME_NORMAL || screen == SCREEN_GAME_TIME_SCALE)
             gameScreen();
         else if (screen == SCREEN_EDIT)
             editScreen();
