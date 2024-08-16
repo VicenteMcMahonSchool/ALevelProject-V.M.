@@ -172,6 +172,27 @@ void TileMap::setTileAtPosition(Vector2 position, TILE_TYPE tileType)
     }
     tileMap[tileIndex] = tileType;
 }
+void TileMap::setTilesAroundPosition(Vector2 position, TILE_TYPE tileType, size_t distance)
+{
+    if (distance == 1)
+        setTileAtPosition(position, tileType);
+    if (tileType == TILE_SPAWN) // Avoids situation with multiple spawn tiles.
+        tileType = TILE_AIR;
+    size_t index = getIndexFromPosition(position);
+    size_t topCornerDifference = distance + WIDTH_OF_TILE_MAP * distance; // Avoids integer underflow.
+    size_t topIndex = 0;
+    if (index < topCornerDifference && index < distance)
+        topIndex = index - topCornerDifference;
+    else if (index < topCornerDifference)
+        topIndex = index - distance;
+    size_t bottomIndex = index - distance + WIDTH_OF_TILE_MAP * distance;
+    if (bottomIndex > NUMBER_OF_TILES && index - distance < NUMBER_OF_TILES)
+        bottomIndex = index - distance;
+    else if (bottomIndex > NUMBER_OF_TILES)
+        bottomIndex = NUMBER_OF_TILES;
+    for (size_t i = topIndex; i < bottomIndex; i++)
+        tileMap[i] = tileType;
+}
 
 size_t TileMap::getIndexFromPosition(Vector2 position)
 {

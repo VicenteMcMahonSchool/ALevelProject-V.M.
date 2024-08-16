@@ -94,6 +94,7 @@ public:
     void drawShadows(void);
     void saveMap(void);
     void setTileAtPosition(Vector2 position, TILE_TYPE tileType);
+    void setTilesAroundPosition(Vector2 position, TILE_TYPE tileType, size_t distance);
     const TILE_TYPE *getSpawnTile(void);
     size_t getIndexFromPosition(Vector2 position);
     const TILE_TYPE *getTileAtPosition(Vector2 position);

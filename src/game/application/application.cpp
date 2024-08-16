@@ -235,6 +235,7 @@ exit:
 void Application::editScreen(void)
 {
     gameObjects.makeEmpty();
+    size_t cursorSize = 1;
     GameObjectUnion *tileMap = gameObjects.add(TILE_MAP);
     tileMap->tileMap = {{0, 0}, 120};
     cameraPosition = tileMap->tileMap.getCentrePositionOfTile(tileMap->tileMap.getSpawnTile());
@@ -267,19 +268,28 @@ void Application::editScreen(void)
                         goto exit;
                     case SDL_CONTROLLER_BUTTON_A:
                     {
+                        printf("%d\n", cursorSize);
                         const TILE_TYPE *tile = tileMap->tileMap.getTileAtPosition(cameraPosition);
                         if (tile != NULL && *tile < TILE_MAXIMUM_VALUE - 1)
-                            tileMap->tileMap.setTileAtPosition(cameraPosition, (TILE_TYPE)(*tile + 1));
+                            // tileMap->tileMap.setTileAtPosition(cameraPosition, (TILE_TYPE)(*tile + 1));
+                            tileMap->tileMap.setTilesAroundPosition(cameraPosition, (TILE_TYPE)(*tile + 1), cursorSize);
                         else
-                            tileMap->tileMap.setTileAtPosition(cameraPosition, TILE_AIR);
+                            tileMap->tileMap.setTilesAroundPosition(cameraPosition, TILE_AIR, cursorSize);
                         break;
                     }
                     case SDL_CONTROLLER_BUTTON_B:
                     {
                         const TILE_TYPE *tile = tileMap->tileMap.getTileAtPosition(cameraPosition);
-                        tileMap->tileMap.setTileAtPosition(cameraPosition, TILE_AIR);
+                        tileMap->tileMap.setTilesAroundPosition(cameraPosition, TILE_AIR, cursorSize);
                         break;
                     }
+                    case SDL_CONTROLLER_BUTTON_X:
+                        cursorSize += 1;
+                        break;
+                    case SDL_CONTROLLER_BUTTON_Y:
+                        if (cursorSize > 1)
+                            cursorSize -= 1;
+                        break;
                     default:
                         setButtonDown(event.cbutton.button);
                     }
