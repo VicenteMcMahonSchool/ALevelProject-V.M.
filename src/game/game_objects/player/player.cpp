@@ -37,7 +37,7 @@ void Player::update(double deltaTime)
             continue; // Avoids dereferencing a null pointer.
         const Vector2 &enemiesPosition = enemies[i]->enemy.getPosition();
         const SDL_Rect &enemiesRectangle = enemies[i]->enemy.getRectangle();
-        if (position.x > enemiesPosition.x - rectangle.x && position.x < enemiesPosition.x + enemiesRectangle.w || position.y > enemiesPosition.y - rectangle.h && position.y < enemiesPosition.y + enemiesRectangle.h)
+        if (position.x > enemiesPosition.x - rectangle.x && position.x < enemiesPosition.x + enemiesRectangle.w && position.y > enemiesPosition.y - rectangle.h && position.y < enemiesPosition.y + enemiesRectangle.h)
             puts("a");
     }
 }
