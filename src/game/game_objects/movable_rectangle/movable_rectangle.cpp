@@ -7,8 +7,11 @@ void MovableRectangle::update(double deltaTime)
 {
     TileMap *tileMap = &gameObjects.getGameObjectOfType(TILE_MAP)->tileMap; // Made it a pointer to avoid copying the tile map.
     double localGravity = isOnGround ? 0 : gravity;
-    position += (velocity * deltaTime + (Vector2){0, localGravity} / 2 * deltaTime * deltaTime) * tileMap->getTileSize() / 120;
-    velocity += (Vector2){0, localGravity} * deltaTime;
+    position.y += (velocity.y * deltaTime + localGravity / 2 * deltaTime * deltaTime) * tileMap->getTileSize() / 120;
+    velocity.y += localGravity * deltaTime;
+    double newVelocityX = velocity.x * pow(MOVABLE_RECTANGLE_DAMPENING_EVERY_1000TH_OF_SECOND, deltaTime);
+    position.x += ((newVelocityX - velocity.x) / log(MOVABLE_RECTANGLE_DAMPENING_EVERY_1000TH_OF_SECOND)) * tileMap->getTileSize() / 120;
+    velocity.x = newVelocityX;
     isOnGround = false;
     Vector2 centrePosition = position + (Vector2){(double)rectangle.w / 2, (double)rectangle.h / 2};
     unsigned int tileSize = tileMap->getTileSize();

@@ -3,9 +3,9 @@
 
 #define MOVABLE_RECTANGLE_CONSTRUCTOR_ARGUMENTS Vector2 position, SDL_Colour colour, int width, int height
 #define MOVABLE_RECTANGLE_CONSTRUCTOR_ARGUMENTS_NAMES position, colour, width, height
+#define MOVABLE_RECTANGLE_DAMPENING_EVERY_1000TH_OF_SECOND .9995
 
 struct TileCentres;
-// typedef char TILE_TYPE;
 
 class MovableRectangle : public Rectangle
 {
@@ -18,7 +18,7 @@ private:
 protected:
     double gravity = 0.002;
     bool isOnGround = false;
-    void (*onCollision)(const /* TILE_TYPE */ unsigned char *tile, MovableRectangle *movableRectangle) = NULL;
+    void (*onCollision)(const unsigned char *tile, MovableRectangle *movableRectangle) = NULL;
 
 public:
     MovableRectangle(MOVABLE_RECTANGLE_CONSTRUCTOR_ARGUMENTS);
