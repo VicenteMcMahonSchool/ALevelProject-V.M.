@@ -43,4 +43,8 @@ void Player::update(double deltaTime)
     double velocityLengthSquared = velocity.lengthSquared();
     if (velocityLengthSquared > 0.05)
         timeScale = TIME_SCALE_EQUATION(velocityLengthSquared);
+    else
+    {
+        timeScale = TIME_SCALE_EQUATION(0.05);
+    }
 }
