@@ -361,7 +361,7 @@ void Application::editScreen(void)
             {
                 SDL_SetRenderDrawColour(renderer, 0XAA, 0XAA, 0XAA, 0XFF);
                 Vector2 centrePosition = tileMap->tileMap.getCentrePositionOfTile(tile);
-                SDL_Rect rectangle = {(int)(centrePosition.x - (double)tileSize / 2 + (double)windowWidth / 2 - cameraPosition.x), (int)(centrePosition.y - (double)tileSize / 2 + (double)windowHeight / 2 - cameraPosition.y), (int)tileSize, (int)tileSize};
+                SDL_Rect rectangle = {(int)(centrePosition.x - (double)tileSize / 2 - cursorSize / 2 * tileSize + (double)windowWidth / 2 - cameraPosition.x), (int)(centrePosition.y - (double)tileSize / 2 - cursorSize / 2 * tileSize + (double)windowHeight / 2 - cameraPosition.y), (int)tileSize * (int)cursorSize, (int)tileSize * (int)cursorSize};
                 SDL_RenderDrawRect(renderer, &rectangle);
             }
         }
