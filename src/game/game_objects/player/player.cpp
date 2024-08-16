@@ -43,11 +43,6 @@ void Player::update(double deltaTime)
     if (screen == SCREEN_GAME_TIME_SCALE)
     {
         double velocityLengthSquared = velocity.lengthSquared();
-        if (velocityLengthSquared > 0.05)
-            timeScale = TIME_SCALE_EQUATION(velocityLengthSquared);
-        else
-        {
-            timeScale = TIME_SCALE_EQUATION(0.05);
-        }
+        timeScale = TIME_SCALE_EQUATION(velocityLengthSquared);
     }
 }
