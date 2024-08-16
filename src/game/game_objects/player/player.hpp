@@ -7,6 +7,7 @@
 #define PLAYER_GRAVITY 0.002
 #define PLAYER_SPEED 0.001
 #define PLAYER_JUMP_SPEED 1
+#define TIME_SCALE_EQUATION(value) exp(-pow(16 * value, log(log(2)) / log(2)))
 
 void playerHandleCollision(const /* TILE_TYPE */ unsigned char *tile, MovableRectangle *movableRectangle);
 class Player : public MovableRectangle
