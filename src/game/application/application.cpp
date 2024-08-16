@@ -268,7 +268,6 @@ void Application::editScreen(void)
                         goto exit;
                     case SDL_CONTROLLER_BUTTON_A:
                     {
-                        printf("%d\n", cursorSize);
                         const TILE_TYPE *tile = tileMap->tileMap.getTileAtPosition(cameraPosition);
                         if (tile != NULL && *tile < TILE_MAXIMUM_VALUE - 1)
                             // tileMap->tileMap.setTileAtPosition(cameraPosition, (TILE_TYPE)(*tile + 1));
@@ -284,11 +283,11 @@ void Application::editScreen(void)
                         break;
                     }
                     case SDL_CONTROLLER_BUTTON_X:
-                        cursorSize += 1;
+                        cursorSize += 2;
                         break;
                     case SDL_CONTROLLER_BUTTON_Y:
                         if (cursorSize > 1)
-                            cursorSize -= 1;
+                            cursorSize -= 2;
                         break;
                     default:
                         setButtonDown(event.cbutton.button);
