@@ -38,6 +38,7 @@ extern SCREEN screen;
 extern SDL_GameController *controller;
 extern unsigned int numberOfTicks;
 extern double timePassed;
+extern double timeScale;
 
 enum __attribute__((__packed__)) GAME_OBJECT_TYPE
 {
