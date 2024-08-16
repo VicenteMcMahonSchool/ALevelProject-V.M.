@@ -181,9 +181,9 @@ void TileMap::setTilesAroundPosition(Vector2 position, TILE_TYPE tileType, size_
     size_t index = getIndexFromPosition(position);
     size_t topCornerDifference = distance + WIDTH_OF_TILE_MAP * distance; // Avoids integer underflow.
     size_t topIndex = 0;
-    if (index < topCornerDifference && index < distance)
+    if (index >= topCornerDifference)
         topIndex = index - topCornerDifference;
-    else if (index < topCornerDifference)
+    else if (index >= topCornerDifference)
         topIndex = index - distance;
     for (size_t i = 0; i < distance; i++)
         for (size_t j = 0; j < distance; j++)
