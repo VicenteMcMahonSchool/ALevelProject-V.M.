@@ -158,6 +158,13 @@ void TileMap::saveMap(void)
     fclose(file);
 }
 
+void TileMap::resetRemovedCoins(void)
+{
+    for (size_t i = 0; i < NUMBER_OF_TILES; i++)
+        if (tileMap[i] == TILE_COIN_DELETED)
+            tileMap[i] = TILE_COIN;
+}
+
 size_t TileMap::getTileIndex(const TILE_TYPE *tile)
 {
     return tile - tileMap;

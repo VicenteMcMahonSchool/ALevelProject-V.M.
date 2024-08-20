@@ -26,7 +26,9 @@ enum __attribute__((__packed__)) TILE_TYPE
     TILE_ENEMY_SPAWNER = 0X07,
     TILE_COIN = 0X08,
     TILE_SPAWN,
-    TILE_MAXIMUM_VALUE,
+    TILE_NORMAL_MAXIMUM_VALUE,
+    TILE_COIN_DELETED,
+    TILE_REAL_MAXIMUM_VALUE,
 };
 
 struct TilesAroundTile
@@ -66,8 +68,8 @@ TileAttributes getTileAttributes(const TILE_TYPE *tilePointer);
 
 struct TileColourData
 {
-    SDL_Colour tileColours[TILE_MAXIMUM_VALUE];
-    unsigned char onlyVisibleInEditor[TILE_MAXIMUM_VALUE / 8 + (TILE_MAXIMUM_VALUE % 8 != 0)];
+    SDL_Colour tileColours[TILE_NORMAL_MAXIMUM_VALUE];
+    unsigned char onlyVisibleInEditor[TILE_NORMAL_MAXIMUM_VALUE / 8 + (TILE_NORMAL_MAXIMUM_VALUE % 8 != 0)];
 };
 
 #ifdef ONE_TILE_MAP
@@ -95,6 +97,7 @@ public:
     void draw(void);
     void drawShadows(void);
     void saveMap(void);
+    void resetRemovedCoins(void);
     size_t getTileIndex(const TILE_TYPE *tile);
     void setTileAtIndex(size_t tileIndex, TILE_TYPE tileType);
     void setTileAtPosition(Vector2 position, TILE_TYPE tileType);

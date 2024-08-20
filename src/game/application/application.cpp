@@ -56,6 +56,7 @@ void Application::gameScreen(void)
     timePassed = numberOfTicks = 0; // Sets both of them to 0.
     Player &player = gameObjects.add(PLAYER)->player;
     TileMap &tileMap = gameObjects.add(TILE_MAP)->tileMap;
+    tileMap.resetRemovedCoins();
     tileMap = TileMap{{0, 0}, 120};
     unsigned int tileSize = tileMap.getTileSize();
     player = Player{tileMap.getCentrePositionOfTile(tileMap.getSpawnTile()) - (Vector2){(double)tileSize / 2, (double)tileSize / 2} /* (Vector2){(double)tileSize / 2, (double)tileSize / 2} */};
@@ -239,6 +240,7 @@ void Application::editScreen(void)
     gameObjects.makeEmpty();
     size_t cursorSize = 1;
     TileMap &tileMap = gameObjects.add(TILE_MAP)->tileMap;
+    tileMap.resetRemovedCoins();
     tileMap = {{0, 0}, 120};
     cameraPosition = tileMap.getCentrePositionOfTile(tileMap.getSpawnTile());
     unsigned int tileSize = tileMap.getTileSize();
@@ -271,7 +273,7 @@ void Application::editScreen(void)
                     case SDL_CONTROLLER_BUTTON_A:
                     {
                         const TILE_TYPE *tile = tileMap.getTileAtPosition(cameraPosition);
-                        if (tile != NULL && *tile < TILE_MAXIMUM_VALUE - 1)
+                        if (tile != NULL && *tile < TILE_NORMAL_MAXIMUM_VALUE - 1)
                             tileMap.setTilesAroundPosition(cameraPosition, (TILE_TYPE)(*tile + 1), cursorSize);
                         else
                             tileMap.setTilesAroundPosition(cameraPosition, TILE_AIR, cursorSize);
@@ -321,7 +323,7 @@ void Application::editScreen(void)
                 {
                     if (button == 1)
                     {
-                        if (*tile < TILE_MAXIMUM_VALUE - 1)
+                        if (*tile < TILE_NORMAL_MAXIMUM_VALUE - 1)
                             tileMap.setTileAtPosition(position, (TILE_TYPE)(*tile + 1));
                         else
                             tileMap.setTileAtPosition(position, TILE_AIR);
