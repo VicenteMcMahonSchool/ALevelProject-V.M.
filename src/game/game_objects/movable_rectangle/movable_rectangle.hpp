@@ -18,7 +18,8 @@ private:
 protected:
     double gravity = 0.002;
     bool isOnGround = false;
-    void (*onCollision)(const unsigned char *tile, MovableRectangle *movableRectangle) = NULL;
+    void (*onCollision)(const unsigned char *tile, void *data) = NULL;
+    void *onCollisionData = NULL;
 
 public:
     MovableRectangle(MOVABLE_RECTANGLE_CONSTRUCTOR_ARGUMENTS);

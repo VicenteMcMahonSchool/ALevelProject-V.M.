@@ -24,21 +24,21 @@ void MovableRectangle::update(double deltaTime)
         if (getTileAttributes(tiles.top).isCollidable)
             handleCollisionTop(tileCentres, centrePosition, averageWidth, averageHeight);
         if (onCollision != NULL)
-            onCollision((const unsigned char *)tiles.top, this);
+            onCollision((const unsigned char *)tiles.top, onCollisionData);
     }
     else if (getTileAttributes(tiles.topLeft).isCollisionDetectable && (centrePosition - tileCentres.topLeft).isYBiggerThanX() && centrePosition.y < tileCentres.top.y + averageHeight)
     {
         if (getTileAttributes(tiles.topLeft).isCollidable)
             handleCollisionTop(tileCentres, centrePosition, averageWidth, averageHeight);
         if (onCollision != NULL)
-            onCollision((const unsigned char *)tiles.topLeft, this);
+            onCollision((const unsigned char *)tiles.topLeft, onCollisionData);
     }
     else if (getTileAttributes(tiles.topRight).isCollisionDetectable && (tileCentres.topRight - centrePosition).isNegativeYBiggerThanX() && centrePosition.y < tileCentres.top.y + averageHeight)
     {
         if (getTileAttributes(tiles.topRight).isCollidable)
             handleCollisionTop(tileCentres, centrePosition, averageWidth, averageHeight);
         if (onCollision != NULL)
-            onCollision((const unsigned char *)tiles.topRight, this);
+            onCollision((const unsigned char *)tiles.topRight, onCollisionData);
     }
 
     if (getTileAttributes(tiles.bottom).isCollisionDetectable && centrePosition.y > tileCentres.bottom.y - averageHeight)
@@ -46,21 +46,21 @@ void MovableRectangle::update(double deltaTime)
         if (getTileAttributes(tiles.bottom).isCollidable)
             handleCollisionBottom(tileCentres, centrePosition, averageWidth, averageHeight);
         if (onCollision != NULL)
-            onCollision((const unsigned char *)tiles.bottom, this);
+            onCollision((const unsigned char *)tiles.bottom, onCollisionData);
     }
     else if (getTileAttributes(tiles.bottomLeft).isCollisionDetectable && (centrePosition - tileCentres.bottomLeft).isNegativeYBiggerThanX() && centrePosition.y > tileCentres.bottom.y - averageHeight)
     {
         if (getTileAttributes(tiles.bottomLeft).isCollidable)
             handleCollisionBottom(tileCentres, centrePosition, averageWidth, averageHeight);
         if (onCollision != NULL)
-            onCollision((const unsigned char *)tiles.bottomLeft, this);
+            onCollision((const unsigned char *)tiles.bottomLeft, onCollisionData);
     }
     else if (getTileAttributes(tiles.bottomRight).isCollisionDetectable && (tileCentres.bottomRight - centrePosition).isYBiggerThanX() && centrePosition.y > tileCentres.bottom.y - averageHeight)
     {
         if (getTileAttributes(tiles.bottomRight).isCollidable)
             handleCollisionBottom(tileCentres, centrePosition, averageWidth, averageHeight);
         if (onCollision != NULL)
-            onCollision((const unsigned char *)tiles.bottomRight, this);
+            onCollision((const unsigned char *)tiles.bottomRight, onCollisionData);
     }
 
     if (getTileAttributes(tiles.left).isCollisionDetectable && centrePosition.x < tileCentres.left.x + averageWidth)
@@ -68,21 +68,21 @@ void MovableRectangle::update(double deltaTime)
         if (getTileAttributes(tiles.left).isCollidable)
             handleCollisionLeft(tileCentres, centrePosition, averageWidth, averageHeight);
         if (onCollision != NULL)
-            onCollision((const unsigned char *)tiles.left, this);
+            onCollision((const unsigned char *)tiles.left, onCollisionData);
     }
     else if (getTileAttributes(tiles.topLeft).isCollisionDetectable && (centrePosition - tileCentres.topLeft).isXBiggerThanY() && centrePosition.x < tileCentres.left.x + averageWidth)
     {
         if (getTileAttributes(tiles.topLeft).isCollidable)
             handleCollisionLeft(tileCentres, centrePosition, averageWidth, averageHeight);
         if (onCollision != NULL)
-            onCollision((const unsigned char *)tiles.topLeft, this);
+            onCollision((const unsigned char *)tiles.topLeft, onCollisionData);
     }
     else if (getTileAttributes(tiles.bottomLeft).isCollisionDetectable && (centrePosition - tileCentres.bottomLeft).isYBiggerThanNegativeX() && centrePosition.x < tileCentres.left.x + averageWidth)
     {
         if (getTileAttributes(tiles.bottomLeft).isCollidable)
             handleCollisionLeft(tileCentres, centrePosition, averageWidth, averageHeight);
         if (onCollision != NULL)
-            onCollision((const unsigned char *)tiles.bottomLeft, this);
+            onCollision((const unsigned char *)tiles.bottomLeft, onCollisionData);
     }
 
     if (getTileAttributes(tiles.right).isCollisionDetectable && centrePosition.x > tileCentres.right.x - averageWidth)
@@ -90,25 +90,25 @@ void MovableRectangle::update(double deltaTime)
         if (getTileAttributes(tiles.right).isCollidable)
             handleCollisionRight(tileCentres, centrePosition, averageWidth, averageHeight);
         if (onCollision != NULL)
-            onCollision((const unsigned char *)tiles.right, this);
+            onCollision((const unsigned char *)tiles.right, onCollisionData);
     }
     else if (getTileAttributes(tiles.topRight).isCollisionDetectable && (centrePosition - tileCentres.topRight).isNegativeYBiggerThanX() && centrePosition.x > tileCentres.right.x - averageWidth)
     {
         if (getTileAttributes(tiles.topRight).isCollidable)
             handleCollisionRight(tileCentres, centrePosition, averageWidth, averageHeight);
         if (onCollision != NULL)
-            onCollision((const unsigned char *)tiles.topRight, this);
+            onCollision((const unsigned char *)tiles.topRight, onCollisionData);
     }
     else if (getTileAttributes(tiles.bottomRight).isCollisionDetectable && (centrePosition - tileCentres.bottomRight).isYBiggerThanX() && centrePosition.x > tileCentres.right.x - averageWidth)
     {
         if (getTileAttributes(tiles.bottomRight).isCollidable)
             handleCollisionRight(tileCentres, centrePosition, averageWidth, averageHeight);
         if (onCollision != NULL)
-            onCollision((const unsigned char *)tiles.bottomRight, this);
+            onCollision((const unsigned char *)tiles.bottomRight, onCollisionData);
     }
     if (getTileAttributes(tiles.centre).isCollisionDetectable)
         if (onCollision != NULL)
-            onCollision((const unsigned char *)tiles.centre, this);
+            onCollision((const unsigned char *)tiles.centre, onCollisionData);
     position = centrePosition - (Vector2){(double)rectangle.w / 2, (double)rectangle.h / 2};
     Rectangle::update(deltaTime);
 }

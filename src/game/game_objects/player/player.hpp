@@ -9,10 +9,11 @@
 #define PLAYER_JUMP_SPEED 1
 #define TIME_SCALE_EQUATION(value) exp(-pow(16 * value, log(log(2)) / log(2))) + 0.05
 
-void playerHandleCollision(const /* TILE_TYPE */ unsigned char *tile, MovableRectangle *movableRectangle);
+void playerHandleCollision(const /* TILE_TYPE */ unsigned char *tile, void *movableRectangle);
 class Player : public MovableRectangle
 {
 public:
     Player(PLAYER_CONSTRUCTOR_ARGUMENTS);
     void update(double deltaTime);
+    GETTER_AND_SETTER_HPP(unsigned int, coins, Coins)
 };
