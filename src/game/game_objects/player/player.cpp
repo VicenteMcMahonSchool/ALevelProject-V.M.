@@ -9,6 +9,15 @@ Player::Player(PLAYER_CONSTRUCTOR_ARGUMENTS) : MovableRectangle(position, {0X22,
 }
 void playerHandleCollision(const unsigned char *tile, MovableRectangle *movableRectangle)
 {
+    if (!getTileAttributes((TILE_TYPE *)tile).isCollidable)
+    {
+        if (tile != NULL && *tile == TILE_COIN)
+        {
+            TileMap &tileMap = gameObjects.getGameObjectOfType(TILE_MAP)->tileMap;
+            tileMap.setTileAtIndex(tileMap.getTileIndex((TILE_TYPE *)tile), TILE_AIR);
+        }
+        return;
+    }
     TileMap *tileMap = &gameObjects.getGameObjectOfType(TILE_MAP)->tileMap; // Made it a pointer to avoid copying the tile map.
     const TILE_TYPE *centreTile = tileMap->getTileAtPosition(movableRectangle->getPosition() + (Vector2){(double)movableRectangle->getRectangle().w / 2, (double)movableRectangle->getRectangle().h / 2});
     if (*tile == TILE_LOSE || ((const TILE_TYPE *)tile == centreTile && getTileAttributes((const TILE_TYPE *)tile).isCollidable))

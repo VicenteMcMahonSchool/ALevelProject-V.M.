@@ -24,7 +24,8 @@ enum __attribute__((__packed__)) TILE_TYPE
     TILE_LOSE = 0X05,
     TILE_ROTATION = 0X06,
     TILE_ENEMY_SPAWNER = 0X07,
-    TILE_SPAWN = 0X08,
+    TILE_COIN = 0X08,
+    TILE_SPAWN,
     TILE_MAXIMUM_VALUE,
 };
 
@@ -57,6 +58,7 @@ struct TileCentres
 struct __attribute__((__packed__)) TileAttributes
 {
     bool isCollidable;
+    bool isCollisionDetectable;
 };
 
 TileAttributes getTileAttributes(const TILE_TYPE tile);
@@ -93,6 +95,8 @@ public:
     void draw(void);
     void drawShadows(void);
     void saveMap(void);
+    size_t getTileIndex(const TILE_TYPE *tile);
+    void setTileAtIndex(size_t tileIndex, TILE_TYPE tileType);
     void setTileAtPosition(Vector2 position, TILE_TYPE tileType);
     void setTilesAroundPosition(Vector2 position, TILE_TYPE tileType, size_t distance);
     const TILE_TYPE *getSpawnTile(void);

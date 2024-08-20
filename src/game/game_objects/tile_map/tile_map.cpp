@@ -158,9 +158,13 @@ void TileMap::saveMap(void)
     fclose(file);
 }
 
-void TileMap::setTileAtPosition(Vector2 position, TILE_TYPE tileType)
+size_t TileMap::getTileIndex(const TILE_TYPE *tile)
 {
-    size_t tileIndex = getIndexFromPosition(position);
+    return tileMap - tile;
+}
+
+void TileMap::setTileAtIndex(size_t tileIndex, TILE_TYPE tileType)
+{
     if (tileIndex >= NUMBER_OF_TILES || tileIndex < 0)
         return;
     if (tileType == TILE_SPAWN)
@@ -171,6 +175,11 @@ void TileMap::setTileAtPosition(Vector2 position, TILE_TYPE tileType)
                 tileMap[i] = TILE_AIR;
     }
     tileMap[tileIndex] = tileType;
+}
+
+void TileMap::setTileAtPosition(Vector2 position, TILE_TYPE tileType)
+{
+    setTileAtIndex(getIndexFromPosition(position), tileType);
 }
 void TileMap::setTilesAroundPosition(Vector2 position, TILE_TYPE tileType, size_t distance)
 {
@@ -270,6 +279,8 @@ TileAttributes getTileAttributes(const TILE_TYPE tile)
         output.isCollidable = true;
     else
         output.isCollidable = false;
+    if (output.isCollidable || tile == TILE_COIN)
+        output.isCollisionDetectable = true;
     return output;
 }
 TileAttributes getTileAttributes(const TILE_TYPE *tilePointer)

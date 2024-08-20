@@ -19,82 +19,94 @@ void MovableRectangle::update(double deltaTime)
     double averageHeight = (double)(tileSize + rectangle.h) / 2;
     TilesAroundTile tiles = tileMap->getTilesAroundPosition(centrePosition);
     TileCentres tileCentres = tileMap->getTileCentresAroundPositionOfTile(tiles.centre);
-    if (getTileAttributes(tiles.top).isCollidable && centrePosition.y < tileCentres.top.y + averageHeight)
+    if (getTileAttributes(tiles.top).isCollisionDetectable && centrePosition.y < tileCentres.top.y + averageHeight)
     {
-        handleCollisionTop(tileCentres, centrePosition, averageWidth, averageHeight);
+        if (getTileAttributes(tiles.top).isCollidable)
+            handleCollisionTop(tileCentres, centrePosition, averageWidth, averageHeight);
         if (onCollision != NULL)
             onCollision((const unsigned char *)tiles.top, this);
     }
-    else if (getTileAttributes(tiles.topLeft).isCollidable && (centrePosition - tileCentres.topLeft).isYBiggerThanX() && centrePosition.y < tileCentres.top.y + averageHeight)
+    else if (getTileAttributes(tiles.topLeft).isCollisionDetectable && (centrePosition - tileCentres.topLeft).isYBiggerThanX() && centrePosition.y < tileCentres.top.y + averageHeight)
     {
-        handleCollisionTop(tileCentres, centrePosition, averageWidth, averageHeight);
+        if (getTileAttributes(tiles.topLeft).isCollidable)
+            handleCollisionTop(tileCentres, centrePosition, averageWidth, averageHeight);
         if (onCollision != NULL)
             onCollision((const unsigned char *)tiles.topLeft, this);
     }
-    else if (getTileAttributes(tiles.topRight).isCollidable && (tileCentres.topRight - centrePosition).isNegativeYBiggerThanX() && centrePosition.y < tileCentres.top.y + averageHeight)
+    else if (getTileAttributes(tiles.topRight).isCollisionDetectable && (tileCentres.topRight - centrePosition).isNegativeYBiggerThanX() && centrePosition.y < tileCentres.top.y + averageHeight)
     {
-        handleCollisionTop(tileCentres, centrePosition, averageWidth, averageHeight);
+        if (getTileAttributes(tiles.topRight).isCollidable)
+            handleCollisionTop(tileCentres, centrePosition, averageWidth, averageHeight);
         if (onCollision != NULL)
             onCollision((const unsigned char *)tiles.topRight, this);
     }
 
-    if (getTileAttributes(tiles.bottom).isCollidable && centrePosition.y > tileCentres.bottom.y - averageHeight)
+    if (getTileAttributes(tiles.bottom).isCollisionDetectable && centrePosition.y > tileCentres.bottom.y - averageHeight)
     {
-        handleCollisionBottom(tileCentres, centrePosition, averageWidth, averageHeight);
+        if (getTileAttributes(tiles.bottom).isCollidable)
+            handleCollisionBottom(tileCentres, centrePosition, averageWidth, averageHeight);
         if (onCollision != NULL)
             onCollision((const unsigned char *)tiles.bottom, this);
     }
-    else if (getTileAttributes(tiles.bottomLeft).isCollidable && (centrePosition - tileCentres.bottomLeft).isNegativeYBiggerThanX() && centrePosition.y > tileCentres.bottom.y - averageHeight)
+    else if (getTileAttributes(tiles.bottomLeft).isCollisionDetectable && (centrePosition - tileCentres.bottomLeft).isNegativeYBiggerThanX() && centrePosition.y > tileCentres.bottom.y - averageHeight)
     {
-        handleCollisionBottom(tileCentres, centrePosition, averageWidth, averageHeight);
+        if (getTileAttributes(tiles.bottomLeft).isCollidable)
+            handleCollisionBottom(tileCentres, centrePosition, averageWidth, averageHeight);
         if (onCollision != NULL)
             onCollision((const unsigned char *)tiles.bottomLeft, this);
     }
-    else if (getTileAttributes(tiles.bottomRight).isCollidable && (tileCentres.bottomRight - centrePosition).isYBiggerThanX() && centrePosition.y > tileCentres.bottom.y - averageHeight)
+    else if (getTileAttributes(tiles.bottomRight).isCollisionDetectable && (tileCentres.bottomRight - centrePosition).isYBiggerThanX() && centrePosition.y > tileCentres.bottom.y - averageHeight)
     {
-        handleCollisionBottom(tileCentres, centrePosition, averageWidth, averageHeight);
+        if (getTileAttributes(tiles.bottomRight).isCollidable)
+            handleCollisionBottom(tileCentres, centrePosition, averageWidth, averageHeight);
         if (onCollision != NULL)
             onCollision((const unsigned char *)tiles.bottomRight, this);
     }
 
-    if (getTileAttributes(tiles.left).isCollidable && centrePosition.x < tileCentres.left.x + averageWidth)
+    if (getTileAttributes(tiles.left).isCollisionDetectable && centrePosition.x < tileCentres.left.x + averageWidth)
     {
-        handleCollisionLeft(tileCentres, centrePosition, averageWidth, averageHeight);
+        if (getTileAttributes(tiles.left).isCollidable)
+            handleCollisionLeft(tileCentres, centrePosition, averageWidth, averageHeight);
         if (onCollision != NULL)
             onCollision((const unsigned char *)tiles.left, this);
     }
-    else if (getTileAttributes(tiles.topLeft).isCollidable && (centrePosition - tileCentres.topLeft).isXBiggerThanY() && centrePosition.x < tileCentres.left.x + averageWidth)
+    else if (getTileAttributes(tiles.topLeft).isCollisionDetectable && (centrePosition - tileCentres.topLeft).isXBiggerThanY() && centrePosition.x < tileCentres.left.x + averageWidth)
     {
-        handleCollisionLeft(tileCentres, centrePosition, averageWidth, averageHeight);
+        if (getTileAttributes(tiles.topLeft).isCollidable)
+            handleCollisionLeft(tileCentres, centrePosition, averageWidth, averageHeight);
         if (onCollision != NULL)
             onCollision((const unsigned char *)tiles.topLeft, this);
     }
-    else if (getTileAttributes(tiles.bottomLeft).isCollidable && (centrePosition - tileCentres.bottomLeft).isYBiggerThanNegativeX() && centrePosition.x < tileCentres.left.x + averageWidth)
+    else if (getTileAttributes(tiles.bottomLeft).isCollisionDetectable && (centrePosition - tileCentres.bottomLeft).isYBiggerThanNegativeX() && centrePosition.x < tileCentres.left.x + averageWidth)
     {
-        handleCollisionLeft(tileCentres, centrePosition, averageWidth, averageHeight);
+        if (getTileAttributes(tiles.bottomLeft).isCollidable)
+            handleCollisionLeft(tileCentres, centrePosition, averageWidth, averageHeight);
         if (onCollision != NULL)
             onCollision((const unsigned char *)tiles.bottomLeft, this);
     }
 
-    if (getTileAttributes(tiles.right).isCollidable && centrePosition.x > tileCentres.right.x - averageWidth)
+    if (getTileAttributes(tiles.right).isCollisionDetectable && centrePosition.x > tileCentres.right.x - averageWidth)
     {
-        handleCollisionRight(tileCentres, centrePosition, averageWidth, averageHeight);
+        if (getTileAttributes(tiles.right).isCollidable)
+            handleCollisionRight(tileCentres, centrePosition, averageWidth, averageHeight);
         if (onCollision != NULL)
             onCollision((const unsigned char *)tiles.right, this);
     }
-    else if (getTileAttributes(tiles.topRight).isCollidable && (centrePosition - tileCentres.topRight).isNegativeYBiggerThanX() && centrePosition.x > tileCentres.right.x - averageWidth)
+    else if (getTileAttributes(tiles.topRight).isCollisionDetectable && (centrePosition - tileCentres.topRight).isNegativeYBiggerThanX() && centrePosition.x > tileCentres.right.x - averageWidth)
     {
-        handleCollisionRight(tileCentres, centrePosition, averageWidth, averageHeight);
+        if (getTileAttributes(tiles.topRight).isCollidable)
+            handleCollisionRight(tileCentres, centrePosition, averageWidth, averageHeight);
         if (onCollision != NULL)
             onCollision((const unsigned char *)tiles.topRight, this);
     }
-    else if (getTileAttributes(tiles.bottomRight).isCollidable && (centrePosition - tileCentres.bottomRight).isYBiggerThanX() && centrePosition.x > tileCentres.right.x - averageWidth)
+    else if (getTileAttributes(tiles.bottomRight).isCollisionDetectable && (centrePosition - tileCentres.bottomRight).isYBiggerThanX() && centrePosition.x > tileCentres.right.x - averageWidth)
     {
-        handleCollisionRight(tileCentres, centrePosition, averageWidth, averageHeight);
+        if (getTileAttributes(tiles.bottomRight).isCollidable)
+            handleCollisionRight(tileCentres, centrePosition, averageWidth, averageHeight);
         if (onCollision != NULL)
             onCollision((const unsigned char *)tiles.bottomRight, this);
     }
-    if (getTileAttributes(tiles.centre).isCollidable)
+    if (getTileAttributes(tiles.centre).isCollisionDetectable)
         if (onCollision != NULL)
             onCollision((const unsigned char *)tiles.centre, this);
     position = centrePosition - (Vector2){(double)rectangle.w / 2, (double)rectangle.h / 2};
