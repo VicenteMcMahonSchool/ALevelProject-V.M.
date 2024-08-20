@@ -160,7 +160,7 @@ void TileMap::saveMap(void)
 
 size_t TileMap::getTileIndex(const TILE_TYPE *tile)
 {
-    return tileMap - tile;
+    return tile - tileMap;
 }
 
 void TileMap::setTileAtIndex(size_t tileIndex, TILE_TYPE tileType)
