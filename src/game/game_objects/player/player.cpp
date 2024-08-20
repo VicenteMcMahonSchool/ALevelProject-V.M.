@@ -21,7 +21,6 @@ void playerHandleCollision(const unsigned char *tile, void *data)
             TileMap &tileMap = gameObjects.getGameObjectOfType(TILE_MAP)->tileMap;
             tileMap.setTileAtIndex(tileMap.getTileIndex((TILE_TYPE *)tile), TILE_AIR);
             player->setCoins(player->getCoins() + 1);
-            printf("%u\n", player->getCoins());
         }
         return;
     }
