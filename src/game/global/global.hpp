@@ -26,8 +26,7 @@ struct TileMap;
 struct Vector2;
 
 // Extern allows other files to know about global variables stored else where.
-extern Application application; // In 'main.cpp'.
-// These are stored in 'application.cpp'.
+extern Application application;
 // extern SDL_DisplayMode displayMode;
 extern int windowWidth, windowHeight;
 extern SDL_Window *window;
@@ -40,6 +39,7 @@ extern SDL_GameController *controller;
 extern unsigned int numberOfTicks;
 extern double timePassed;
 extern double timeScale;
+void drawText(const char *text, const SDL_Rect *rectangle);
 
 enum __attribute__((__packed__)) GAME_OBJECT_TYPE
 {

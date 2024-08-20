@@ -1,17 +1,5 @@
 #include "./application.hpp"
 
-int windowWidth, windowHeight;
-SDL_Window *window;
-SDL_Renderer *renderer;
-GameObjects gameObjects{};
-Vector2 cameraPosition{0, 0};
-TTF_Font *font = NULL;
-SCREEN screen = SCREEN_MENU;
-SDL_GameController *controller = NULL;
-unsigned int numberOfTicks = 0;
-double timePassed = 0;
-double timeScale = 1;
-
 // Constructor for application, this is used to make the class.
 Application::Application()
 {

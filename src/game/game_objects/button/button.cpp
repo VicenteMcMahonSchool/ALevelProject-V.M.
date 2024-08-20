@@ -2,19 +2,10 @@
 
 Button::Button(BUTTON_CONSTRUCTOR_ARGUMENTS) : Rectangle(position, colour, width, height), text(text), callBack(callBack) {}
 
-void Button::drawText(const char *text)
-{
-    SDL_Surface *textSurface = TTF_RenderText_Solid(font, text, {0X00, 0X00, 0X00});
-    SDL_Texture *textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
-    SDL_RenderCopy(renderer, textTexture, NULL, &rectangle);
-    SDL_FreeSurface(textSurface);
-    SDL_DestroyTexture(textTexture);
-}
-
 void Button::draw(void)
 {
     Rectangle::draw();
-    drawText(text);
+    drawText(text, &rectangle);
 }
 
 void Button::onAction(bool checkMousePosition)

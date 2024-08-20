@@ -1,7 +1,5 @@
 #include "./application/application.hpp"
 
-// Defining global variable.
-Application application{};
 // The main function, needed to start the program.
 int main(void)
 {

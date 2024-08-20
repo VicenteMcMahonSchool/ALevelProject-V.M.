@@ -13,6 +13,5 @@ public:
 
 private:
     const char *text;
-    void drawText(const char *text);
     void (*callBack)(void);
 };
