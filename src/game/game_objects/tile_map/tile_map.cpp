@@ -11,9 +11,10 @@ TileMap::TileMap(TILE_MAP_CONSTRUCTOR_ARGUMENTS) : GeneralGameObject(position), 
         return;
     tileFilesHaveBeenRead = true;
 #endif
-    int tileDisplayFile = open("./settings/tile_data", O_RDONLY);
-    read(tileDisplayFile, &tileAttributesData, sizeof(tileAttributesData));
-    close(tileDisplayFile);
+    int tileDataFile = open("./settings/tile_data", O_RDONLY);
+    read(tileDataFile, &tileAttributesData, sizeof(tileAttributesData));
+    close(tileDataFile);
+
     int mapFile = open("./map", O_RDONLY);
     read(mapFile, tileMap, sizeof(tileMap));
     close(mapFile);
@@ -286,11 +287,11 @@ TileCentres TileMap::getTileCentresAroundPositionOfTile(const TILE_TYPE *tile)
     return output;
 }
 
-TileAttributes TileMap::getTileAttributes(const TILE_TYPE tile)
+TileAttributes &TileMap::getTileAttributes(const TILE_TYPE tile)
 {
     return tileAttributesData.tileData[tile];
 }
-TileAttributes TileMap::getTileAttributes(const TILE_TYPE *tilePointer)
+TileAttributes &TileMap::getTileAttributes(const TILE_TYPE *tilePointer)
 {
     if (tilePointer == NULL)
         return getTileAttributes(TILE_AIR);

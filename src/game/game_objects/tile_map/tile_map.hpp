@@ -109,8 +109,8 @@ private:
 public:
     TileMap(TILE_MAP_CONSTRUCTOR_ARGUMENTS);
     ~TileMap();
-    TileAttributes getTileAttributes(const TILE_TYPE tile);
-    TileAttributes getTileAttributes(const TILE_TYPE *tilePointer);
+    TileAttributes &getTileAttributes(const TILE_TYPE tile);
+    TileAttributes &getTileAttributes(const TILE_TYPE *tilePointer);
     bool tileOutlines = false;
     void tick(void);
     void update(double deltaTime);
