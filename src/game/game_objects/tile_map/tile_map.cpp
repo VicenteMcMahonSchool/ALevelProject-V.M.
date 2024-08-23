@@ -16,13 +16,13 @@ TileMap::TileMap(TILE_MAP_CONSTRUCTOR_ARGUMENTS) : GeneralGameObject(position), 
     close(tileColoursFile);
     int mapFile = open("./map", O_RDONLY);
     read(mapFile, tileMap, sizeof(tileMap));
+    close(mapFile);
     for (size_t i = 0; i < NUMBER_OF_TILES; i++)
     {
         TILE_MAP_RECTANGLES_POSITION
         rectangles[i].w = tileSize;
         rectangles[i].h = tileSize;
     }
-    close(mapFile);
 }
 
 GETTER_AND_SETTER_CPP(unsigned int, TileMap, tileSize, TileSize)
