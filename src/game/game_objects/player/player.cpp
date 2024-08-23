@@ -11,10 +11,11 @@ Player::Player(PLAYER_CONSTRUCTOR_ARGUMENTS) : MovableRectangle(position, {0X22,
 }
 void playerHandleCollision(const unsigned char *tile, void *data)
 {
+    TileMap &tileMap = gameObjects.getGameObjectOfType(TILE_MAP)->tileMap; // Made it a reference to avoid copying the tile map.
     if (data == NULL)
         return;
     Player *player = (Player *)data;
-    if (!getTileAttributes((TILE_TYPE *)tile).isCollidable)
+    if (!tileMap.getTileAttributes((TILE_TYPE *)tile).isCollidable)
     {
         if (tile != NULL && *tile == TILE_COIN)
         {
@@ -24,9 +25,8 @@ void playerHandleCollision(const unsigned char *tile, void *data)
         }
         return;
     }
-    TileMap *tileMap = &gameObjects.getGameObjectOfType(TILE_MAP)->tileMap; // Made it a pointer to avoid copying the tile map.
-    const TILE_TYPE *centreTile = tileMap->getTileAtPosition(player->getPosition() + (Vector2){(double)player->getRectangle().w / 2, (double)player->getRectangle().h / 2});
-    if (*tile == TILE_LOSE || ((const TILE_TYPE *)tile == centreTile && getTileAttributes((const TILE_TYPE *)tile).isCollidable))
+    const TILE_TYPE *centreTile = tileMap.getTileAtPosition(player->getPosition() + (Vector2){(double)player->getRectangle().w / 2, (double)player->getRectangle().h / 2});
+    if (*tile == TILE_LOSE || ((const TILE_TYPE *)tile == centreTile && tileMap.getTileAttributes((const TILE_TYPE *)tile).isCollidable))
         screen = SCREEN_LOSE;
     else if (*tile == TILE_WIN)
         screen = SCREEN_WIN;

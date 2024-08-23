@@ -24,7 +24,7 @@ void Enemy::update(double deltaTime)
         else
             lookaheadPosition = position + (velocity / abs(velocity.length())) * rectangle.w;
         TilesAroundTile tiles = tileMap.getTilesAroundPosition(lookaheadPosition);
-        if (getTileAttributes(tiles.centre).isCollidable || !getTileAttributes(tiles.bottom).isCollidable)
+        if (tileMap.getTileAttributes(tiles.centre).isCollidable || !tileMap.getTileAttributes(tiles.bottom).isCollidable)
             velocity.y -= PLAYER_JUMP_SPEED;
     }
     MovableRectangle::update(deltaTime);

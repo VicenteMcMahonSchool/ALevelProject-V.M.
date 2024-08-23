@@ -1,10 +1,14 @@
 #pragma once
 #include <stdexcept>
 #include <dlfcn.h>
+#include <SDL2/SDL_image.h>
 #include "../../global/global.hpp"
 #include "../general_game_object/general_game_object.hpp"
 #include "../../game_objects_class/game_objects_class.hpp"
 
+#ifndef ONE_TILE_MAP
+#define ONE_TILE_MAP ;
+#endif
 #define TILE_MAP_CONSTRUCTOR_ARGUMENTS Vector2 position, unsigned int tileSize
 #define TILE_MAP_CONSTRUCTOR_ARGUMENTS_NAMES position, tileSize
 #define WIDTH_OF_TILE_MAP 128
@@ -57,33 +61,46 @@ struct TileCentres
     Vector2 bottomRight;
 };
 
+struct __attribute__((__packed__)) TileDisplayData
+{
+    enum __attribute__((__packed__))
+    {
+        TILE_DISPLAY_COLOUR = 0X00,
+        TILE_DISPLAY_IMAGE = 0X01
+    } type;
+    union
+    {
+        SDL_Colour colour;
+        const char *imageFile;
+    } datum;
+    bool visibleInEditorOnly : 1;
+};
+
 struct __attribute__((__packed__)) TileAttributes
 {
-    bool isCollidable;
-    bool isCollisionDetectable;
+    TileDisplayData display;
+    bool isCollidable : 1;
+    bool isCollisionDetectable : 1;
 };
 
-TileAttributes getTileAttributes(const TILE_TYPE tile);
-TileAttributes getTileAttributes(const TILE_TYPE *tilePointer);
-
-struct TileColourData
+struct TileAttributesData
 {
-    SDL_Colour tileColours[TILE_NORMAL_MAXIMUM_VALUE];
-    unsigned char onlyVisibleInEditor[TILE_NORMAL_MAXIMUM_VALUE / 8 + (TILE_NORMAL_MAXIMUM_VALUE % 8 != 0)];
+    TileAttributes tileData[TILE_NORMAL_MAXIMUM_VALUE];
 };
-
 #ifdef ONE_TILE_MAP
-static TileColourData tileColourData;
+static SDL_Texture *images[TILE_NORMAL_MAXIMUM_VALUE] = {NULL};
+static TileAttributesData tileAttributesData;
 static TILE_TYPE tileMap[NUMBER_OF_TILES];
 static SDL_Rect rectangles[NUMBER_OF_TILES];
-static bool tileFilesHaveBeenRead = false;
+static bool tileFilesHaveBeenRead;
 #endif
 
 class TileMap : public GeneralGameObject
 {
 private:
 #ifndef ONE_TILE_MAP
-    TileColourData tileColourData;
+    SDL_Texture *images[TILE_NORMAL_MAXIMUM_VALUE];
+    TileAttributesData tileAttributesData;
     TILE_TYPE tileMap[NUMBER_OF_TILES];
     SDL_Rect rectangles[NUMBER_OF_TILES];
 #endif
@@ -91,6 +108,9 @@ private:
 
 public:
     TileMap(TILE_MAP_CONSTRUCTOR_ARGUMENTS);
+    ~TileMap();
+    TileAttributes getTileAttributes(const TILE_TYPE tile);
+    TileAttributes getTileAttributes(const TILE_TYPE *tilePointer);
     bool tileOutlines = false;
     void tick(void);
     void update(double deltaTime);

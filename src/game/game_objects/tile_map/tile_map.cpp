@@ -11,9 +11,9 @@ TileMap::TileMap(TILE_MAP_CONSTRUCTOR_ARGUMENTS) : GeneralGameObject(position), 
         return;
     tileFilesHaveBeenRead = true;
 #endif
-    int tileColoursFile = open("./settings/tile_colours", O_RDONLY);
-    read(tileColoursFile, &tileColourData, sizeof(tileColourData));
-    close(tileColoursFile);
+    int tileDisplayFile = open("./settings/tile_data", O_RDONLY);
+    read(tileDisplayFile, &tileAttributesData, sizeof(tileAttributesData));
+    close(tileDisplayFile);
     int mapFile = open("./map", O_RDONLY);
     read(mapFile, tileMap, sizeof(tileMap));
     close(mapFile);
@@ -23,6 +23,12 @@ TileMap::TileMap(TILE_MAP_CONSTRUCTOR_ARGUMENTS) : GeneralGameObject(position), 
         rectangles[i].w = tileSize;
         rectangles[i].h = tileSize;
     }
+}
+
+TileMap::~TileMap()
+{
+    for (size_t i = 0; i < TILE_NORMAL_MAXIMUM_VALUE; i++)
+        SDL_DestroyTexture(images[i]);
 }
 
 GETTER_AND_SETTER_CPP(unsigned int, TileMap, tileSize, TileSize)
@@ -80,7 +86,6 @@ void TileMap::draw(void)
         TILE_MAP_RECTANGLES_POSITION
         rectangles[i].x -= cameraPosition.x - windowWidth / 2;
         rectangles[i].y -= cameraPosition.y - windowHeight / 2;
-        SDL_Colour colour = tileColourData.tileColours[tileMap[i]];
         if (rectangles[i].x > windowWidth)
         {
             i = (i / WIDTH_OF_TILE_MAP + 1) * WIDTH_OF_TILE_MAP - 1;
@@ -102,9 +107,11 @@ void TileMap::draw(void)
                 i += addedOn;
             continue;
         }
-        if (tileMap[i] == TILE_AIR || tileMap[i] == TILE_NONE || (((tileColourData.onlyVisibleInEditor[tileMap[i] / 8] >> (7 - (tileMap[i] % 8))) & 1) && !tileOutlines))
+        TileAttributes tileAttributes = tileAttributesData.tileData[tileMap[i]];
+        if (tileMap[i] == TILE_AIR || tileMap[i] == TILE_NONE || tileAttributes.display.visibleInEditorOnly && !tileOutlines)
             goto doNotFill;
-        SDL_SetRenderDrawColour(renderer, colour.r, colour.g, colour.b, colour.a);
+        if (tileAttributes.display.type == tileAttributes.display.TILE_DISPLAY_COLOUR)
+            SDL_SetRenderDrawColour(renderer, tileAttributes.display.datum.colour.r, tileAttributes.display.datum.colour.g, tileAttributes.display.datum.colour.b, tileAttributes.display.datum.colour.a);
         SDL_RenderFillRect(renderer, rectangles + i); // Fills the rectangle.
     doNotFill:
         if (tileOutlines)
@@ -143,7 +150,7 @@ void TileMap::drawShadows(void)
                 i += addedOn;
             continue;
         }
-        if (tileMap[i] == TILE_AIR || tileMap[i] == TILE_NONE || (((tileColourData.onlyVisibleInEditor[tileMap[i] / 8] >> (7 - (tileMap[i] % 8))) & 1) && !tileOutlines))
+        if (tileMap[i] == TILE_AIR || tileMap[i] == TILE_NONE || (tileAttributesData.tileData[tileMap[i]].display.visibleInEditorOnly && !tileOutlines))
             continue;
         SDL_Rect shadowRectangle{rectangles[i].x, rectangles[i].y, rectangles[i].w + SHADOW_DISTANCE_X, rectangles[i].h + SHADOW_DISTANCE_Y};
         SDL_SetRenderDrawColour(renderer, 0X11, 0X11, 0X11, 0XFF);
@@ -279,18 +286,11 @@ TileCentres TileMap::getTileCentresAroundPositionOfTile(const TILE_TYPE *tile)
     return output;
 }
 
-TileAttributes getTileAttributes(const TILE_TYPE tile)
+TileAttributes TileMap::getTileAttributes(const TILE_TYPE tile)
 {
-    TileAttributes output{};
-    if (tile == TILE_PLATFORM || tile == TILE_BOARDER || tile == TILE_ROTATION || tile == TILE_LOSE || tile == TILE_WIN)
-        output.isCollidable = true;
-    else
-        output.isCollidable = false;
-    if (output.isCollidable || tile == TILE_COIN)
-        output.isCollisionDetectable = true;
-    return output;
+    return tileAttributesData.tileData[tile];
 }
-TileAttributes getTileAttributes(const TILE_TYPE *tilePointer)
+TileAttributes TileMap::getTileAttributes(const TILE_TYPE *tilePointer)
 {
     if (tilePointer == NULL)
         return getTileAttributes(TILE_AIR);
