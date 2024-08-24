@@ -72,7 +72,7 @@ struct __attribute__((__packed__)) TileDisplayData
     {
         SDL_Colour colour;
         const char imageFile[256];
-    } datum;
+    } data;
     bool visibleInEditorOnly : 1;
 };
 

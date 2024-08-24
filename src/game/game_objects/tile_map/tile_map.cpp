@@ -15,6 +15,10 @@ TileMap::TileMap(TILE_MAP_CONSTRUCTOR_ARGUMENTS) : GeneralGameObject(position), 
     read(tileDataFile, &tileAttributesData, sizeof(tileAttributesData));
     close(tileDataFile);
 
+    for (size_t i = 0; i < sizeof(tileAttributesData.tileData); i++)
+        if (tileAttributesData.tileData[i].display.type == TileDisplayData::TILE_DISPLAY_IMAGE)
+            images[i] = IMG_LoadTexture(renderer, tileAttributesData.tileData[i].display.data.imageFile);
+
     int mapFile = open("./map", O_RDONLY);
     read(mapFile, tileMap, sizeof(tileMap));
     close(mapFile);
@@ -111,9 +115,13 @@ void TileMap::draw(void)
         TileAttributes tileAttributes = tileAttributesData.tileData[tileMap[i]];
         if (tileMap[i] == TILE_AIR || tileMap[i] == TILE_NONE || tileAttributes.display.visibleInEditorOnly && !tileOutlines)
             goto doNotFill;
-        if (tileAttributes.display.type == tileAttributes.display.TILE_DISPLAY_COLOUR)
-            SDL_SetRenderDrawColour(renderer, tileAttributes.display.datum.colour.r, tileAttributes.display.datum.colour.g, tileAttributes.display.datum.colour.b, tileAttributes.display.datum.colour.a);
-        SDL_RenderFillRect(renderer, rectangles + i); // Fills the rectangle.
+        if (tileAttributes.display.type == TileDisplayData::TILE_DISPLAY_COLOUR)
+        {
+            SDL_SetRenderDrawColour(renderer, tileAttributes.display.data.colour.r, tileAttributes.display.data.colour.g, tileAttributes.display.data.colour.b, tileAttributes.display.data.colour.a);
+            SDL_RenderFillRect(renderer, rectangles + i); // Fills the rectangle.
+        }
+        else if (tileAttributes.display.type == TileDisplayData::TILE_DISPLAY_IMAGE)
+            SDL_RenderCopy(renderer, images[tileMap[i]], NULL, rectangles + i);
     doNotFill:
         if (tileOutlines)
         {
