@@ -71,7 +71,7 @@ struct __attribute__((__packed__)) TileDisplayData
     union
     {
         SDL_Colour colour;
-        const char *imageFile;
+        const char imageFile[256];
     } datum;
     bool visibleInEditorOnly : 1;
 };
@@ -89,7 +89,7 @@ struct TileAttributesData
 };
 #ifdef ONE_TILE_MAP
 static SDL_Texture *images[TILE_NORMAL_MAXIMUM_VALUE] = {NULL};
-static TileAttributesData tileAttributesData;
+static TileAttributesData tileAttributesData = {.tileData = {}};
 static TILE_TYPE tileMap[NUMBER_OF_TILES];
 static SDL_Rect rectangles[NUMBER_OF_TILES];
 static bool tileFilesHaveBeenRead;
