@@ -15,9 +15,9 @@ TileMap::TileMap(TILE_MAP_CONSTRUCTOR_ARGUMENTS) : GeneralGameObject(position), 
     read(tileDataFile, &tileAttributesData, sizeof(tileAttributesData));
     close(tileDataFile);
 
-    for (size_t i = 0; i < sizeof(tileAttributesData.tileData); i++)
-        if (tileAttributesData.tileData[i].display.type == TileDisplayData::TILE_DISPLAY_IMAGE)
-            images[i] = IMG_LoadTexture(renderer, tileAttributesData.tileData[i].display.data.imageFile);
+    for (size_t i = 0; i < sizeof(tileAttributesData.tileData) / sizeof(TileAttributes); i++)
+        if (tileAttributesData.tileData[i].display.type == 1)
+            images[0] = IMG_LoadTexture(renderer, tileAttributesData.tileData[i].display.data.imageFile);
 
     int mapFile = open("./map", O_RDONLY);
     read(mapFile, tileMap, sizeof(tileMap));

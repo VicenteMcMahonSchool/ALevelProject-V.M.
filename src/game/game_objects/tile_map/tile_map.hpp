@@ -99,8 +99,8 @@ class TileMap : public GeneralGameObject
 {
 private:
 #ifndef ONE_TILE_MAP
-    SDL_Texture *images[TILE_NORMAL_MAXIMUM_VALUE];
-    TileAttributesData tileAttributesData;
+    SDL_Texture *images[TILE_NORMAL_MAXIMUM_VALUE] = {NULL};
+    TileAttributesData tileAttributesData = {.tileData = {}};
     TILE_TYPE tileMap[NUMBER_OF_TILES];
     SDL_Rect rectangles[NUMBER_OF_TILES];
 #endif
