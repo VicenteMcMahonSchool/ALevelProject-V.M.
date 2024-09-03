@@ -108,7 +108,7 @@ private:
 
 public:
     TileMap(TILE_MAP_CONSTRUCTOR_ARGUMENTS);
-    ~TileMap();
+    ~TileMap() override;
     TileAttributes &getTileAttributes(const TILE_TYPE tile);
     TileAttributes &getTileAttributes(const TILE_TYPE *tilePointer);
     bool tileOutlines = false;

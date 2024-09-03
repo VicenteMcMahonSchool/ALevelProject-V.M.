@@ -1,4 +1,5 @@
 #include "./general_game_object.hpp"
+#include <stdio.h>
 
 GeneralGameObject::GeneralGameObject(GENERAL_GAME_OBJECT_CONSTRUCTOR_ARGUMENTS) : position(position) {}
 void GeneralGameObject::tick(void) {}

@@ -24,6 +24,7 @@ public:
     GameObjectUnion value{};
     GameObject(void);
     GameObject(GAME_OBJECT_TYPE type);
+    ~GameObject();
     void tick(void);
     void update(double deltaTime);
     void draw(void);

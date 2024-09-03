@@ -13,6 +13,11 @@ GameObject::GameObject(GAME_OBJECT_TYPE type)
     this->type = type;
 }
 
+GameObject::~GameObject()
+{
+    GAME_OBJECT_SWITCH_VALUES(((GeneralGameObject *)&gameObject)->~GeneralGameObject())
+}
+
 void GameObject::tick(void)
 {
     GAME_OBJECT_SWITCH_VALUES(gameObject.tick())

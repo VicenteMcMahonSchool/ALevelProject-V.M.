@@ -15,15 +15,11 @@ GameObjects::~GameObjects()
     delete[] gameObjects;
 }
 
-// template <class... Arguments>
-// void GameObjects::construct(size_t index, Arguments... arguments)
-// {
-// GAME_OBJECT_SWITCH_VALUES(gameObject = typeof(GameObject){arguments})
-// }
-
 void GameObjects::makeEmpty(void)
 {
     index = 0;
+    for (size_t i = 0; i < INITIAL_NUMBER_OF_GAME_OBJECTS; i++)
+        gameObjects[i].~GameObject();
     delete[] gameObjects;
     gameObjects = new GameObject[INITIAL_NUMBER_OF_GAME_OBJECTS]{};
 }

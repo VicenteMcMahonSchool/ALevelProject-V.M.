@@ -139,6 +139,7 @@ void Application::gameScreen(void)
     }
 exit: // This is a section which can be reached using 'goto' statements.
     unsetAllButtons();
+    gameObjects.makeEmpty();
     if (screen == SCREEN_GAME_NORMAL || screen == SCREEN_GAME_TIME_SCALE)
         screen = SCREEN_MENU;
     return;
@@ -246,7 +247,6 @@ void Application::editScreen(void)
     cameraPosition = tileMap.getCentrePositionOfTile(tileMap.getSpawnTile());
     unsigned int tileSize = tileMap.getTileSize();
     tileMap.tileOutlines = true;
-    // gameObjects.add({tileMap});
     SDL_Event event;
     // Delta Time code taken from https://gamedev.stackexchange.com/questions/110825/how-to-calculate-delta-time-with-sdl.
     Uint64 now = SDL_GetPerformanceCounter(), last = 0; // Will be used to calculate 'deltaTime'.
@@ -375,6 +375,7 @@ void Application::editScreen(void)
 exit: // This is a section which can be reached using 'goto' statements.
     unsetAllButtons();
     tileMap.saveMap();
+    gameObjects.makeEmpty();
     if (screen == SCREEN_EDIT)
         screen = SCREEN_MENU;
     return;
@@ -382,24 +383,20 @@ exit: // This is a section which can be reached using 'goto' statements.
 
 void Application::winScreen(void)
 {
-    // SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
     SDL_SetRenderDrawColour(renderer, 0X00, 0XFF, 0X00, 0X55);
     SDL_Rect rectangle{0, 0, windowWidth, windowHeight};
     SDL_RenderFillRect(renderer, &rectangle);
     SDL_RenderPresent(renderer);
     SDL_Delay(1000);
-    // SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
     screen = SCREEN_MENU;
 }
 void Application::loseScreen(void)
 {
-    // SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
     SDL_SetRenderDrawColour(renderer, 0XFF, 0X00, 0X00, 0X55);
     SDL_Rect rectangle{0, 0, windowWidth, windowHeight};
     SDL_RenderFillRect(renderer, &rectangle);
     SDL_RenderPresent(renderer);
     SDL_Delay(1000);
-    // SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
     screen = SCREEN_MENU;
 }
 

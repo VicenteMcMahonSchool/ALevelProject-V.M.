@@ -52,33 +52,6 @@
         }                                                            \
         }                                                            \
     }
-// #define GAME_OBJECT_SWITCH_VALUES(expression)   \
-//     {                                           \
-//         switch (type)                           \
-//         {                                       \
-//         case GENERAL_GAME_OBJECT:               \
-//             value.generalGameObject.expression; \
-//             break;                              \
-//         case RECTANGLE:                         \
-//             value.rectangle.expression;         \
-//             break;                              \
-//         case MOVABLE_RECTANGLE:                 \
-//             value.movableRectangle.expression;  \
-//             break;                              \
-//         case TILE_MAP:                          \
-//             value.tileMap.expression;           \
-//             break;                              \
-//         case PLAYER:                            \
-//             value.player.expression;            \
-//             break;                              \
-//         case BUTTON:                            \
-//             value.button.expression;            \
-//             break;                              \
-//         case ENEMY:                             \
-//             value.enemy.expression;             \
-//             break;                              \
-//         }                                       \
-//     }
 
 #define INITIAL_NUMBER_OF_GAME_OBJECTS 64
 
@@ -95,8 +68,6 @@ private:
 public:
     GameObjects(void);
     ~GameObjects();
-    // template <class... Arguments>
-    // void construct(size_t index, Arguments... arguments);
     void makeEmpty(void);
     GameObjectUnion *add(GAME_OBJECT_TYPE type);
     GameObjectUnion *getGameObjectOfType(GAME_OBJECT_TYPE type);

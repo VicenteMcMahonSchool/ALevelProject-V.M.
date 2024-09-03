@@ -9,6 +9,7 @@ class GeneralGameObject
 {
 public:
     GeneralGameObject(GENERAL_GAME_OBJECT_CONSTRUCTOR_ARGUMENTS);
+    virtual ~GeneralGameObject() = default;
     virtual void tick(void);
     virtual void update(double deltaTime);
     virtual void draw(void);
