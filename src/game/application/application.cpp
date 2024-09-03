@@ -54,6 +54,7 @@ Application::~Application()
 // This is the main loop for the game.
 void Application::gameScreen(void)
 {
+    SDL_Rect coinsDisplayRectangle{0, 0, 256, 128};
     gameObjects.makeEmpty();
     timePassed = numberOfTicks = 0; // Sets both of them to 0.
     Player &player = gameObjects.add(PLAYER)->player;
@@ -135,6 +136,9 @@ void Application::gameScreen(void)
         gameObjects.draw();
         if (screen != SCREEN_GAME_NORMAL && screen != SCREEN_GAME_TIME_SCALE)
             break;
+        char numberOfCoins[sizeof(unsigned int) * 8 + 1];
+        SDL_uitoa(player.getCoins(), numberOfCoins, 10);
+        drawText(numberOfCoins, &coinsDisplayRectangle);
         SDL_RenderPresent(renderer); // Renders everything.
         SDL_Delay(DELAY);
     }
