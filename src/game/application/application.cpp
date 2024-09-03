@@ -59,10 +59,9 @@ void Application::gameScreen(void)
     timePassed = numberOfTicks = 0; // Sets both of them to 0.
     Player &player = gameObjects.add(PLAYER)->player;
     TileMap &tileMap = gameObjects.getGameObjectOfType(TILE_MAP)->tileMap;
-    new (&player) Player{{0, 0}}; // Using placement new to prevent calling the destructor.
     tileMap.resetRemovedCoins();
     unsigned int tileSize = tileMap.getTileSize();
-    player = Player{tileMap.getCentrePositionOfTile(tileMap.getSpawnTile()) - (Vector2){(double)tileSize / 2, (double)tileSize / 2} /* (Vector2){(double)tileSize / 2, (double)tileSize / 2} */};
+    new (&player) Player{tileMap.getCentrePositionOfTile(tileMap.getSpawnTile()) - (Vector2){(double)tileSize / 2, (double)tileSize / 2}}; // Using placement new to prevent calling the destructor.
     tileMap.tileOutlines = false;
     SDL_Event event;
     // Delta Time code taken from https://gamedev.stackexchange.com/questions/110825/how-to-calculate-delta-time-with-sdl.
