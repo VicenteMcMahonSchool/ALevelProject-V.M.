@@ -36,7 +36,7 @@ Application::Application()
         }
     }
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-    TileMap &tileMap = gameObjects.add(TILE_MAP, false)->tileMap;
+    TileMap &tileMap = gameObjects.add(TILE_MAP, true)->tileMap;
     new (&tileMap) TileMap{{0, 0}, 120}; // Using placement new to prevent calling the destructor.
 }
 
