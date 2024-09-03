@@ -20,7 +20,7 @@ void playerHandleCollision(const unsigned char *tile, void *data)
         if (tile != NULL && *tile == TILE_COIN)
         {
             TileMap &tileMap = gameObjects.getGameObjectOfType(TILE_MAP)->tileMap;
-            tileMap.setTileAtIndex(tileMap.getTileIndex((TILE_TYPE *)tile), TILE_AIR);
+            tileMap.setTileAtIndex(tileMap.getTileIndex((TILE_TYPE *)tile), TILE_COIN_DELETED);
             player->setCoins(player->getCoins() + 1);
         }
         return;
