@@ -26,7 +26,6 @@ void Rectangle::drawShadows(void)
     shadowRectangle.y = (int)round(position.y - (cameraPosition.y - (double)windowHeight / 2)) /* + SHADOW_DISTANCE_Y */;
     SDL_SetRenderDrawColour(renderer, 0X11, 0X11, 0X11, 0XFF);
     SDL_RenderFillRect(renderer, &shadowRectangle);
-    // SDL_SetRenderDrawColour(renderer, colour.r, colour.g, colour.b, colour.a);
 }
 GETTER_AND_SETTER_CPP(SDL_Colour, Rectangle, colour, Colour)
 GETTER_CPP(SDL_Rect, Rectangle, rectangle, Rectangle)
