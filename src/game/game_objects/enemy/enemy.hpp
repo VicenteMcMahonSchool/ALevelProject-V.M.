@@ -9,5 +9,5 @@ class Enemy : public MovableRectangle
 {
 public:
     Enemy(ENEMY_CONSTRUCTOR_ARGUMENTS);
-    void update(double deltaTime);
+    void update(double deltaTime) override;
 };

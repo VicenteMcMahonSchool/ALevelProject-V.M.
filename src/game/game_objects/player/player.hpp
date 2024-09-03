@@ -14,6 +14,6 @@ class Player : public MovableRectangle
 {
 public:
     Player(PLAYER_CONSTRUCTOR_ARGUMENTS);
-    void update(double deltaTime);
+    void update(double deltaTime) override;
     GETTER_AND_SETTER_HPP(unsigned int, coins, Coins)
 };

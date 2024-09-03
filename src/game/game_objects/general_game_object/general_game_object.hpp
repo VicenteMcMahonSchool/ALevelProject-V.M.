@@ -9,9 +9,9 @@ class GeneralGameObject
 {
 public:
     GeneralGameObject(GENERAL_GAME_OBJECT_CONSTRUCTOR_ARGUMENTS);
-    void tick(void);
-    void update(double deltaTime);
-    void draw(void);
-    void drawShadows(void);
+    virtual void tick(void);
+    virtual void update(double deltaTime);
+    virtual void draw(void);
+    virtual void drawShadows(void);
     GETTER_AND_SETTER_HPP(Vector2, position, Position)
 };

@@ -15,9 +15,16 @@ GameObjects::~GameObjects()
     delete[] gameObjects;
 }
 
+template <class... Arguments>
+void GameObjects::construct(Arguments... arguments)
+{
+}
+
 void GameObjects::makeEmpty(void)
 {
     index = 0;
+    delete[] gameObjects;
+    gameObjects = new GameObject[INITIAL_NUMBER_OF_GAME_OBJECTS]{};
 }
 
 GameObjectUnion *GameObjects::add(GAME_OBJECT_TYPE type)

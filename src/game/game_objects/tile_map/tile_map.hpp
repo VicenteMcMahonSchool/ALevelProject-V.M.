@@ -112,10 +112,10 @@ public:
     TileAttributes &getTileAttributes(const TILE_TYPE tile);
     TileAttributes &getTileAttributes(const TILE_TYPE *tilePointer);
     bool tileOutlines = false;
-    void tick(void);
-    void update(double deltaTime);
-    void draw(void);
-    void drawShadows(void);
+    void tick(void) override;
+    void update(double deltaTime) override;
+    void draw(void) override;
+    void drawShadows(void) override;
     void saveMap(void);
     void resetRemovedCoins(void);
     size_t getTileIndex(const TILE_TYPE *tile);

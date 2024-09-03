@@ -12,9 +12,9 @@ private:
 
 public:
     Rectangle(RECTANGLE_CONSTRUCTOR_ARGUMENTS);
-    void update(double deltaTime);
-    void draw(void);
-    void drawShadows(void);
+    void update(double deltaTime) override;
+    void draw(void) override;
+    void drawShadows(void) override;
     GETTER_AND_SETTER_HPP(SDL_Colour, colour, Colour)
     GETTER_HPP(SDL_Rect, rectangle, Rectangle)
 };

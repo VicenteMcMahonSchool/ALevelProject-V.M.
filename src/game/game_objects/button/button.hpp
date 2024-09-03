@@ -9,7 +9,7 @@ class Button : public Rectangle
 public:
     Button(BUTTON_CONSTRUCTOR_ARGUMENTS);
     void onAction(bool checkMousePosition);
-    void draw(void);
+    void draw(void) override;
 
 private:
     const char *text;
