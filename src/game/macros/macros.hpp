@@ -4,7 +4,7 @@
 #define SDL_WINDOWPOS_CENTRED SDL_WINDOWPOS_CENTERED
 
 #define GETTER_CPP(type, className, name, name2) \
-    const type &className::get##name2(void) { return this->name; }
+    const type &className::get##name2(void) { return name; }
 
 #define GETTER_HPP(type, name, name2) \
 protected:                            \
@@ -21,7 +21,7 @@ public:                                              \
 
 #define GETTER_AND_SETTER_CPP(type, className, name, name2) \
     GETTER_CPP(type, className, name, name2)                \
-    void className::set##name2(type newValue) { this->name = newValue; }
+    void className::set##name2(type newValue) { name = newValue; }
 
 #define GETTER_AND_SETTER_HPP(type, name, name2) \
     GETTER_HPP(type, name, name2)                \
