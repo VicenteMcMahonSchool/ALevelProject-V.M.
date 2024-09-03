@@ -5,14 +5,14 @@ GETTER_CPP(size_t, GameObjects, capacity, Capacity)
 
 GameObjects::GameObjects(void)
 {
-    gameObjects = (GameObject *)malloc(sizeof(GameObject) * INITIAL_NUMBER_OF_GAME_OBJECTS);
+    gameObjects = new GameObject[INITIAL_NUMBER_OF_GAME_OBJECTS]{};
     capacity = INITIAL_NUMBER_OF_GAME_OBJECTS;
     index = 0;
 }
 
 GameObjects::~GameObjects()
 {
-    free(gameObjects);
+    delete[] gameObjects;
 }
 
 void GameObjects::makeEmpty(void)
@@ -22,35 +22,22 @@ void GameObjects::makeEmpty(void)
 
 GameObjectUnion *GameObjects::add(GAME_OBJECT_TYPE type)
 {
-    GameObject gameObject{GENERAL_GAME_OBJECT};
+    if (index >= capacity)
+        return NULL;
     if (type == GENERAL_GAME_OBJECT)
-        gameObject = GameObject(GENERAL_GAME_OBJECT);
+        new (gameObjects + index) GameObject{GENERAL_GAME_OBJECT};
     else if (type == RECTANGLE)
-        gameObject = GameObject(RECTANGLE);
-    else if (type == RECTANGLE)
-        gameObject = GameObject(RECTANGLE);
+        new (gameObjects + index) GameObject{RECTANGLE};
     else if (type == MOVABLE_RECTANGLE)
-        gameObject = GameObject(MOVABLE_RECTANGLE);
+        new (gameObjects + index) GameObject{MOVABLE_RECTANGLE};
     else if (type == BUTTON)
-        gameObject = GameObject(BUTTON);
+        new (gameObjects + index) GameObject{BUTTON};
     else if (type == TILE_MAP)
-        gameObject = GameObject(TILE_MAP);
+        new (gameObjects + index) GameObject{TILE_MAP};
     else if (type == PLAYER)
-        gameObject = GameObject(PLAYER);
+        new (gameObjects + index) GameObject{PLAYER};
     else if (type == ENEMY)
-        gameObject = GameObject(ENEMY);
-
-    if (index < capacity)
-        goto addToArray;
-    else
-    {
-        void *newArray = realloc(gameObjects, capacity * 2);
-        if (newArray == NULL)
-            return NULL;
-        gameObjects = (GameObject *)newArray;
-    }
-addToArray:
-    gameObjects[index] = gameObject;
+        new (gameObjects + index) GameObject{ENEMY};
     return &gameObjects[index++].value;
 }
 

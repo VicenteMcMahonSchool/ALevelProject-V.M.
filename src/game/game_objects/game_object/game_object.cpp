@@ -28,6 +28,11 @@
 GameObjectUnion::GameObjectUnion(void) : generalGameObject(GeneralGameObject((Vector2){0, 0})) {}
 GameObjectUnion::~GameObjectUnion(void) {}
 
+GameObject::GameObject(void)
+{
+    this->type = GENERAL_GAME_OBJECT;
+}
+
 GameObject::GameObject(GAME_OBJECT_TYPE type)
 {
     this->type = type;

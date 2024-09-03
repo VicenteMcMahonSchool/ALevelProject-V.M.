@@ -16,9 +16,8 @@ TileMap::TileMap(TILE_MAP_CONSTRUCTOR_ARGUMENTS) : GeneralGameObject(position), 
     close(tileDataFile);
 
     for (size_t i = 0; i < sizeof(tileAttributesData.tileData) / sizeof(TileAttributes); i++)
-        if (tileAttributesData.tileData[i].display.type == 1)
-            images[0] = IMG_LoadTexture(renderer, tileAttributesData.tileData[i].display.data.imageFile);
-
+        if (tileAttributesData.tileData[i].display.type == TileDisplayData::TILE_DISPLAY_IMAGE)
+            images[i] = IMG_LoadTexture(renderer, tileAttributesData.tileData[i].display.data.imageFile);
     int mapFile = open("./map", O_RDONLY);
     read(mapFile, tileMap, sizeof(tileMap));
     close(mapFile);
@@ -32,6 +31,7 @@ TileMap::TileMap(TILE_MAP_CONSTRUCTOR_ARGUMENTS) : GeneralGameObject(position), 
 
 TileMap::~TileMap()
 {
+    puts("##############################");
     for (size_t i = 0; i < TILE_NORMAL_MAXIMUM_VALUE; i++)
         SDL_DestroyTexture(images[i]);
 }
