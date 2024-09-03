@@ -95,8 +95,8 @@ private:
 public:
     GameObjects(void);
     ~GameObjects();
-    template <class... Arguments>
-    void construct(Arguments... arguments);
+    // template <class... Arguments>
+    // void construct(size_t index, Arguments... arguments);
     void makeEmpty(void);
     GameObjectUnion *add(GAME_OBJECT_TYPE type);
     GameObjectUnion *getGameObjectOfType(GAME_OBJECT_TYPE type);

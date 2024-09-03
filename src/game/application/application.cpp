@@ -56,8 +56,9 @@ void Application::gameScreen(void)
     timePassed = numberOfTicks = 0; // Sets both of them to 0.
     Player &player = gameObjects.add(PLAYER)->player;
     TileMap &tileMap = gameObjects.add(TILE_MAP)->tileMap;
+    new (&player) Player{{0, 0}};        // Using placement new to prevent calling the destructor.
+    new (&tileMap) TileMap{{0, 0}, 120}; // Using placement new to prevent calling the destructor.
     tileMap.resetRemovedCoins();
-    tileMap = TileMap{{0, 0}, 120};
     unsigned int tileSize = tileMap.getTileSize();
     player = Player{tileMap.getCentrePositionOfTile(tileMap.getSpawnTile()) - (Vector2){(double)tileSize / 2, (double)tileSize / 2} /* (Vector2){(double)tileSize / 2, (double)tileSize / 2} */};
     tileMap.tileOutlines = false;
@@ -240,8 +241,8 @@ void Application::editScreen(void)
     gameObjects.makeEmpty();
     size_t cursorSize = 1;
     TileMap &tileMap = gameObjects.add(TILE_MAP)->tileMap;
+    new (&tileMap) TileMap{{0, 0}, 120}; // Using placement new to avoid destructing the tile map.
     tileMap.resetRemovedCoins();
-    tileMap = {{0, 0}, 120};
     cameraPosition = tileMap.getCentrePositionOfTile(tileMap.getSpawnTile());
     unsigned int tileSize = tileMap.getTileSize();
     tileMap.tileOutlines = true;
