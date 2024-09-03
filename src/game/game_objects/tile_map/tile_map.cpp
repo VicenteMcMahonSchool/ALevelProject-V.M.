@@ -31,7 +31,6 @@ TileMap::TileMap(TILE_MAP_CONSTRUCTOR_ARGUMENTS) : GeneralGameObject(position), 
 
 TileMap::~TileMap()
 {
-    puts("##############################");
     for (size_t i = 0; i < TILE_NORMAL_MAXIMUM_VALUE; i++)
         SDL_DestroyTexture(images[i]);
 }

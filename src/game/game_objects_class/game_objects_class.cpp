@@ -70,7 +70,7 @@ size_t GameObjects::getGameObjectsOfType(GAME_OBJECT_TYPE type, GameObjectUnion 
         if (gameObjects[i].type == type && nextSetIndex < lengthOfOutput)
             output[nextSetIndex++] = &gameObjects[i].value;
     for (size_t i = 0; i < staticIndex; i++)
-        if (gameObjects[i].type == type && nextSetIndex < lengthOfOutput)
+        if (staticGameObjects[i].type == type && nextSetIndex < lengthOfOutput)
             output[nextSetIndex++] = &GameObjects::staticGameObjects[i].value;
     return nextSetIndex;
 }
