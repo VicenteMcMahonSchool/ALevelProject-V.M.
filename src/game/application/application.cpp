@@ -135,7 +135,7 @@ void Application::gameScreen(void)
         gameObjects.draw();
         if (screen != SCREEN_GAME_NORMAL && screen != SCREEN_GAME_TIME_SCALE)
             break;
-        char coinsText[sizeof(unsigned int) * 8 + 1 + 7] = /* {'C', 'o', 'i', 'n', 's', ':', ' '} */ "Coins: ";
+        char coinsText[sizeof(unsigned int) * 8 + 1 + 7] = "Coins: ";
         SDL_uitoa(player.getCoins(), coinsText + 7, 10);
         coinsDisplayRectangle.w = 64 * (strlen(coinsText) - 1);
         drawText(coinsText, &coinsDisplayRectangle);
