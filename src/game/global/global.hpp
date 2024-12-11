@@ -1,11 +1,9 @@
 #pragma once
+#define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
-#include "../macros/macros.hpp"
-// #include "../game_objects_class/game_objects_class.hpp"
 
-enum __attribute__((__packed__)) SCREEN
-{
+enum __attribute__((__packed__)) SCREEN {
     SCREEN_EXIT,
     SCREEN_GAME_TIME_SCALE,
     SCREEN_GAME_NORMAL,
@@ -18,7 +16,9 @@ enum __attribute__((__packed__)) SCREEN
 #define SHADOW_DISTANCE_X 6
 #define SHADOW_DISTANCE_Y 6
 
-// Application Type is defined here because of circular dependencies issues. This occurs because 'global.hpp' requires 'application' of type 'Application', whilst 'application' needs access to the global variables.
+// Application Type is defined here because of circular dependencies issues.
+// This occurs because 'global.hpp' requires 'application' of type
+// 'Application', whilst 'application' needs access to the global variables.
 struct Application;
 struct GameObject;
 struct GameObjects;
@@ -41,8 +41,7 @@ extern double timePassed;
 extern double timeScale;
 void drawText(const char *text, const SDL_Rect *rectangle);
 
-enum __attribute__((__packed__)) GAME_OBJECT_TYPE
-{
+enum __attribute__((__packed__)) GAME_OBJECT_TYPE {
     GENERAL_GAME_OBJECT,
     RECTANGLE,
     MOVABLE_RECTANGLE,

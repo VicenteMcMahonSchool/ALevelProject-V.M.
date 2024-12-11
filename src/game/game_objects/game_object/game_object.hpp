@@ -1,11 +1,10 @@
 #pragma once
-#include "../player/player.hpp"
-#include "../enemy/enemy.hpp"
 #include "../button/button.hpp"
+#include "../enemy/enemy.hpp"
+#include "../player/player.hpp"
 #include "../tile_map/tile_map.hpp"
 
-union GameObjectUnion
-{
+union GameObjectUnion {
     GameObjectUnion(void);
     ~GameObjectUnion();
     GeneralGameObject generalGameObject;
@@ -17,9 +16,8 @@ union GameObjectUnion
     Enemy enemy;
 };
 
-class GameObject
-{
-public:
+class GameObject {
+  public:
     GAME_OBJECT_TYPE type;
     GameObjectUnion value{};
     GameObject(void);

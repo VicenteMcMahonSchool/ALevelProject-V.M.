@@ -1,13 +1,12 @@
-#include <unistd.h>
-#include <fcntl.h>
 #include "../game/game_objects/tile_map/tile_map.hpp" // Includes tiles and other things.
+#include <fcntl.h>
+#include <unistd.h>
 
-int main(void)
-{
+int main(void) {
     TILE_TYPE buffer[NUMBER_OF_TILES];
-    for (size_t i = 0; i < NUMBER_OF_TILES; i++)
-    {
-        if (i < WIDTH_OF_TILE_MAP || i % WIDTH_OF_TILE_MAP == 0 || i % WIDTH_OF_TILE_MAP == WIDTH_OF_TILE_MAP - 1)
+    for (size_t i = 0; i < NUMBER_OF_TILES; i++) {
+        if (i < WIDTH_OF_TILE_MAP || i % WIDTH_OF_TILE_MAP == 0 ||
+            i % WIDTH_OF_TILE_MAP == WIDTH_OF_TILE_MAP - 1)
             buffer[i] = TILE_BOARDER;
         else if (i > NUMBER_OF_TILES - WIDTH_OF_TILE_MAP)
             buffer[i] = TILE_LOSE;

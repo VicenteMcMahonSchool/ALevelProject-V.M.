@@ -1,13 +1,12 @@
 #pragma once
-#include "../../vector2/vector2.hpp"
 #include "../../macros/macros.hpp"
+#include "../../vector2/vector2.hpp"
 
 #define GENERAL_GAME_OBJECT_CONSTRUCTOR_ARGUMENTS Vector2 position
 #define GENERAL_GAME_OBJECT_CONSTRUCTOR_ARGUMENTS_NAMES position
 
-class GeneralGameObject
-{
-public:
+class GeneralGameObject {
+  public:
     GeneralGameObject(GENERAL_GAME_OBJECT_CONSTRUCTOR_ARGUMENTS);
     virtual ~GeneralGameObject() = default;
     virtual void tick(void);

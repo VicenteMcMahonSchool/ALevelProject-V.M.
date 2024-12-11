@@ -2,8 +2,7 @@
 #include <math.h>
 
 #define POSITION(vector2) vector2.x, vector2.y
-struct Vector2
-{
+struct Vector2 {
     double x, y;
     double lengthSquared(void);
     double length(void);

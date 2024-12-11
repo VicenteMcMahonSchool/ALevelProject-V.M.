@@ -1,16 +1,16 @@
 #pragma once
-#include "../general_game_object/general_game_object.hpp"
 #include "../../global/global.hpp"
+#include "../general_game_object/general_game_object.hpp"
 
-#define RECTANGLE_CONSTRUCTOR_ARGUMENTS Vector2 position, SDL_Colour colour, int width, int height
+#define RECTANGLE_CONSTRUCTOR_ARGUMENTS                                        \
+    Vector2 position, SDL_Colour colour, int width, int height
 #define RECTANGLE_CONSTRUCTOR_ARGUMENTS_NAMES position, colour, width, height
 
-class Rectangle : public GeneralGameObject
-{
-private:
+class Rectangle : public GeneralGameObject {
+  private:
     SDL_Rect shadowRectangle;
 
-public:
+  public:
     Rectangle(RECTANGLE_CONSTRUCTOR_ARGUMENTS);
     void update(double deltaTime) override;
     void draw(void) override;
